@@ -14,6 +14,7 @@ extern "C" {
     INT16DATA i16Data;
     
     float pi = 3.14159265358979323846;
+    short proceso = 0;
     char tVarProceso = tvp_kg; //1
     float kgXcorte = 0.1;
     float tempkgXcorte = 0.1;
@@ -21,7 +22,7 @@ extern "C" {
     float tiXcorte = 2.0f; //2-5
     short numCortes = 1; //6-7
     short tempNumCortes = 1;
-    float diamTubo = 20; //8-11
+    float diamTubo = 20.0f; //8-11
     float densidadMasa = 1.5; //12-15
     float velocidadMasa = 2.0; //16-19
     float calFactor = 0;
@@ -95,7 +96,7 @@ char readEEPROM(char adr) {
         float temp = 0;
         float temp2 = 2000.0f * 2000.0f;
         tempNumCortes = numCortes;
-        numCortes = 10.0f;
+        numCortes = 10;
         tempkgXcorte = kgXcorte;
         kgXcorte = 1.0f;
         temp = (float)pi*densidadMasa*numCortes*diamTubo*diamTubo*tiXcorte;

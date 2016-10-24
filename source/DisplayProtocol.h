@@ -1,6 +1,10 @@
 #ifndef DISPLAYPROTOCOL_H
 #define	DISPLAYPROTOCOL_H
 
+#include "sysParams.h"
+#include "IOConfig.h"
+
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -10,27 +14,46 @@ extern "C" {
     #define SCREEN_PASSWORD     1
     #define SCREEN_ON_PROCESS   2
     #define SCREEN_OFF_PROCESS  3   
-//    #define SCREEN_MENU_ADV     4   
-    #define SCREEN_CHAN_VAL     4   
-    #define SCREEN_CALIB_VEL    5
+    #define SCREEN_MENU_ADV     4   
+    #define SCREEN_CHAN_VAL     5   
+    #define SCREEN_CALIB_VEL    6
 
     signed char actualScreen = SCREEN_MENU ;
     signed char menuSection = 0;
-    char introducido = 128;
+    signed char passSection = 0;
+    char contra[4] = {1,2,3,4};
+    char introducido[4] = {0,0,0,0};
     char advMode = 0;
     
     void pressUP() {
-        if(actualScreen == SCREEN_MENU) {
+        if(actualScreen == SCREEN_MENU || actualScreen == SCREEN_MENU_ADV) {
             menuSection++;
-            if(menuSection > 5)
+            if(menuSection > 6)
                 menuSection = 0;
         }
     }
     
     void longPressUP() {
-        if(!UPisLP) {
-            UPisLP = 1;
+//        if(!UPisLP) {
+//            UPisLP = 1;
+        if(actualScreen == SCREEN_MENU || actualScreen == SCREEN_MENU_ADV) {
+            if(holdENTERcont > 5) {
+                if(actualScreen == SCREEN_MENU) {
+                    actualScreen = SCREEN_PASSWORD;
+                    passSection = 0;
+                }
+                if(actualScreen == SCREEN_MENU_ADV)
+                    actualScreen = SCREEN_MENU;
+            }else
+                menuSection = 0;
+        }else if(actualScreen == SCREEN_PASSWORD) {
+            
+            introducido[passSection]++;
+            if(introducido[passSection] > 6)
+                introducido[passSection] = 0;
         }
+        
+//        }
     }
     
     void releaseUP() {
@@ -39,17 +62,18 @@ extern "C" {
     }
     
     void pressDOWN() {
-        if(actualScreen == SCREEN_MENU) {
+        if(actualScreen == SCREEN_MENU || actualScreen == SCREEN_MENU_ADV) {
             menuSection--;
             if(menuSection < 0)
-                menuSection = 5;
+                menuSection = 6;
         }
     }
     
     void longPressDOWN() {
-        if(!DOWNisLP) {
-            DOWNisLP = 1;
-        }
+//        if(!DOWNisLP) {
+//            DOWNisLP = 1;
+            
+//        }
     }
     
     void releaseDOWN() {
@@ -77,7 +101,17 @@ extern "C" {
     }
     
     void longPressENTER() {
-        ENTERisLP = 1;
+        if(!ENTERisLP) {
+            ENTERisLP = 1;
+            if(holdUPcont > 5) {
+               if(actualScreen == SCREEN_MENU)
+                   actualScreen = SCREEN_PASSWORD;
+               if(actualScreen == SCREEN_MENU_ADV)
+                   actualScreen = SCREEN_MENU;
+           }else {
+               actualScreen = SCREEN_ON_PROCESS;
+           }
+        }
     }
     
     void releaseENTER() {
@@ -87,11 +121,10 @@ extern "C" {
     
     void execCombinations() {
         if(ENTERisLP) {
-           if(UPisLP) {
-               actualScreen = SCREEN_PASSWORD;
-           }else {
-               actualScreen = SCREEN_ON_PROCESS;
-           }
+           
+        }
+        if(UPisLP) {
+           
         }
     }
     
@@ -100,37 +133,66 @@ extern "C" {
             case (0): {
                 lcd_gotoxy(1,1);
                 printf("Estado proceso: \n");
-                printf("     Detenido     ");
+                if(proceso > 0) {
+                    printf("    %us / %us   ", proceso, numCortes);
+                }else
+                    printf("     Detenido     ");
                 break;
             }case (1): {
                 lcd_gotoxy(1,1);
                 printf("Proceso en:     \n");
-                printf("        kg        ");
+                switch(tVarProceso) {
+                    case (tvp_kg): {
+                        printf("       kg       ");
+                        break;
+                    }
+                    case (tvp_m3): {
+                        printf("       m3       ");
+                        break;
+                    }
+                    case (tvp_ti): {
+                        printf("       sec      ");
+                        break;
+                    }
+                }
                 break;
             }case (2): {
                 lcd_gotoxy(1,1);
                 printf("Valor por Corte:\n");
-                printf("        0.1       ");
+                switch(tVarProceso) {
+                    case (tvp_kg): {
+                        printf("       %f kg    ",kgXcorte);
+                        break;
+                    }
+                    case (tvp_m3): {
+                        printf("       %f m3    ",kgXcorte);
+                        break;
+                    }
+                    case (tvp_ti): {
+                        printf("       %f sec   ",kgXcorte);
+                        break;
+                    }
+                }
                 break;
             }case (3): {
                 lcd_gotoxy(1,1);
                 printf("Cantidad Cortes:\n");
-                printf("        10        ");
+                printf("       %us       ",numCortes);
                 break;
             }case (4): {
                 lcd_gotoxy(1,1);
-                printf("Diámetro Tubo:  \n");
-                printf("       20mm       ");
+                printf("Diametro Tubo:  \n");
+                printf("      %f mm     ",diamTubo);
                 break;
             }case (5): {
                 lcd_gotoxy(1,1);
                 printf("Densidad Masa:  \n");
-                printf("     1.5 kg/m3    ");
+                printf("     %f kg/m3   ", densidadMasa);
                 break;
             }case (6): {
                 lcd_gotoxy(1,1);
                 printf("Velocidad Masa: \n");
-                printf("      0.5 m/s     ");
+                printf("     %f m/s     ",velocidadMasa);
                 break;
             }
         }
@@ -139,8 +201,9 @@ extern "C" {
     
     void drawPassWord() {
         lcd_gotoxy(1,1);
-        printf("Contraseña:\n");
-        printf("XXXX = %u", introducido);        
+        printf("Contrasena:\n");
+        printf("    %u%u%u%u    ", introducido[0], introducido[1],
+                introducido[2], introducido[3]);        
     }
     
     void drawScreen() {

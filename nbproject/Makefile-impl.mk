@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=CortaMasa.X
+PROJECTNAME=CortaMasa
 
 # Active Configuration
 DEFAULTCONF=default

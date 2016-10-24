@@ -18,7 +18,7 @@ extern "C" {
     #pragma config BORV = 285       // Brown Out Reset Voltage bits (VBOR set to 2.85 V nominal)
 
     // CONFIG2H
-    #pragma config WDTEN = OFF      // Watchdog Timer Enable bits (Watch dog timer is always disabled. SWDTEN has no effect.)
+    #pragma config WDTEN = SWON     // Watchdog Timer Enable bits (WDT is controlled by SWDTEN bit of the WDTCON register)
     #pragma config WDTPS = 32768    // Watchdog Timer Postscale Select bits (1:32768)
 
     // CONFIG3H
@@ -83,7 +83,8 @@ extern "C" {
         OSCTUNEbits.INTSRC = 0;
         OSCTUNEbits.TUN = 0b011111;
         OSCTUNEbits.PLLEN = 1;
-//        while(!OSCCON2bits.PLLRDY);
+//        while(!OSCCON2bits.PLLRDY); //No se porque no da XD
+        WDTCONbits.SWDTEN = 1;
     }
     
     void interruptConfig() {

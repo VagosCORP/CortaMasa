@@ -35,6 +35,7 @@ void main(void) {
     interruptConfig();
     
     while(1) {
+        CLRWDT();
         drawScreen();
         if(!UP && lastSttUP) {
             lastSttUP = 0;

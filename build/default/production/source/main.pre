@@ -15,7 +15,7 @@
 #pragma config BORV = 285
 
 
-#pragma config WDTEN = OFF
+#pragma config WDTEN = SWON
 #pragma config WDTPS = 32768
 
 
@@ -8997,6 +8997,7 @@ OSCTUNEbits.INTSRC = 0;
 OSCTUNEbits.TUN = 0b011111;
 OSCTUNEbits.PLLEN = 1;
 
+WDTCONbits.SWDTEN = 1;
 }
 
 void interruptConfig() {
@@ -9452,46 +9453,23 @@ TRISCbits.TRISC1 = 1;
 }
 }
 
-# 30 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h"
-extern double fabs(double);
-extern double floor(double);
-extern double ceil(double);
-extern double modf(double, double *);
-extern double sqrt(double);
-extern double atof(const char *);
-extern double sin(double) ;
-extern double cos(double) ;
-extern double tan(double) ;
-extern double asin(double) ;
-extern double acos(double) ;
-extern double atan(double);
-extern double atan2(double, double) ;
-extern double log(double);
-extern double log10(double);
-extern double pow(double, double) ;
-extern double exp(double) ;
-extern double sinh(double) ;
-extern double cosh(double) ;
-extern double tanh(double);
-extern double eval_poly(double, const double *, int);
-extern double frexp(double, int *);
-extern double ldexp(double, int);
-extern double fmod(double, double);
-extern double trunc(double);
-extern double round(double);
-
-# 15 "source/sysParams.h"
+# 13 "source/sysParams.h"
 FLOATDATA fData;
 INT16DATA i16Data;
 
+float pi = 3.14159265358979323846;
+short proceso = 0;
 char tVarProceso = 0;
 float kgXcorte = 0.1;
+float tempkgXcorte = 0.1;
 float m3Xcorte = 0.1;
-float tiXcorte = 2.0;
+float tiXcorte = 2.0f;
 short numCortes = 1;
-float diamTubo = 20;
+short tempNumCortes = 1;
+float diamTubo = 20.0f;
 float densidadMasa = 1.5;
-float velocidadMasa = 0.5;
+float velocidadMasa = 2.0;
+float calFactor = 0;
 
 char ie = 0;
 
@@ -9550,16 +9528,41 @@ writeEEPROM(19, fData.floatLB);
 
 void calcSysVars() {
 float temp = 0;
-temp = (float)diamTubo / 2.0f;
-temp*=temp;
-
-temp = (float)diamTubo*velocidadMasa;
+temp = (float)diamTubo / 2000.0f;
+temp *= temp;
+temp *= pi;
+temp *= velocidadMasa;
 m3Xcorte = (float)temp * tiXcorte;
 kgXcorte = (float)densidadMasa * m3Xcorte;
 }
 
-void autoCal(float pesoReal) {
+void preAutoCal() {
+float temp = 0;
+float temp2 = 2000.0f * 2000.0f;
+tempNumCortes = numCortes;
+numCortes = 10;
+tempkgXcorte = kgXcorte;
+kgXcorte = 1.0f;
+temp = (float)pi*densidadMasa*numCortes*diamTubo*diamTubo*tiXcorte;
+calFactor = (float)temp2/temp;
+velocidadMasa = (float)kgXcorte * calFactor;
+}
 
+void autoCal(float pesoReal) {
+float temp = 0;
+velocidadMasa = (float)calFactor * pesoReal;
+numCortes = tempNumCortes;
+kgXcorte = tempkgXcorte;
+temp = (float)diamTubo / 2000.0f;
+temp *= temp;
+temp *= pi;
+temp *= velocidadMasa;
+if(tVarProceso == 0) {
+temp *= densidadMasa;
+tiXcorte = (float)kgXcorte / temp;
+}else if(tVarProceso == 1)
+tiXcorte = (float)m3Xcorte / temp;
+saveSysParams();
 }
 
 void sysParamInit() {
@@ -9590,24 +9593,43 @@ velocidadMasa = fData.floatdat;
 calcSysVars();
 }
 
-# 17 "source/DisplayProtocol.h"
+# 21 "source/DisplayProtocol.h"
 signed char actualScreen = 0 ;
 signed char menuSection = 0;
-char introducido = 128;
+signed char passSection = 0;
+char contra[4] = {1,2,3,4};
+char introducido[4] = {0,0,0,0};
 char advMode = 0;
 
 void pressUP() {
-if(actualScreen == 0) {
+if(actualScreen == 0 || actualScreen == 4) {
 menuSection++;
-if(menuSection > 5)
+if(menuSection > 6)
 menuSection = 0;
 }
 }
 
 void longPressUP() {
-if(!UPisLP) {
-UPisLP = 1;
+
+
+if(actualScreen == 0 || actualScreen == 4) {
+if(holdENTERcont > 5) {
+if(actualScreen == 0) {
+actualScreen = 1;
+passSection = 0;
 }
+if(actualScreen == 4)
+actualScreen = 0;
+}else
+menuSection = 0;
+}else if(actualScreen == 1) {
+
+introducido[passSection]++;
+if(introducido[passSection] > 6)
+introducido[passSection] = 0;
+}
+
+
 }
 
 void releaseUP() {
@@ -9616,17 +9638,18 @@ UPsecurLock = 0;
 }
 
 void pressDOWN() {
-if(actualScreen == 0) {
+if(actualScreen == 0 || actualScreen == 4) {
 menuSection--;
 if(menuSection < 0)
-menuSection = 5;
+menuSection = 6;
 }
 }
 
 void longPressDOWN() {
-if(!DOWNisLP) {
-DOWNisLP = 1;
-}
+
+
+
+
 }
 
 void releaseDOWN() {
@@ -9654,7 +9677,17 @@ void pressENTER() {
 }
 
 void longPressENTER() {
+if(!ENTERisLP) {
 ENTERisLP = 1;
+if(holdUPcont > 5) {
+if(actualScreen == 0)
+actualScreen = 1;
+if(actualScreen == 4)
+actualScreen = 0;
+}else {
+actualScreen = 2;
+}
+}
 }
 
 void releaseENTER() {
@@ -9664,11 +9697,10 @@ ENTERsecurLock = 0;
 
 void execCombinations() {
 if(ENTERisLP) {
-if(UPisLP) {
-actualScreen = 1;
-}else {
-actualScreen = 2;
+
 }
+if(UPisLP) {
+
 }
 }
 
@@ -9677,37 +9709,66 @@ switch(menuSection) {
 case (0): {
 lcd_gotoxy(1,1);
 printf("Estado proceso: \n");
+if(proceso > 0) {
+printf("    %us / %us   ", proceso, numCortes);
+}else
 printf("     Detenido     ");
 break;
 }case (1): {
 lcd_gotoxy(1,1);
 printf("Proceso en:     \n");
-printf("        kg        ");
+switch(tVarProceso) {
+case (0): {
+printf("       kg       ");
+break;
+}
+case (1): {
+printf("       m3       ");
+break;
+}
+case (2): {
+printf("       sec      ");
+break;
+}
+}
 break;
 }case (2): {
 lcd_gotoxy(1,1);
 printf("Valor por Corte:\n");
-printf("        0.1       ");
+switch(tVarProceso) {
+case (0): {
+printf("       %f kg    ",kgXcorte);
+break;
+}
+case (1): {
+printf("       %f m3    ",kgXcorte);
+break;
+}
+case (2): {
+printf("       %f sec   ",kgXcorte);
+break;
+}
+}
 break;
 }case (3): {
 lcd_gotoxy(1,1);
 printf("Cantidad Cortes:\n");
-printf("        10        ");
+printf("       %us       ",numCortes);
 break;
 }case (4): {
 lcd_gotoxy(1,1);
-printf("Diámetro Tubo:  \n");
-printf("       20mm       ");
+printf("Diametro Tubo:  \n");
+printf("      %f mm     ",diamTubo);
 break;
 }case (5): {
 lcd_gotoxy(1,1);
 printf("Densidad Masa:  \n");
-printf("     1.5 kg/m3    ");
+printf("     %f kg/m3   ", densidadMasa);
 break;
 }case (6): {
 lcd_gotoxy(1,1);
 printf("Velocidad Masa: \n");
-printf("      0.5 m/s     ");
+printf("     %f m/s     ",velocidadMasa);
 break;
 }
 }
@@ -9716,8 +9777,9 @@ break;
 
 void drawPassWord() {
 lcd_gotoxy(1,1);
-printf("Contraseña:\n");
-printf("XXXX = %u", introducido);
+printf("Contrasena:\n");
+printf("    %u%u%u%u    ", introducido[0], introducido[1],
+introducido[2], introducido[3]);
 }
 
 void drawScreen() {
@@ -9760,6 +9822,7 @@ UARTConfig();
 interruptConfig();
 
 while(1) {
+asm(" clrwdt");
 drawScreen();
 if(!PORTAbits.RA2 && lastSttUP) {
 lastSttUP = 0;
