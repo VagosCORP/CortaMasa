@@ -6,6 +6,8 @@ extern "C" {
 #endif
 
     
+    #include "../../Comunic.h"
+    
     #define tvp_kg  0
     #define tvp_m3  1
     #define tvp_ti  2
@@ -13,16 +15,18 @@ extern "C" {
     FLOATDATA fData;
     INT16DATA i16Data;
     
+    char ProcessStarted = 0;
+    
     float pi = 3.14159265358979323846;
     short proceso = 0;
-    char tVarProceso = tvp_kg; //1
+    char tVarProceso = tvp_m3; //1
     float kgXcorte = 0.1;
     float tempkgXcorte = 0.1;
     float m3Xcorte = 0.1; 
     float tiXcorte = 2.0f; //2-5
     short numCortes = 1; //6-7
     short tempNumCortes = 1;
-    float diamTubo = 20.0f; //8-11
+    float diamTubo = 20.000f; //8-11
     float densidadMasa = 1.5; //12-15
     float velocidadMasa = 2.0; //16-19
     float calFactor = 0;
@@ -30,32 +34,45 @@ extern "C" {
     char ie = 0;
     
     void writeEEPROM(char adr, char data) {
-    ie = INTCONbits.GIE;
-    INTCONbits.GIE = 0;
-    EECON1bits.WREN = 1;
     EEADR = adr;
     EEDATA = data;
+    EECON1bits.EEPGD = 0;
+    EECON1bits.CFGS = 0;
     EECON2 = 0x55;
     EECON2 = 0xAA;
     EECON1bits.WR = 1;
-    EECON1bits.WREN = 0;
     while(EECON1bits.WR);
-    INTCONbits.GIE = ie;
 }
 
 char readEEPROM(char adr) {
     EEADR = adr;
+    EECON1bits.EEPGD = 0;
+    EECON1bits.CFGS = 0;
     EECON1bits.RD = 1;
     while(EECON1bits.RD);
     return EEDATA;
 }
     
     void EEPROMConfig() {
-        EECON1bits.EEPGD = 0;
         EECON1bits.WREN = 0;
+        EECON1bits.FREE = 0;
+        
+    }
+    
+    void calcSysVars() {
+        float temp = 0;
+        temp = (float)diamTubo / 2000.0f;
+        temp *= temp;
+        temp *= pi;
+        temp *= velocidadMasa;
+        m3Xcorte = (float)temp * tiXcorte;
+        kgXcorte = (float)densidadMasa * m3Xcorte;
     }
     
     void saveSysParams() {
+        EECON1bits.WREN = 1;
+        ie = INTCONbits.GIE;
+        INTCONbits.GIE = 0;
         writeEEPROM(1, tVarProceso); //1
         fData.floatdat = tiXcorte; //2-5
         writeEEPROM(2, fData.floatMB);
@@ -80,16 +97,9 @@ char readEEPROM(char adr) {
         writeEEPROM(17, fData.floatUB);
         writeEEPROM(18, fData.floatHB);
         writeEEPROM(19, fData.floatLB);
-    }
-    
-    void calcSysVars() {
-        float temp = 0;
-        temp = (float)diamTubo / 2000.0f;
-        temp *= temp;
-        temp *= pi;
-        temp *= velocidadMasa;
-        m3Xcorte = (float)temp * tiXcorte;
-        kgXcorte = (float)densidadMasa * m3Xcorte;
+        EECON1bits.WREN = 0;
+        INTCONbits.GIE = ie;
+        calcSysVars();
     }
     
     void preAutoCal() {

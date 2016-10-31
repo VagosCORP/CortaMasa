@@ -3,6 +3,8 @@
  source/main.c  \
 source/sysParams.h  \
 source/../../Comunic.h  \
+source/ButtonController.h  \
+source/screenDrawers.h  \
 source/SYSConfig.h  \
 source/IOConfig.h  \
 source/UARTConfig.h  \

@@ -1,10 +1,12 @@
 #ifndef UARTCONFIG_H
 #define	UARTCONFIG_H
 
+#include "sysParams.h"
+#include "DisplayProtocol.h"
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
     
     void putchUART(char val) {
         while(!TXSTA1bits.TRMT);
@@ -12,7 +14,47 @@ extern "C" {
     }
     
     void UARTint() {
-        putch(RCREG1);
+        char sas = RCREG1;
+        if(sas == 'A') {
+            putchUART(actualScreen);
+            putchUART(menuSection);
+            putchUART(passSection);
+        }else if(sas == 'B') {
+            saveSysParams();
+        }else if(sas == 'C') {
+            sysParamInit();
+        }
+//            putchUART(readEEPROM(1));
+//            putchUART(readEEPROM(2));
+//            putchUART(readEEPROM(3));
+//            putchUART(readEEPROM(4));
+//            putchUART(readEEPROM(5));
+//            putchUART(readEEPROM(6));
+//            putchUART(readEEPROM(7));
+//            putchUART(readEEPROM(8));
+//            putchUART(readEEPROM(9));
+//            putchUART(readEEPROM(10));
+//            putchUART(readEEPROM(11));
+//            putchUART(readEEPROM(12));
+//            putchUART(readEEPROM(13));
+//            putchUART(readEEPROM(14));
+//            putchUART(readEEPROM(15));
+//            putchUART(readEEPROM(16));
+//            putchUART(readEEPROM(17));
+//            putchUART(readEEPROM(18));
+//            putchUART(readEEPROM(19));
+//        char sas = RCREG1;
+//        EECON1bits.WREN = 1;
+//        ie = INTCONbits.GIE;
+//        INTCONbits.GIE = 0;
+//        writeEEPROM(1, sas);
+//        delay_ms(100);
+//        sas += 20;
+//        writeEEPROM(2, sas);
+//        putchUART(readEEPROM(1));
+//        putchUART(readEEPROM(2));
+//        EECON1bits.WREN = 0;
+//        INTCONbits.GIE = ie;
     }
     
     void UARTConfig() {

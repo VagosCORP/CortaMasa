@@ -1,6 +1,9 @@
 #ifndef PWMCONFIG_H
 #define	PWMCONFIG_H
 
+#include "UARTConfig.h"
+
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -30,8 +33,13 @@ extern "C" {
     }
     
     void T2int() {
-        if(FC1 || FC2)
+        if(FC1 || FC2) {
             setPWM2duty(0);
+            if(FC1)
+                putchUART(101);
+            if(FC2)
+                putchUART(102);
+        }
     }
     
     void PWM2Config() {

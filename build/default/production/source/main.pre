@@ -9006,6 +9006,22 @@ INTCONbits.PEIE = 1;
 INTCONbits.GIE = 1;
 }
 
+# 13 "source/../../delay.h"
+void delay_ms(int del) {
+for(int i = 1;i <= del;i++)
+_delay((unsigned long)((1)*(16000000/4000.0)));
+}
+
+void delay_us(int del) {
+for(int i = 1;i <= del;i++)
+_delay((unsigned long)((1)*(16000000/4000000.0)));
+}
+
+void delay_cc(long del) {
+for(long i = 1;i <= del;i++)
+_delay(1);
+}
+
 # 117 "source/../../vclib_lcd.h"
 unsigned char lcd_read_4bits(void) {
 unsigned char n = 0x00;
@@ -9211,42 +9227,6 @@ LATBbits.LATB0 = 0;
 LATCbits.LATC5 = 0;
 }
 
-# 9 "source/UARTConfig.h"
-void putchUART(char val) {
-while(!TXSTA1bits.TRMT);
-TXREG1 = val;
-}
-
-void UARTint() {
-putch(RCREG1);
-}
-
-void UARTConfig() {
-RCSTA1bits.SPEN = 0;
-SPBRGH1 = 0;
-SPBRG1 = 34;
-ANSELCbits.ANSC6 = 0;
-ANSELCbits.ANSC7 = 0;
-TRISCbits.TRISC6 = 1;
-TRISCbits.TRISC7 = 1;
-TXSTA1bits.TX9 = 0;
-TXSTA1bits.SYNC = 0;
-TXSTA1bits.SENDB = 0;
-TXSTA1bits.BRGH = 1;
-RCSTA1bits.RX9 = 0;
-BAUDCON1bits.DTRXP = 0;
-BAUDCON1bits.CKTXP = 0;
-BAUDCON1bits.BRG16 = 1;
-BAUDCON1bits.WUE = 0;
-BAUDCON1bits.ABDEN = 0;
-RCSTA1bits.CREN = 1;
-TXSTA1bits.TXEN = 1;
-IPR1bits.RC1IP = 0;
-PIR1bits.RC1IF = 0;
-PIE1bits.RC1IE = 1;
-RCSTA1bits.SPEN = 1;
-}
-
 # 8 "source/../../Comunic.h"
 typedef union {
 float floatdat;
@@ -9374,99 +9354,22 @@ data.int16LB = byteLS;
 return data.int16dat;
 }
 
-# 6 "source/../../delay.h"
-void delay_ms(int del) {
-for(int i = 1;i <= del;i++)
-_delay((unsigned long)((1)*(16000000/4000.0)));
-}
-
-void delay_us(int del) {
-for(int i = 1;i <= del;i++)
-_delay((unsigned long)((1)*(16000000/4000000.0)));
-}
-
-void delay_cc(long del) {
-for(long i = 1;i <= del;i++)
-_delay(1);
-}
-
-# 9 "source/PWMConfig.h"
-void t2config() {
-T2CONbits.TMR2ON = 0;
-T2CONbits.T2CKPS = 0b00;
-T2CONbits.T2OUTPS = 0b1111;
-
-PIR1bits.TMR2IF = 0;
-IPR1bits.TMR2IP = 1;
-PIE1bits.TMR2IE = 1;
-T2CONbits.TMR2ON = 1;
-}
-
-void setPWM2duty(signed short actuator) {
-short act = 400;
-if(actuator > 400)
-act = 800;
-else if(actuator < -400)
-act = 0;
-else
-act = actuator + 400;
-CCP2CONbits.DC2B = act;
-CCPR2L = act>>2;
-}
-
-void T2int() {
-if(PORTAbits.RA7 || PORTAbits.RA6)
-setPWM2duty(0);
-}
-
-void PWM2Config() {
-TRISCbits.TRISC0 = 1;
-TRISCbits.TRISC1 = 1;
-PSTR2CONbits.STR2A = 1;
-PSTR2CONbits.STR2B = 1;
-PSTR2CONbits.STR2C = 0;
-PSTR2CONbits.STR2D = 0;
-CCPTMRS0bits.C2TSEL = 0b00;
-PR2 = 199;
-ECCP2ASbits.CCP2AS = 0b000;
-ECCP2ASbits.PSS2AC = 0b00;
-ECCP2ASbits.PSS2BD = 0b00;
-PWM2CONbits.P2RSEN = 0;
-ECCP2ASbits.CCP2AS = 1;
-CCP2CONbits.P2M = 0b10;
-CCP2CONbits.CCP2M = 0b1100;
-setPWM2duty(0);
-PWM2CONbits.P2DC = 16;
-t2config();
-TRISCbits.TRISC0 = 0;
-TRISCbits.TRISC1 = 0;
-ECCP2ASbits.CCP2ASE = 0;
-}
-
-void setPWM2on(char on) {
-if(on) {
-TRISCbits.TRISC0 = 0;
-TRISCbits.TRISC1 = 0;
-}else {
-TRISCbits.TRISC0 = 1;
-TRISCbits.TRISC1 = 1;
-}
-}
-
-# 13 "source/sysParams.h"
+# 15 "source/sysParams.h"
 FLOATDATA fData;
 INT16DATA i16Data;
 
+char ProcessStarted = 0;
+
 float pi = 3.14159265358979323846;
 short proceso = 0;
-char tVarProceso = 0;
+char tVarProceso = 1;
 float kgXcorte = 0.1;
 float tempkgXcorte = 0.1;
 float m3Xcorte = 0.1;
 float tiXcorte = 2.0f;
 short numCortes = 1;
 short tempNumCortes = 1;
-float diamTubo = 20.0f;
+float diamTubo = 20.000f;
 float densidadMasa = 1.5;
 float velocidadMasa = 2.0;
 float calFactor = 0;
@@ -9474,32 +9377,45 @@ float calFactor = 0;
 char ie = 0;
 
 void writeEEPROM(char adr, char data) {
-ie = INTCONbits.GIE;
-INTCONbits.GIE = 0;
-EECON1bits.WREN = 1;
 EEADR = adr;
 EEDATA = data;
+EECON1bits.EEPGD = 0;
+EECON1bits.CFGS = 0;
 EECON2 = 0x55;
 EECON2 = 0xAA;
 EECON1bits.WR = 1;
-EECON1bits.WREN = 0;
 while(EECON1bits.WR);
-INTCONbits.GIE = ie;
 }
 
 char readEEPROM(char adr) {
 EEADR = adr;
+EECON1bits.EEPGD = 0;
+EECON1bits.CFGS = 0;
 EECON1bits.RD = 1;
 while(EECON1bits.RD);
 return EEDATA;
 }
 
 void EEPROMConfig() {
-EECON1bits.EEPGD = 0;
 EECON1bits.WREN = 0;
+EECON1bits.FREE = 0;
+
+}
+
+void calcSysVars() {
+float temp = 0;
+temp = (float)diamTubo / 2000.0f;
+temp *= temp;
+temp *= pi;
+temp *= velocidadMasa;
+m3Xcorte = (float)temp * tiXcorte;
+kgXcorte = (float)densidadMasa * m3Xcorte;
 }
 
 void saveSysParams() {
+EECON1bits.WREN = 1;
+ie = INTCONbits.GIE;
+INTCONbits.GIE = 0;
 writeEEPROM(1, tVarProceso);
 fData.floatdat = tiXcorte;
 writeEEPROM(2, fData.floatMB);
@@ -9524,16 +9440,9 @@ writeEEPROM(16, fData.floatMB);
 writeEEPROM(17, fData.floatUB);
 writeEEPROM(18, fData.floatHB);
 writeEEPROM(19, fData.floatLB);
-}
-
-void calcSysVars() {
-float temp = 0;
-temp = (float)diamTubo / 2000.0f;
-temp *= temp;
-temp *= pi;
-temp *= velocidadMasa;
-m3Xcorte = (float)temp * tiXcorte;
-kgXcorte = (float)densidadMasa * m3Xcorte;
+EECON1bits.WREN = 0;
+INTCONbits.GIE = ie;
+calcSysVars();
 }
 
 void preAutoCal() {
@@ -9593,43 +9502,479 @@ velocidadMasa = fData.floatdat;
 calcSysVars();
 }
 
-# 21 "source/DisplayProtocol.h"
-signed char actualScreen = 0 ;
+# 26 "source/screenDrawers.h"
+signed char actualScreen = 0;
 signed char menuSection = 0;
 signed char passSection = 0;
-char contra[4] = {1,2,3,4};
-char introducido[4] = {0,0,0,0};
-char advMode = 0;
+char contra[4] = {1, 2, 3, 4};
+signed char introducido[4] = {0, 0, 0, 0};
+char passChar[4] = {0, 0, 0, 0};
+char questKMT[3] = {0, 0, 0};
+signed char selKMT = 0;
+char questSN[2] = {0, 0};
+char selSN = 0;
+char fd = 0;
+char tempLastScreen = 0;
+
+void drawMenu(char adv) {
+switch (menuSection) {
+case (0):
+{
+lcd_gotoxy(1, 1);
+printf("Estado proceso: \n");
+if (adv)
+lcd_putc('A');
+else
+lcd_putc(' ');
+lcd_gotoxy(2, 2);
+if (ProcessStarted)
+printf("   %d / %d    ", proceso, numCortes);
+else
+printf("    Detenido    ");
+break;
+}
+case (1):
+{
+lcd_gotoxy(1, 1);
+printf("Proceso en:     \n");
+if (adv)
+lcd_putc('A');
+else
+lcd_putc(' ');
+lcd_gotoxy(2, 2);
+switch (tVarProceso) {
+case (0):
+{
+printf("       kg        ");
+break;
+}
+case (1):
+{
+printf("       m3       ");
+break;
+}
+case (2):
+{
+printf("      sec       ");
+break;
+}
+}
+break;
+}
+case (2):
+{
+lcd_gotoxy(1, 1);
+printf("Valor por Corte:\n");
+if (adv)
+lcd_putc('A');
+else
+lcd_putc(' ');
+lcd_gotoxy(2, 2);
+switch (tVarProceso) {
+case (0):
+{
+printf("   %3.3f kg   ", kgXcorte);
+break;
+}
+case (1):
+{
+printf("   %3.3f m3   ", m3Xcorte);
+break;
+}
+case (2):
+{
+printf("   %3.3f sec  ", tiXcorte);
+break;
+}
+}
+break;
+}
+case (3):
+{
+lcd_gotoxy(1, 1);
+printf("Cantidad Cortes:\n");
+if (adv)
+lcd_putc('A');
+else
+lcd_putc(' ');
+lcd_gotoxy(2, 2);
+printf("      %d       ", numCortes);
+break;
+}
+case (4):
+{
+lcd_gotoxy(1, 1);
+printf("Diametro Tubo:  \n");
+if (adv)
+lcd_putc('A');
+else
+lcd_putc(' ');
+lcd_gotoxy(2, 2);
+printf("   %3.3f mm   ", diamTubo);
+break;
+}
+case (5):
+{
+lcd_gotoxy(1, 1);
+printf("Densidad Masa:  \n");
+if (adv)
+lcd_putc('A');
+else
+lcd_putc(' ');
+lcd_gotoxy(2, 2);
+printf("  %3.3f kg/m3 ", densidadMasa);
+break;
+}
+case (6):
+{
+lcd_gotoxy(1, 1);
+printf("Velocidad Masa: \n");
+if (adv)
+lcd_putc('A');
+else
+lcd_putc(' ');
+lcd_gotoxy(2, 2);
+printf("   %3.3f m/s  ", velocidadMasa);
+break;
+}
+}
+}
+
+void drawChanVal() {
+switch (menuSection) {
+case (0):
+{
+lcd_gotoxy(1, 1);
+printf("Estado proceso: \n");
+if (ProcessStarted)
+printf("   %d / %d    ", proceso, numCortes);
+else
+printf("    Detenido    ");
+break;
+}
+case (1):
+{
+int i;
+for (i = 0; i < 4; i++)
+questKMT[i] = ' ';
+questKMT[selKMT] = 0b01111110;
+lcd_gotoxy(1, 1);
+printf("Proceso en:     \n");
+printf(" %ckg  %cm3  %csec ", questKMT[0], questKMT[1], questKMT[2]);
+break;
+}
+case (2):
+{
+lcd_gotoxy(1, 1);
+printf("Valor por Corte:\n");
+switch (tVarProceso) {
+case (0):
+{
+printf("   %3.3f kg   ", kgXcorte);
+break;
+}
+case (1):
+{
+printf("   %3.3f m3   ", m3Xcorte);
+break;
+}
+case (2):
+{
+printf("   %3.3f sec  ", tiXcorte);
+break;
+}
+}
+break;
+}
+case (3):
+{
+lcd_gotoxy(1, 1);
+printf("Cantidad Cortes:\n");
+printf("      %d       ", numCortes);
+break;
+}
+case (4):
+{
+lcd_gotoxy(1, 1);
+printf("Diametro Tubo:  \n");
+printf("   %3.3f mm   ", diamTubo);
+break;
+}
+case (5):
+{
+lcd_gotoxy(1, 1);
+printf("Densidad Masa:  \n");
+printf("  %3.3f kg/m3 ", densidadMasa);
+break;
+}
+case (6):
+{
+lcd_gotoxy(1, 1);
+printf("Velocidad Masa: \n");
+printf("   %3.3f m/s  ", velocidadMasa);
+break;
+}
+}
+}
+
+void drawPassWord() {
+if (!fd) {
+passSection = 0;
+introducido[0] = 0;
+introducido[1] = 0;
+introducido[2] = 0;
+introducido[3] = 0;
+fd = 1;
+}
+int i;
+for (i = 0; i < 4; i++)
+passChar[i] = ' ';
+passChar[passSection] = 0b01111110;
+lcd_gotoxy(1, 1);
+printf("Contrasena:     \n");
+printf("    %c%u%c%u%c%u%c%u    ", passChar[0], introducido[0], passChar[1], introducido[1],
+passChar[2], introducido[2], passChar[3], introducido[3]);
+}
+
+void drawBadPass() {
+lcd_gotoxy(1, 1);
+printf("Contrasena      \n");
+printf("     Erronea    ");
+}
+
+void drawAdvON() {
+lcd_gotoxy(1, 1);
+printf("Modo Configurar:\n");
+printf("    Iniciado    ");
+}
+
+void drawAdvOFF() {
+lcd_gotoxy(1, 1);
+printf("Modo Configurar:\n");
+printf("   Finalizado   ");
+}
+
+void drawSNquest(char tq) {
+int i;
+for (i = 0; i < 2; i++)
+questSN[i] = ' ';
+questSN[selSN] = 0b01111110;
+lcd_gotoxy(1, 1);
+if (tq == 0)
+printf("Iniciar Proceso?\n");
+else if(tq == 1)
+printf("Detener Proceso?\n");
+else if(tq == 2)
+printf("Guardar Cambio? \n");
+printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
+}
+
+void drawScreen() {
+switch (actualScreen) {
+case (0):
+{
+drawMenu(0);
+break;
+}
+case (1):
+{
+drawPassWord();
+break;
+}
+case (7):
+{
+drawBadPass();
+break;
+}
+case (4):
+{
+drawMenu(1);
+break;
+}
+case (8):
+{
+drawAdvON();
+break;
+}
+case (9):
+{
+drawAdvOFF();
+break;
+}
+case (6):
+{
+
+break;
+}
+case (5):
+{
+drawChanVal();
+break;
+}
+case (2):
+{
+drawSNquest(0);
+break;
+}
+case (3):
+{
+drawSNquest(1);
+break;
+}
+case (10):
+{
+drawSNquest(2);
+break;
+}
+}
+}
+
+# 13 "source/DisplayProtocol.h"
+char checkPass() {
+int i;
+char passOK = 0;
+for (i = 0; i < 4; i++) {
+if (introducido[i] == contra[i])
+passOK = 1;
+else {
+passOK = 0;
+break;
+}
+}
+return passOK;
+}
+
+void confirmEdition(char yes) {
+switch (menuSection) {
+case (0): {
+break;
+}case (1): {
+if(yes) {
+tVarProceso = selKMT;
+actualScreen = 4;
+saveSysParams();
+}else {
+tempLastScreen = actualScreen;
+actualScreen = 10;
+selSN = 1;
+}
+break;
+}case (2): {
+if(yes) {
+
+actualScreen = 4;
+saveSysParams();
+}else {
+tempLastScreen = actualScreen;
+actualScreen = 10;
+selSN = 1;
+}
+break;
+}case (3): {
+if(yes) {
+
+actualScreen = 4;
+saveSysParams();
+}else {
+tempLastScreen = actualScreen;
+actualScreen = 10;
+selSN = 1;
+}
+break;
+}case (4): {
+if(yes) {
+
+actualScreen = 4;
+saveSysParams();
+}else {
+tempLastScreen = actualScreen;
+actualScreen = 10;
+selSN = 1;
+}
+break;
+}case (5): {
+if(yes) {
+
+actualScreen = 4;
+saveSysParams();
+}else {
+tempLastScreen = actualScreen;
+actualScreen = 10;
+selSN = 1;
+}
+break;
+}case (6): {
+if(yes) {
+
+actualScreen = 4;
+saveSysParams();
+}else {
+tempLastScreen = actualScreen;
+actualScreen = 10;
+selSN = 1;
+}
+break;
+}
+}
+}
 
 void pressUP() {
-if(actualScreen == 0 || actualScreen == 4) {
+if (actualScreen == 0 || actualScreen == 4) {
 menuSection++;
-if(menuSection > 6)
+if (menuSection > 6)
 menuSection = 0;
+} else if (actualScreen == 1) {
+introducido[passSection]++;
+if (introducido[passSection] > 9)
+introducido[passSection] = 0;
+} else if (actualScreen == 2 || actualScreen == 3
+|| actualScreen == 10) {
+selSN = !selSN;
+if(selSN > 1)
+selSN = 0;
+}else if(actualScreen == 5) {
+switch (menuSection) {
+case (0): {
+break;
+}case (1): {
+selKMT++;
+if(selKMT > 2)
+selKMT = 0;
+break;
+}case (2): {
+
+break;
+}case (3): {
+
+break;
+}case (4): {
+
+break;
+}case (5): {
+
+break;
+}case (6): {
+
+break;
+}
+}
 }
 }
 
 void longPressUP() {
-
-
-if(actualScreen == 0 || actualScreen == 4) {
-if(holdENTERcont > 5) {
-if(actualScreen == 0) {
+if (!UPisLP) {
+UPisLP = 1;
+if (actualScreen == 0 || actualScreen == 4) {
+if (holdENTERcont > 5) {
+if (actualScreen == 0) {
 actualScreen = 1;
-passSection = 0;
-}
-if(actualScreen == 4)
-actualScreen = 0;
-}else
+fd = 0;
+} else if (actualScreen == 4)
+actualScreen = 9;
+} else
 menuSection = 0;
-}else if(actualScreen == 1) {
-
-introducido[passSection]++;
-if(introducido[passSection] > 6)
-introducido[passSection] = 0;
 }
-
-
+}
 }
 
 void releaseUP() {
@@ -9638,18 +9983,53 @@ UPsecurLock = 0;
 }
 
 void pressDOWN() {
-if(actualScreen == 0 || actualScreen == 4) {
+if (actualScreen == 0 || actualScreen == 4) {
 menuSection--;
-if(menuSection < 0)
+if (menuSection < 0)
 menuSection = 6;
+} else if (actualScreen == 1) {
+introducido[passSection]--;
+if (introducido[passSection] < 0)
+introducido[passSection] = 9;
+} else if (actualScreen == 2 || actualScreen == 3
+|| actualScreen == 10) {
+selSN = !selSN;
+if(selSN > 1)
+selSN = 0;
+}else if(actualScreen == 5) {
+switch (menuSection) {
+case (0): {
+break;
+}case (1): {
+selKMT--;
+if(selKMT < 0)
+selKMT = 2;
+break;
+}case (2): {
+
+break;
+}case (3): {
+
+break;
+}case (4): {
+
+break;
+}case (5): {
+
+break;
+}case (6): {
+
+break;
+}
+}
 }
 }
 
 void longPressDOWN() {
+if (!DOWNisLP) {
+DOWNisLP = 1;
 
-
-
-
+}
 }
 
 void releaseDOWN() {
@@ -9658,12 +10038,25 @@ DOWNsecurLock = 0;
 }
 
 void pressRETRO() {
-
+if (actualScreen == 1) {
+actualScreen = 0;
+}else if (actualScreen == 2 || actualScreen == 3
+|| actualScreen == 10)
+actualScreen = tempLastScreen;
+else if(actualScreen == 5)
+actualScreen = 4;
 }
 
 void longPressRETRO() {
-if(!RETROisLP) {
+if (!RETROisLP) {
 RETROisLP = 1;
+if(actualScreen == 0 || actualScreen == 4) {
+if(ProcessStarted) {
+tempLastScreen = actualScreen;
+actualScreen = 3;
+selSN = 0;
+}
+}
 }
 }
 
@@ -9673,19 +10066,87 @@ RETROsecurLock = 0;
 }
 
 void pressENTER() {
+if (actualScreen == 1) {
+passSection++;
+if (passSection > 3) {
+passSection = 0;
+if (checkPass())
+actualScreen = 8;
+else
+actualScreen = 7;
+}
+}else if(actualScreen == 4) {
+switch (menuSection) {
+case (0): {
+tempLastScreen = actualScreen;
+if(ProcessStarted) {
+actualScreen = 3;
+selSN = 0;
+}else {
+actualScreen = 2;
+selSN = 1;
+}
+break;
+}case (1): {
+tempLastScreen = actualScreen;
+selKMT = tVarProceso;
+actualScreen = 5;
+break;
+}case (2): {
 
+break;
+}case (3): {
+
+break;
+}case (4): {
+
+break;
+}case (5): {
+
+break;
+}case (6): {
+
+break;
+}
+}
+}else if(actualScreen == 7)
+actualScreen = 1;
+else if(actualScreen == 6) {
+
+}else if(actualScreen == 5)
+confirmEdition(!ProcessStarted);
+else if(actualScreen == 2) {
+ProcessStarted = !selSN;
+actualScreen = tempLastScreen;
+}else if(actualScreen == 3) {
+ProcessStarted = selSN;
+actualScreen = tempLastScreen;
+}else if(actualScreen == 10) {
+if(!selSN)
+confirmEdition(1);
+else
+actualScreen = tempLastScreen;
+}else if(actualScreen == 8)
+actualScreen = 4;
+else if(actualScreen == 9)
+actualScreen = 0;
 }
 
 void longPressENTER() {
-if(!ENTERisLP) {
+if (!ENTERisLP) {
 ENTERisLP = 1;
-if(holdUPcont > 5) {
-if(actualScreen == 0)
+if(actualScreen == 0 || actualScreen == 4) {
+if (holdUPcont > 5) {
+if (actualScreen == 0) {
 actualScreen = 1;
-if(actualScreen == 4)
-actualScreen = 0;
-}else {
+fd = 0;
+} else if (actualScreen == 4)
+actualScreen = 9;
+} else if(!ProcessStarted) {
+tempLastScreen = actualScreen;
 actualScreen = 2;
+selSN = 1;
+}
 }
 }
 }
@@ -9695,135 +10156,123 @@ ENTERisLP = 0;
 ENTERsecurLock = 0;
 }
 
-void execCombinations() {
-if(ENTERisLP) {
-
-}
-if(UPisLP) {
-
-}
+# 11 "source/UARTConfig.h"
+void putchUART(char val) {
+while(!TXSTA1bits.TRMT);
+TXREG1 = val;
 }
 
-void drawMenu() {
-switch(menuSection) {
-case (0): {
-lcd_gotoxy(1,1);
-printf("Estado proceso: \n");
-if(proceso > 0) {
-printf("    %us / %us   ", proceso, numCortes);
-}else
-printf("     Detenido     ");
-break;
-}case (1): {
-lcd_gotoxy(1,1);
-printf("Proceso en:     \n");
-switch(tVarProceso) {
-case (0): {
-printf("       kg       ");
-break;
-}
-case (1): {
-printf("       m3       ");
-break;
-}
-case (2): {
-printf("       sec      ");
-break;
-}
-}
-break;
-}case (2): {
-lcd_gotoxy(1,1);
-printf("Valor por Corte:\n");
-switch(tVarProceso) {
-case (0): {
-printf("       %f kg    ",kgXcorte);
-break;
-}
-case (1): {
-printf("       %f m3    ",kgXcorte);
-break;
-}
-case (2): {
-printf("       %f sec   ",kgXcorte);
-break;
-}
-}
-break;
-}case (3): {
-lcd_gotoxy(1,1);
-printf("Cantidad Cortes:\n");
-printf("       %us       ",numCortes);
-break;
-}case (4): {
-lcd_gotoxy(1,1);
-printf("Diametro Tubo:  \n");
-printf("      %f mm     ",diamTubo);
-break;
-}case (5): {
-lcd_gotoxy(1,1);
-printf("Densidad Masa:  \n");
-printf("     %f kg/m3   ", densidadMasa);
-break;
-}case (6): {
-lcd_gotoxy(1,1);
-printf("Velocidad Masa: \n");
-printf("     %f m/s     ",velocidadMasa);
-break;
-}
-}
-
-}
-
-void drawPassWord() {
-lcd_gotoxy(1,1);
-printf("Contrasena:\n");
-printf("    %u%u%u%u    ", introducido[0], introducido[1],
-introducido[2], introducido[3]);
-}
-
-void drawScreen() {
-switch(actualScreen) {
-case (0): {
-drawMenu();
-break;
-}case (1): {
-drawPassWord();
-break;
-}
-}
-}
-
-# 11 "source/main.c"
-void interrupt hp_isr(void) {
-if(PIE1bits.TMR2IE && PIR1bits.TMR2IF) {
-T2int();
-PIR1bits.TMR2IF = 0;
-}
-}
-
-void interrupt low_priority isr(void) {
-if(PIE1bits.RC1IE && PIR1bits.RC1IF) {
-UARTint();
-PIR1bits.RC1IF = 0;
-}
-}
-
-void main(void) {
-
-clockConfig();
-ioInitStt();
-EEPROMConfig();
+void UARTint() {
+char sas = RCREG1;
+if(sas == 'A') {
+putchUART(actualScreen);
+putchUART(menuSection);
+putchUART(passSection);
+}else if(sas == 'B') {
+saveSysParams();
+}else if(sas == 'C') {
 sysParamInit();
-ioConfig();
-lcd_init();
-PWM2Config();
-UARTConfig();
-interruptConfig();
+}
 
-while(1) {
-asm(" clrwdt");
-drawScreen();
+# 58
+}
+
+void UARTConfig() {
+RCSTA1bits.SPEN = 0;
+SPBRGH1 = 0;
+SPBRG1 = 34;
+ANSELCbits.ANSC6 = 0;
+ANSELCbits.ANSC7 = 0;
+TRISCbits.TRISC6 = 1;
+TRISCbits.TRISC7 = 1;
+TXSTA1bits.TX9 = 0;
+TXSTA1bits.SYNC = 0;
+TXSTA1bits.SENDB = 0;
+TXSTA1bits.BRGH = 1;
+RCSTA1bits.RX9 = 0;
+BAUDCON1bits.DTRXP = 0;
+BAUDCON1bits.CKTXP = 0;
+BAUDCON1bits.BRG16 = 1;
+BAUDCON1bits.WUE = 0;
+BAUDCON1bits.ABDEN = 0;
+RCSTA1bits.CREN = 1;
+TXSTA1bits.TXEN = 1;
+IPR1bits.RC1IP = 0;
+PIR1bits.RC1IF = 0;
+PIE1bits.RC1IE = 1;
+RCSTA1bits.SPEN = 1;
+}
+
+# 12 "source/PWMConfig.h"
+void t2config() {
+T2CONbits.TMR2ON = 0;
+T2CONbits.T2CKPS = 0b00;
+T2CONbits.T2OUTPS = 0b1111;
+
+PIR1bits.TMR2IF = 0;
+IPR1bits.TMR2IP = 1;
+PIE1bits.TMR2IE = 1;
+T2CONbits.TMR2ON = 1;
+}
+
+void setPWM2duty(signed short actuator) {
+short act = 400;
+if(actuator > 400)
+act = 800;
+else if(actuator < -400)
+act = 0;
+else
+act = actuator + 400;
+CCP2CONbits.DC2B = act;
+CCPR2L = act>>2;
+}
+
+void T2int() {
+if(PORTAbits.RA7 || PORTAbits.RA6) {
+setPWM2duty(0);
+if(PORTAbits.RA7)
+putchUART(101);
+if(PORTAbits.RA6)
+putchUART(102);
+}
+}
+
+void PWM2Config() {
+TRISCbits.TRISC0 = 1;
+TRISCbits.TRISC1 = 1;
+PSTR2CONbits.STR2A = 1;
+PSTR2CONbits.STR2B = 1;
+PSTR2CONbits.STR2C = 0;
+PSTR2CONbits.STR2D = 0;
+CCPTMRS0bits.C2TSEL = 0b00;
+PR2 = 199;
+ECCP2ASbits.CCP2AS = 0b000;
+ECCP2ASbits.PSS2AC = 0b00;
+ECCP2ASbits.PSS2BD = 0b00;
+PWM2CONbits.P2RSEN = 0;
+ECCP2ASbits.CCP2AS = 1;
+CCP2CONbits.P2M = 0b10;
+CCP2CONbits.CCP2M = 0b1100;
+setPWM2duty(0);
+PWM2CONbits.P2DC = 16;
+t2config();
+TRISCbits.TRISC0 = 0;
+TRISCbits.TRISC1 = 0;
+ECCP2ASbits.CCP2ASE = 0;
+}
+
+void setPWM2on(char on) {
+if(on) {
+TRISCbits.TRISC0 = 0;
+TRISCbits.TRISC1 = 0;
+}else {
+TRISCbits.TRISC0 = 1;
+TRISCbits.TRISC1 = 1;
+}
+}
+
+# 9 "source/ButtonController.h"
+void buttonChecking() {
 if(!PORTAbits.RA2 && lastSttUP) {
 lastSttUP = 0;
 delay_ms(200);
@@ -9924,6 +10373,39 @@ ENTERsecurLock = 1;
 delay_ms(200);
 }
 }
-execCombinations();
+}
+
+# 13 "source/main.c"
+void interrupt hp_isr(void) {
+if(PIE1bits.TMR2IE && PIR1bits.TMR2IF) {
+T2int();
+PIR1bits.TMR2IF = 0;
+}
+}
+
+void interrupt low_priority isr(void) {
+if(PIE1bits.RC1IE && PIR1bits.RC1IF) {
+UARTint();
+PIR1bits.RC1IF = 0;
+}
+}
+
+void main(void) {
+
+clockConfig();
+ioInitStt();
+EEPROMConfig();
+
+
+ioConfig();
+lcd_init();
+PWM2Config();
+UARTConfig();
+interruptConfig();
+
+while(1) {
+asm(" clrwdt");
+drawScreen();
+buttonChecking();
 }
 }

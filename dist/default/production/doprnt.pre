@@ -353,8 +353,39 @@ if(c != '%')
 continue;
 }
 
-# 548
+
+width = 0;
+
 flag = 0;
+
+# 597
+if(isdigit((unsigned)*f)) {
+width = 0;
+do {
+width *= 10;
+width += *f++ - '0';
+} while(isdigit((unsigned)*f));
+
+# 608
+}
+
+
+if(*f == '.') {
+flag |= 0x4000;
+f++;
+
+# 620
+{
+prec = 0;
+while(isdigit((unsigned)*f))
+prec = prec*10 + *f++ - '0';
+}
+} else {
+prec = 0;
+
+flag |= 0x1000;
+
+}
 
 # 635
 switch(c = *f++) {
@@ -367,16 +398,51 @@ case 'f':
 flag |= 0x400;
 break;
 
-# 802
-default:
+# 697
+case 'd':
+case 'i':
+break;
 
-# 813
+# 750
+dostring:
+
+
+if(prec && prec < len)
+len = prec;
+
+
+if(width > len)
+width -= len;
+else
+width = 0;
+
+# 764
+while(width--)
+(putch(' ') );
+
+while(len--)
+(putch(*cp++) );
+
+# 774
 continue;
 
+# 784
+case 'c':
+
+# 799
+c = (*(int *)__va_arg((*(int **)ap), (int)0));
 
 
+default:
+
+
+cp = (char *)&c;
+len = 1;
+goto dostring;
+
+# 817
 case 'u':
-flag |= 0xC0;
+flag |= 0x40;
 break;
 
 
@@ -385,7 +451,8 @@ break;
 
 if(flag & (0x700)) {
 
-# 829
+if(flag & 0x1000)
+
 prec = 6;
 fval = (*(double *)__va_arg((*(double **)ap), (double)0));
 if(fval < 0.0) {
@@ -440,10 +507,29 @@ for(c = 1 ; c != (sizeof dpowers/sizeof dpowers[0]) ; c++)
 if(val < dpowers[c])
 break;
 
+
+
+width -= prec + c + exp;
+if(
+
+# 1147
+prec)
+width--;
+if(flag & 0x03)
+width--;
+
 # 1175
 {
 
-# 1188
+# 1180
+while(width > 0) {
+(putch(' ') );
+width--;
+}
+
+
+
+
 if(flag & 0x03)
 
 (putch('-') );
@@ -495,20 +581,76 @@ prec--;
 continue;
 }
 
-# 1273
+
+
+
+if((flag & 0x40) == 0x00)
+
+{
+
+# 1259
+val = (long)(*(int *)__va_arg((*(int **)ap), (int)0));
+
+if((long)val < 0) {
+flag |= 0x03;
+val = -val;
+}
+
+}
+
+else
+
+
+
+
 {
 
 # 1286
 val = (*(unsigned *)__va_arg((*(unsigned **)ap), (unsigned)0));
 }
 
+
+if(prec == 0 && val == 0)
+prec++;
+
 # 1305
 for(c = 1 ; c != sizeof dpowers/sizeof dpowers[0] ; c++)
 if(val < dpowers[c])
 break;
 
+# 1339
+if(c < prec)
+c = prec;
+else if(prec < c)
+prec = c;
+
+
+if(width && flag & 0x03)
+width--;
+
+if(flag & 0x4000) {
+if(width > prec)
+width -= prec;
+else
+width = 0;
+}
+
+# 1381
+if(width > c)
+width -= c;
+else
+width = 0;
+
 # 1422
 {
+
+if(width
+
+# 1428
+)
+do
+(putch(' ') );
+while(--width);
 
 # 1438
 if(flag & 0x03)
@@ -517,9 +659,7 @@ if(flag & 0x03)
 # 1469
 }
 
-
-prec = c;
-
+# 1474
 while(prec--) {
 
 # 1478
