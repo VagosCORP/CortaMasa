@@ -26,9 +26,9 @@ extern "C" {
     
     void confirmEdition(char yes) {
         switch (menuSection) {
-            case (0): {
+            case (MENU_ESTADO): {
                 break;
-            }case (1): {
+            }case (MENU_TIP_VAR): {
                 if(yes) {
                     tVarProceso = selKMT;
                     actualScreen = SCREEN_MENU_ADV;
@@ -39,7 +39,7 @@ extern "C" {
                     selSN = NO;
                 }
                 break;
-            }case (2): {
+            }case (MENU_VALP_CUT): {
                 if(yes) {
 //                        tVarProceso = selKMT;
                     actualScreen = SCREEN_MENU_ADV;
@@ -50,7 +50,7 @@ extern "C" {
                     selSN = NO;
                 }
                 break;
-            }case (3): {
+            }case (MENU_CANT_CUT): {
                 if(yes) {
 //                        tVarProceso = selKMT;
                     actualScreen = SCREEN_MENU_ADV;
@@ -61,7 +61,7 @@ extern "C" {
                     selSN = NO;
                 }
                 break;
-            }case (4): {
+            }case (MENU_DIAM_TUB): {
                 if(yes) {
 //                        tVarProceso = selKMT;
                     actualScreen = SCREEN_MENU_ADV;
@@ -72,7 +72,7 @@ extern "C" {
                     selSN = NO;
                 }
                 break;
-            }case (5): {
+            }case (MENU_DENS_MAS): {
                 if(yes) {
 //                        tVarProceso = selKMT;
                     actualScreen = SCREEN_MENU_ADV;
@@ -83,7 +83,7 @@ extern "C" {
                     selSN = NO;
                 }
                 break;
-            }case (6): {
+            }case (MENU_VEL_MAS): {
                 if(yes) {
 //                        tVarProceso = selKMT;
                     actualScreen = SCREEN_MENU_ADV;
@@ -114,26 +114,26 @@ extern "C" {
                 selSN = 0;
         }else if(actualScreen == SCREEN_CHAN_VAL) {
             switch (menuSection) {
-                case (0): {
+                case (MENU_ESTADO): {
                     break;
-                }case (1): {
+                }case (MENU_TIP_VAR): {
                     selKMT++;
                     if(selKMT > 2)
                         selKMT = 0;
                     break;
-                }case (2): {
+                }case (MENU_VALP_CUT): {
                     
                     break;
-                }case (3): {
+                }case (MENU_CANT_CUT): {
                     
                     break;
-                }case (4): {
+                }case (MENU_DIAM_TUB): {
                     
                     break;
-                }case (5): {
+                }case (MENU_DENS_MAS): {
                     
                     break;
-                }case (6): {
+                }case (MENU_VEL_MAS): {
                     
                     break;
                 }
@@ -178,26 +178,26 @@ extern "C" {
                 selSN = 0;
         }else if(actualScreen == SCREEN_CHAN_VAL) {
             switch (menuSection) {
-                case (0): {
+                case (MENU_ESTADO): {
                     break;
-                }case (1): {
+                }case (MENU_TIP_VAR): {
                     selKMT--;
                     if(selKMT < 0)
                         selKMT = 2;
                     break;
-                }case (2): {
+                }case (MENU_VALP_CUT): {
                     
                     break;
-                }case (3): {
+                }case (MENU_CANT_CUT): {
                     
                     break;
-                }case (4): {
+                }case (MENU_DIAM_TUB): {
                     
                     break;
-                }case (5): {
+                }case (MENU_DENS_MAS): {
                     
                     break;
-                }case (6): {
+                }case (MENU_VEL_MAS): {
                     
                     break;
                 }
@@ -257,7 +257,7 @@ extern "C" {
             }
         }else if(actualScreen == SCREEN_MENU_ADV) {
             switch (menuSection) {
-                case (0): {
+                case (MENU_ESTADO): {
                     tempLastScreen = actualScreen;
                     if(ProcessStarted) {
                         actualScreen = SCREEN_OFF_PROCESS;
@@ -267,24 +267,24 @@ extern "C" {
                         selSN = NO;
                     }
                     break;
-                }case (1): {
+                }case (MENU_TIP_VAR): {
                     tempLastScreen = actualScreen;
                     selKMT = tVarProceso;
                     actualScreen = SCREEN_CHAN_VAL;
                     break;
-                }case (2): {
+                }case (MENU_VALP_CUT): {
                     
                     break;
-                }case (3): {
+                }case (MENU_CANT_CUT): {
                     
                     break;
-                }case (4): {
+                }case (MENU_DIAM_TUB): {
                     
                     break;
-                }case (5): {
+                }case (MENU_DENS_MAS): {
                     
                     break;
-                }case (6): {
+                }case (MENU_VEL_MAS): {
                     
                     break;
                 }

@@ -128,21 +128,21 @@
 [v _T2int T2int `(v  1 e 1 0 ]
 "45
 [v _PWM2Config PWM2Config `(v  1 e 1 0 ]
-"39 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
+"47 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
 [v _drawMenu drawMenu `(v  1 e 1 0 ]
-"163
+"136
 [v _drawChanVal drawChanVal `(v  1 e 1 0 ]
-"240
+"183
 [v _drawPassWord drawPassWord `(v  1 e 1 0 ]
-"259
+"202
 [v _drawBadPass drawBadPass `(v  1 e 1 0 ]
-"265
+"208
 [v _drawAdvON drawAdvON `(v  1 e 1 0 ]
-"271
+"214
 [v _drawAdvOFF drawAdvOFF `(v  1 e 1 0 ]
-"277
+"220
 [v _drawSNquest drawSNquest `(v  1 e 1 0 ]
-"292
+"235
 [v _drawScreen drawScreen `(v  1 e 1 0 ]
 "76 L:\MPLABXProjects\CortaMasa.X\source/SYSConfig.h
 [v _clockConfig clockConfig `(v  1 e 1 0 ]
@@ -934,29 +934,29 @@
 [v _RETROsecurLock RETROsecurLock `uc  1 e 1 0 ]
 "57
 [v _ENTERsecurLock ENTERsecurLock `uc  1 e 1 0 ]
-"26 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
+"34 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
 [v _actualScreen actualScreen `c  1 e 1 0 ]
-"27
-[v _menuSection menuSection `c  1 e 1 0 ]
-"28
-[v _passSection passSection `c  1 e 1 0 ]
-"29
-[v _contra contra `[4]uc  1 e 4 0 ]
-"30
-[v _introducido introducido `[4]c  1 e 4 0 ]
-"31
-[v _passChar passChar `[4]uc  1 e 4 0 ]
-"32
-[v _questKMT questKMT `[3]uc  1 e 3 0 ]
-"33
-[v _selKMT selKMT `c  1 e 1 0 ]
-"34
-[v _questSN questSN `[2]uc  1 e 2 0 ]
 "35
-[v _selSN selSN `uc  1 e 1 0 ]
+[v _menuSection menuSection `c  1 e 1 0 ]
 "36
-[v _fd fd `uc  1 e 1 0 ]
+[v _passSection passSection `c  1 e 1 0 ]
 "37
+[v _contra contra `[4]uc  1 e 4 0 ]
+"38
+[v _introducido introducido `[4]c  1 e 4 0 ]
+"39
+[v _passChar passChar `[4]uc  1 e 4 0 ]
+"40
+[v _questKMT questKMT `[3]uc  1 e 3 0 ]
+"41
+[v _selKMT selKMT `c  1 e 1 0 ]
+"42
+[v _questSN questSN `[2]uc  1 e 2 0 ]
+"43
+[v _selSN selSN `uc  1 e 1 0 ]
+"44
+[v _fd fd `uc  1 e 1 0 ]
+"45
 [v _tempLastScreen tempLastScreen `uc  1 e 1 0 ]
 [s S694 . 4 `uc 1 floatLB 1 0 `uc 1 floatHB 1 1 `uc 1 floatUB 1 2 `uc 1 floatMB 1 3 ]
 "15 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
@@ -1026,59 +1026,59 @@
 {
 "94
 } 0
-"292 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
+"235 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
 [v _drawScreen drawScreen `(v  1 e 1 0 ]
 {
-"350
+"272
 } 0
-"277
+"220
 [v _drawSNquest drawSNquest `(v  1 e 1 0 ]
 {
 [v drawSNquest@tq tq `uc  1 a 1 wreg ]
-"278
+"221
 [v drawSNquest@i i `i  1 a 2 106 ]
-"277
+"220
 [v drawSNquest@tq tq `uc  1 a 1 wreg ]
-"279
+"222
 [v drawSNquest@tq tq `uc  1 a 1 105 ]
-"290
+"233
 } 0
-"240
+"183
 [v _drawPassWord drawPassWord `(v  1 e 1 0 ]
 {
-"249
+"192
 [v drawPassWord@i i `i  1 a 2 105 ]
-"257
+"200
 } 0
-"39
+"47
 [v _drawMenu drawMenu `(v  1 e 1 0 ]
 {
 [v drawMenu@adv adv `uc  1 a 1 wreg ]
 [v drawMenu@adv adv `uc  1 a 1 wreg ]
 [v drawMenu@adv adv `uc  1 a 1 105 ]
-"161
+"134
 } 0
-"163
+"136
 [v _drawChanVal drawChanVal `(v  1 e 1 0 ]
 {
-"177
+"141
 [v drawChanVal@i i `i  1 a 2 105 ]
-"238
+"181
 } 0
-"259
+"202
 [v _drawBadPass drawBadPass `(v  1 e 1 0 ]
 {
-"263
+"206
 } 0
-"265
+"208
 [v _drawAdvON drawAdvON `(v  1 e 1 0 ]
 {
-"269
+"212
 } 0
-"271
+"214
 [v _drawAdvOFF drawAdvOFF `(v  1 e 1 0 ]
 {
-"275
+"218
 } 0
 "464 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
@@ -1087,9 +1087,9 @@
 [v printf@fval fval `d  1 a 4 42 ]
 "528
 [v printf@val val `ul  1 a 4 34 ]
-[u S2121 . 4 `ul 1 vd 4 0 `d 1 integ 4 0 ]
+[u S2118 . 4 `ul 1 vd 4 0 `d 1 integ 4 0 ]
 "526
-[v printf@tmpval tmpval `S2121  1 a 4 30 ]
+[v printf@tmpval tmpval `S2118  1 a 4 30 ]
 "504
 [v printf@prec prec `i  1 a 2 46 ]
 "501
@@ -1419,17 +1419,17 @@
 "8 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\sprcmul.c
 [v ___flmul __flmul `(d  1 e 4 0 ]
 {
-[s S2410 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
+[s S2407 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
 "13
-[s S2415 . 4 `i 1 wordA 2 0 `i 1 wordB 2 2 ]
-[u S2418 . 4 `l 1 i 4 0 `d 1 f 4 0 `S2410 1 fAsBytes 4 0 `S2415 1 fAsWords 4 0 ]
-[v ___flmul@prod prod `S2418  1 a 4 54 ]
+[s S2412 . 4 `i 1 wordA 2 0 `i 1 wordB 2 2 ]
+[u S2415 . 4 `l 1 i 4 0 `d 1 f 4 0 `S2407 1 fAsBytes 4 0 `S2412 1 fAsWords 4 0 ]
+[v ___flmul@prod prod `S2415  1 a 4 54 ]
 "12
 [v ___flmul@grs grs `ul  1 a 4 49 ]
-[s S2486 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
+[s S2483 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
 "14
-[u S2489 . 2 `i 1 i 2 0 `ui 1 n 2 0 `S2486 1 nAsBytes 2 0 ]
-[v ___flmul@temp temp `S2489  1 a 2 58 ]
+[u S2486 . 2 `i 1 i 2 0 `ui 1 n 2 0 `S2483 1 nAsBytes 2 0 ]
+[v ___flmul@temp temp `S2486  1 a 2 58 ]
 "10
 [v ___flmul@bexp bexp `uc  1 a 1 53 ]
 "11
@@ -1573,14 +1573,14 @@
 "8 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\sprcmul.c
 [v i1___flmul __flmul `(d  1 e 4 0 ]
 {
-[s S2410 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
-[s S2415 . 4 `i 1 wordA 2 0 `i 1 wordB 2 2 ]
-[u S2418 . 4 `l 1 i 4 0 `d 1 f 4 0 `S2410 1 fAsBytes 4 0 `S2415 1 fAsWords 4 0 ]
-[v i1___flmul@prod __flmul `S2418  1 a 4 39 ]
+[s S2407 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
+[s S2412 . 4 `i 1 wordA 2 0 `i 1 wordB 2 2 ]
+[u S2415 . 4 `l 1 i 4 0 `d 1 f 4 0 `S2407 1 fAsBytes 4 0 `S2412 1 fAsWords 4 0 ]
+[v i1___flmul@prod __flmul `S2415  1 a 4 39 ]
 [v i1___flmul@grs __flmul `ul  1 a 4 34 ]
-[s S2486 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
-[u S2489 . 2 `i 1 i 2 0 `ui 1 n 2 0 `S2486 1 nAsBytes 2 0 ]
-[v i1___flmul@temp __flmul `S2489  1 a 2 43 ]
+[s S2483 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
+[u S2486 . 2 `i 1 i 2 0 `ui 1 n 2 0 `S2483 1 nAsBytes 2 0 ]
+[v i1___flmul@temp __flmul `S2486  1 a 2 43 ]
 [v i1___flmul@bexp __flmul `uc  1 a 1 38 ]
 [v i1___flmul@aexp __flmul `uc  1 a 1 33 ]
 [v i1___flmul@sign __flmul `uc  1 a 1 32 ]
