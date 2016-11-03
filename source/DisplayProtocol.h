@@ -24,6 +24,50 @@ extern "C" {
         return passOK;
     }
     
+    void chanValDigUP() {
+        chanValdig[chanValSection]++;
+        if(chanValdig[chanValSection] > 9) {
+            chanValdig[chanValSection] = 0;
+            if(chanValSection > 1 && chanValdig[chanValSection - 1] < 9)
+                chanValdig[chanValSection - 1]++;
+        }
+    }
+    
+    void chanValDigDOWN() {
+        chanValdig[chanValSection]--;
+        if(chanValdig[chanValSection] < 0) {
+            chanValdig[chanValSection] = 9;
+            if(chanValSection > 1 && chanValdig[chanValSection - 1] > 0)
+                chanValdig[chanValSection - 1]--;
+        }
+    }
+    
+    void desintegrator() {
+        chanValSection = 5;
+        float temp = (float)chanValf*1000;
+        long tempL = (long)temp;
+        long temp2 = 0;
+        long temp3 = 0;
+        int i;
+        for(i = 0; i < 6; i++) {
+            temp2 = tempL/exp10[i];
+            temp3 = temp2*exp10[i];
+            chanValdig[i] = temp2;
+            tempL -= temp3;
+        }
+    }
+    
+    void integrator() {
+        long acum = 0;
+        long temp = 0;
+        int i;
+        for(i = 0; i < 6; i++) {
+            temp = (long)chanValdig[i]*exp10[i];
+            acum += temp;
+        }
+        chanValf = (float)acum / 1000;
+    }
+    
     void confirmEdition(char yes) {
         switch (menuSection) {
             case (MENU_ESTADO): {
@@ -41,7 +85,12 @@ extern "C" {
                 break;
             }case (MENU_VALP_CUT): {
                 if(yes) {
-//                        tVarProceso = selKMT;
+                    if(tVarProceso == tvp_kg)
+                        kgXcorte = chanValf;
+                    else if(tVarProceso == tvp_m3)
+                        m3Xcorte = chanValf;
+                    else if(tVarProceso == tvp_ti)    
+                        tiXcorte = chanValf;
                     actualScreen = SCREEN_MENU_ADV;
                     saveSysParams();
                 }else {
@@ -52,7 +101,7 @@ extern "C" {
                 break;
             }case (MENU_CANT_CUT): {
                 if(yes) {
-//                        tVarProceso = selKMT;
+                    numCortes = chanVals;
                     actualScreen = SCREEN_MENU_ADV;
                     saveSysParams();
                 }else {
@@ -63,7 +112,7 @@ extern "C" {
                 break;
             }case (MENU_DIAM_TUB): {
                 if(yes) {
-//                        tVarProceso = selKMT;
+                    diamTubo = chanValf;
                     actualScreen = SCREEN_MENU_ADV;
                     saveSysParams();
                 }else {
@@ -74,7 +123,7 @@ extern "C" {
                 break;
             }case (MENU_DENS_MAS): {
                 if(yes) {
-//                        tVarProceso = selKMT;
+                    densidadMasa = chanValf;
                     actualScreen = SCREEN_MENU_ADV;
                     saveSysParams();
                 }else {
@@ -85,7 +134,7 @@ extern "C" {
                 break;
             }case (MENU_VEL_MAS): {
                 if(yes) {
-//                        tVarProceso = selKMT;
+                    velocidadMasa = chanValf;
                     actualScreen = SCREEN_MENU_ADV;
                     saveSysParams();
                 }else {
@@ -122,19 +171,19 @@ extern "C" {
                         selKMT = 0;
                     break;
                 }case (MENU_VALP_CUT): {
-                    
+                    chanValDigUP();
                     break;
                 }case (MENU_CANT_CUT): {
-                    
+                    chanVals++;
                     break;
                 }case (MENU_DIAM_TUB): {
-                    
+                    chanValDigUP();
                     break;
                 }case (MENU_DENS_MAS): {
-                    
+                    chanValDigUP();
                     break;
                 }case (MENU_VEL_MAS): {
-                    
+                    chanValDigUP();
                     break;
                 }
             }
@@ -153,6 +202,9 @@ extern "C" {
                         actualScreen = SCREEN_ADVMODE_OFF;
                 } else
                     menuSection = 0;
+            }else if(actualScreen == SCREEN_CHAN_VAL) {
+                if(menuSection == MENU_CANT_CUT)
+                    chanVals += 10;
             }
         }
     }
@@ -186,19 +238,19 @@ extern "C" {
                         selKMT = 2;
                     break;
                 }case (MENU_VALP_CUT): {
-                    
+                    chanValDigDOWN();
                     break;
                 }case (MENU_CANT_CUT): {
-                    
+                    chanVals--;
                     break;
                 }case (MENU_DIAM_TUB): {
-                    
+                    chanValDigDOWN();
                     break;
                 }case (MENU_DENS_MAS): {
-                    
+                    chanValDigDOWN();
                     break;
                 }case (MENU_VEL_MAS): {
-                    
+                    chanValDigDOWN();
                     break;
                 }
             }
@@ -208,7 +260,10 @@ extern "C" {
     void longPressDOWN() {
         if (!DOWNisLP) {
             DOWNisLP = 1;
-
+            if(actualScreen == SCREEN_CHAN_VAL) {
+                if(menuSection == MENU_CANT_CUT)
+                    chanVals -= 10;
+            }
         }
     }
 
@@ -221,10 +276,17 @@ extern "C" {
         if (actualScreen == SCREEN_PASSWORD) {
             actualScreen = SCREEN_MENU;
         }else if (actualScreen == SCREEN_ON_PROCESS || actualScreen == SCREEN_OFF_PROCESS
-                || actualScreen == SCREEN_SAVE_ALL)
+                || actualScreen == SCREEN_SAVE_ALL) {
             actualScreen = tempLastScreen;
-        else if(actualScreen == SCREEN_CHAN_VAL)
-            actualScreen = SCREEN_MENU_ADV;
+        }else if(actualScreen == SCREEN_CHAN_VAL) {
+            if(menuSection != MENU_CANT_CUT && menuSection != MENU_TIP_VAR) {
+                chanValSection++;
+                if(chanValSection > 5)
+                    chanValSection = 0;
+            }else
+                actualScreen = SCREEN_MENU_ADV;
+        }
+        
     }
 
     void longPressRETRO() {
@@ -236,7 +298,8 @@ extern "C" {
                     actualScreen = SCREEN_OFF_PROCESS;
                     selSN = SI;
                 }
-            }
+            }else if(actualScreen == SCREEN_CHAN_VAL)
+                actualScreen = SCREEN_MENU_ADV;
         }
     }
 
@@ -273,19 +336,34 @@ extern "C" {
                     actualScreen = SCREEN_CHAN_VAL;
                     break;
                 }case (MENU_VALP_CUT): {
+                    if(tVarProceso == tvp_kg)
+                        chanValf = kgXcorte;
+                    else if(tVarProceso == tvp_m3)
+                        chanValf = m3Xcorte;
+                    else if(tVarProceso == tvp_ti)
+                        chanValf = tiXcorte;
                     
+                    desintegrator();
+                    actualScreen = SCREEN_CHAN_VAL;
                     break;
                 }case (MENU_CANT_CUT): {
-                    
+                    chanVals = numCortes;
+                    actualScreen = SCREEN_CHAN_VAL;
                     break;
                 }case (MENU_DIAM_TUB): {
-                    
+                    chanValf = diamTubo;
+                    desintegrator();
+                    actualScreen = SCREEN_CHAN_VAL;
                     break;
                 }case (MENU_DENS_MAS): {
-                    
+                    chanValf = densidadMasa;
+                    desintegrator();
+                    actualScreen = SCREEN_CHAN_VAL;
                     break;
                 }case (MENU_VEL_MAS): {
-                    
+                    chanValf = velocidadMasa;
+                    desintegrator();
+                    actualScreen = SCREEN_CHAN_VAL;
                     break;
                 }
             }
@@ -293,9 +371,14 @@ extern "C" {
             actualScreen = SCREEN_PASSWORD;
         else if(actualScreen == SCREEN_CALIB_VEL) {
             
-        }else if(actualScreen == SCREEN_CHAN_VAL)
-            confirmEdition(!ProcessStarted);
-        else if(actualScreen == SCREEN_ON_PROCESS) {
+        }else if(actualScreen == SCREEN_CHAN_VAL) {
+            if(menuSection != MENU_CANT_CUT && menuSection != MENU_TIP_VAR) {
+                chanValSection--;
+                if(chanValSection < 0)
+                    chanValSection = 5;
+            }else
+                confirmEdition(!ProcessStarted);
+        }else if(actualScreen == SCREEN_ON_PROCESS) {
             ProcessStarted = !selSN; //SI = 0
             actualScreen = tempLastScreen;
         }else if(actualScreen == SCREEN_OFF_PROCESS) {
@@ -327,6 +410,10 @@ extern "C" {
                     actualScreen = SCREEN_ON_PROCESS;
                     selSN = NO;
                 }
+            }else if(actualScreen == SCREEN_CHAN_VAL) {
+                if(menuSection != MENU_CANT_CUT && menuSection != MENU_TIP_VAR)
+                    integrator();
+                confirmEdition(!ProcessStarted);
             }
         }
     }

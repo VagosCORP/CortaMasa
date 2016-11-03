@@ -1,49 +1,63 @@
 #ifndef SCREENDRAWERS_H
 #define	SCREENDRAWERS_H
 
-#include "sysParams.h"
-
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
-
-#define SCREEN_MENU         0
-#define SCREEN_PASSWORD     1
-#define SCREEN_ON_PROCESS   2
-#define SCREEN_OFF_PROCESS  3   
-#define SCREEN_MENU_ADV     4   
-#define SCREEN_CHAN_VAL     5   
-#define SCREEN_CALIB_VEL    6
-#define SCREEN_BAD_PASS     7   
-#define SCREEN_ADVMODE_ON   8
-#define SCREEN_ADVMODE_OFF  9
-#define SCREEN_SAVE_ALL    10
-
-#define MENU_ESTADO         0
-#define MENU_TIP_VAR        1
-#define MENU_VALP_CUT       2
-#define MENU_CANT_CUT       3   
-#define MENU_DIAM_TUB       4   
-#define MENU_DENS_MAS       5   
-#define MENU_VEL_MAS        6
     
-#define SI                  0
-#define NO                  1
+    #include "sysParams.h"
+    #include "UARTConfig.h"
+
+
+    #define SCREEN_MENU         0
+    #define SCREEN_PASSWORD     1
+    #define SCREEN_ON_PROCESS   2
+    #define SCREEN_OFF_PROCESS  3   
+    #define SCREEN_MENU_ADV     4   
+    #define SCREEN_CHAN_VAL     5   
+    #define SCREEN_CALIB_VEL    6
+    #define SCREEN_BAD_PASS     7   
+    #define SCREEN_ADVMODE_ON   8
+    #define SCREEN_ADVMODE_OFF  9
+    #define SCREEN_SAVE_ALL    10
+    #define SCREEN_CALIB_RMAS  11
+
+    #define MENU_ESTADO         0
+    #define MENU_TIP_VAR        1
+    #define MENU_VALP_CUT       2
+    #define MENU_CANT_CUT       3   
+    #define MENU_DIAM_TUB       4   
+    #define MENU_DENS_MAS       5   
+    #define MENU_VEL_MAS        6
+
+    #define SI                  0
+    #define NO                  1
 
     signed char actualScreen = SCREEN_MENU;
     signed char menuSection = 0;
     signed char passSection = 0;
-    char contra[4] = {1, 2, 3, 4};
+    signed char chanValSection = 5;
+    char contra[4] = {0,0,0,0};//{1, 2, 3, 4};
     signed char introducido[4] = {0, 0, 0, 0};
     char passChar[4] = {0, 0, 0, 0};
     char questKMT[3] = {0, 0, 0};
     signed char selKMT = 0;
+    float chanValf = 000.000f;
+    short chanVals = 0;
+    signed char chanValdig[6] = {0,0,0,0,0,0};
+    long exp10[6] = {100000,10000,1000,100,10,1};
     char questSN[2] = {0, 0};
     char selSN = 0;
     char fd = 0;
     char tempLastScreen = 0;
-
+    char screen_calibVelRes = 0;
+    
+    void drawValEditor() {
+        printf("  %u%u%u.%u%u%u ", chanValdig[0], chanValdig[1],
+                chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
+        lcd_gotoxy(11, 2);
+    }
+    
     void drawMenu(char adv) {
         switch (menuSection) {
             case (MENU_ESTADO): {
@@ -149,32 +163,36 @@ extern "C" {
             }case (MENU_VALP_CUT): {
                 lcd_gotoxy(1, 1);
                 printf("Valor por Corte:\n");
+                drawValEditor();
                 if(tVarProceso == tvp_kg)
-                    printf("   %3.3f kg   ", kgXcorte);
+                    printf("kg    ");
                 else if(tVarProceso == tvp_m3)
-                    printf("   %3.3f m3   ", m3Xcorte);
-                else if(tVarProceso == tvp_ti)    
-                    printf("   %3.3f sec  ", tiXcorte);
+                    printf("m3    ");
+                else if(tVarProceso == tvp_ti)
+                    printf("sec   ");
                 break;
             }case (MENU_CANT_CUT): {
                 lcd_gotoxy(1, 1);
                 printf("Cantidad Cortes:\n");
-                printf("      %d       ", numCortes);
+                printf("      %d       ", chanVals);
                 break;
             }case (MENU_DIAM_TUB): {
                 lcd_gotoxy(1, 1);
                 printf("Diametro Tubo:  \n");
-                printf("   %3.3f mm   ", diamTubo);
+                drawValEditor();
+                printf("mm    ");
                 break;
             }case (MENU_DENS_MAS): {
                 lcd_gotoxy(1, 1);
                 printf("Densidad Masa:  \n");
-                printf("  %3.3f kg/m3 ", densidadMasa);
+                drawValEditor();
+                printf("kg/m3 ");
                 break;
             }case (MENU_VEL_MAS): {
                 lcd_gotoxy(1, 1);
                 printf("Velocidad Masa: \n");
-                printf("   %3.3f m/s  ", velocidadMasa);
+                drawValEditor();
+                printf("m/s   ");
                 break;
             }
         }
@@ -229,7 +247,22 @@ extern "C" {
             printf("Detener Proceso?\n");
         else if(tq == 2)
             printf("Guardar Cambio? \n");
+        else if(tq == 3)
+            printf("Init autoCalib? \n");
         printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
+    }
+    
+    void drawAutoCalibRes() {
+        lcd_gotoxy(1, 1);
+        printf("Autocalib usando\n");
+        printf("1 kg @ 10 cortes");
+    }
+    
+    void drawAutoCalibRM() {
+        lcd_gotoxy(1, 1);
+        printf("Peso Real:     \n");
+        drawValEditor();
+        printf("kg    ");
     }
 
     void drawScreen() {
@@ -252,9 +285,6 @@ extern "C" {
             }case (SCREEN_ADVMODE_OFF): {
                 drawAdvOFF();
                 break;
-            }case (SCREEN_CALIB_VEL): {
-
-                break;
             }case (SCREEN_CHAN_VAL): {
                 drawChanVal();
                 break;
@@ -267,6 +297,15 @@ extern "C" {
             }case (SCREEN_SAVE_ALL): {
                 drawSNquest(2);
                 break;
+            }case (SCREEN_CALIB_VEL): {
+                if(screen_calibVelRes)
+                    drawAutoCalibRes();
+                else
+                    drawSNquest(3);
+                break;
+            }case (SCREEN_CALIB_RMAS): {
+                drawAutoCalibRM();
+                break;
             }
         }
     }
@@ -277,4 +316,3 @@ extern "C" {
 #endif
 
 #endif	/* SCREENDRAWERS_H */
-

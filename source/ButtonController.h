@@ -19,8 +19,7 @@ extern "C" {
             if(UP) {
                 holdUPcont = 0;
                 releaseUP();
-            }
-            else {
+            }else {
                 if(!UPsecurLock)
                     holdUPcont++;
                 if(holdUPcont > 9) {
@@ -44,8 +43,7 @@ extern "C" {
             if(DOWN) {
                 holdDOWNcont = 0;
                 releaseDOWN();
-            }
-            else {
+            }else {
                 if(!DOWNsecurLock)
                     holdDOWNcont++;
                 if(holdDOWNcont > 9) {
@@ -69,8 +67,7 @@ extern "C" {
             if(RETRO) {
                 holdRETROcont = 0;
                 releaseRETRO();
-            }
-            else {
+            }else {
                 if(!RETROsecurLock)
                     holdRETROcont++;
                 if(holdRETROcont > 9) {
@@ -94,8 +91,7 @@ extern "C" {
             if(ENTER) {
                 holdENTERcont = 0;
                 releaseENTER();
-            }
-            else {
+            }else {
                 if(!ENTERsecurLock)
                     holdENTERcont++;
                 if(holdENTERcont > 9) {

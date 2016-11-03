@@ -9412,6 +9412,24 @@ m3Xcorte = (float)temp * tiXcorte;
 kgXcorte = (float)densidadMasa * m3Xcorte;
 }
 
+void calcVars2ti() {
+float temp = 0;
+temp = (float)diamTubo / 2000.0f;
+temp *= temp;
+temp *= pi;
+temp *= velocidadMasa;
+if(tVarProceso == 0) {
+m3Xcorte = (float)kgXcorte / densidadMasa;
+tiXcorte = (float)m3Xcorte / temp;
+}else if(tVarProceso == 1) {
+tiXcorte = (float)m3Xcorte / temp;
+kgXcorte = (float)densidadMasa * m3Xcorte;
+}else if(tVarProceso == 2) {
+m3Xcorte = (float)temp * tiXcorte;
+kgXcorte = (float)densidadMasa * m3Xcorte;
+}
+}
+
 void saveSysParams() {
 EECON1bits.WREN = 1;
 ie = INTCONbits.GIE;
@@ -9442,7 +9460,7 @@ writeEEPROM(18, fData.floatHB);
 writeEEPROM(19, fData.floatLB);
 EECON1bits.WREN = 0;
 INTCONbits.GIE = ie;
-calcSysVars();
+calcVars2ti();
 }
 
 void preAutoCal() {
@@ -9502,19 +9520,31 @@ velocidadMasa = fData.floatdat;
 calcSysVars();
 }
 
-# 34 "source/screenDrawers.h"
+# 36 "source/screenDrawers.h"
 signed char actualScreen = 0;
 signed char menuSection = 0;
 signed char passSection = 0;
-char contra[4] = {1, 2, 3, 4};
+signed char chanValSection = 5;
+char contra[4] = {0,0,0,0};
 signed char introducido[4] = {0, 0, 0, 0};
 char passChar[4] = {0, 0, 0, 0};
 char questKMT[3] = {0, 0, 0};
 signed char selKMT = 0;
+float chanValf = 000.000f;
+short chanVals = 0;
+signed char chanValdig[6] = {0,0,0,0,0,0};
+long exp10[6] = {100000,10000,1000,100,10,1};
 char questSN[2] = {0, 0};
 char selSN = 0;
 char fd = 0;
 char tempLastScreen = 0;
+char screen_calibVelRes = 0;
+
+void drawValEditor() {
+printf("  %u%u%u.%u%u%u ", chanValdig[0], chanValdig[1],
+chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
+lcd_gotoxy(11, 2);
+}
 
 void drawMenu(char adv) {
 switch (menuSection) {
@@ -9621,32 +9651,36 @@ break;
 }case (2): {
 lcd_gotoxy(1, 1);
 printf("Valor por Corte:\n");
+drawValEditor();
 if(tVarProceso == 0)
-printf("   %3.3f kg   ", kgXcorte);
+printf("kg    ");
 else if(tVarProceso == 1)
-printf("   %3.3f m3   ", m3Xcorte);
+printf("m3    ");
 else if(tVarProceso == 2)
-printf("   %3.3f sec  ", tiXcorte);
+printf("sec   ");
 break;
 }case (3): {
 lcd_gotoxy(1, 1);
 printf("Cantidad Cortes:\n");
-printf("      %d       ", numCortes);
+printf("      %d       ", chanVals);
 break;
 }case (4): {
 lcd_gotoxy(1, 1);
 printf("Diametro Tubo:  \n");
-printf("   %3.3f mm   ", diamTubo);
+drawValEditor();
+printf("mm    ");
 break;
 }case (5): {
 lcd_gotoxy(1, 1);
 printf("Densidad Masa:  \n");
-printf("  %3.3f kg/m3 ", densidadMasa);
+drawValEditor();
+printf("kg/m3 ");
 break;
 }case (6): {
 lcd_gotoxy(1, 1);
 printf("Velocidad Masa: \n");
-printf("   %3.3f m/s  ", velocidadMasa);
+drawValEditor();
+printf("m/s   ");
 break;
 }
 }
@@ -9701,7 +9735,22 @@ else if(tq == 1)
 printf("Detener Proceso?\n");
 else if(tq == 2)
 printf("Guardar Cambio? \n");
+else if(tq == 3)
+printf("Init autoCalib? \n");
 printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
+}
+
+void drawAutoCalibRes() {
+lcd_gotoxy(1, 1);
+printf("Autocalib usando\n");
+printf("1 kg @ 10 cortes");
+}
+
+void drawAutoCalibRM() {
+lcd_gotoxy(1, 1);
+printf("Peso Real:     \n");
+drawValEditor();
+printf("kg    ");
 }
 
 void drawScreen() {
@@ -9724,9 +9773,6 @@ break;
 }case (9): {
 drawAdvOFF();
 break;
-}case (6): {
-
-break;
 }case (5): {
 drawChanVal();
 break;
@@ -9738,6 +9784,15 @@ drawSNquest(1);
 break;
 }case (10): {
 drawSNquest(2);
+break;
+}case (6): {
+if(screen_calibVelRes)
+drawAutoCalibRes();
+else
+drawSNquest(3);
+break;
+}case (11): {
+drawAutoCalibRM();
 break;
 }
 }
@@ -9758,6 +9813,50 @@ break;
 return passOK;
 }
 
+void chanValDigUP() {
+chanValdig[chanValSection]++;
+if(chanValdig[chanValSection] > 9) {
+chanValdig[chanValSection] = 0;
+if(chanValSection > 1 && chanValdig[chanValSection - 1] < 9)
+chanValdig[chanValSection - 1]++;
+}
+}
+
+void chanValDigDOWN() {
+chanValdig[chanValSection]--;
+if(chanValdig[chanValSection] < 0) {
+chanValdig[chanValSection] = 9;
+if(chanValSection > 1 && chanValdig[chanValSection - 1] > 0)
+chanValdig[chanValSection - 1]--;
+}
+}
+
+void desintegrator() {
+chanValSection = 5;
+float temp = (float)chanValf*1000;
+long tempL = (long)temp;
+long temp2 = 0;
+long temp3 = 0;
+int i;
+for(i = 0; i < 6; i++) {
+temp2 = tempL/exp10[i];
+temp3 = temp2*exp10[i];
+chanValdig[i] = temp2;
+tempL -= temp3;
+}
+}
+
+void integrator() {
+long acum = 0;
+long temp = 0;
+int i;
+for(i = 0; i < 6; i++) {
+temp = (long)chanValdig[i]*exp10[i];
+acum += temp;
+}
+chanValf = (float)acum / 1000;
+}
+
 void confirmEdition(char yes) {
 switch (menuSection) {
 case (0): {
@@ -9775,7 +9874,12 @@ selSN = 1;
 break;
 }case (2): {
 if(yes) {
-
+if(tVarProceso == 0)
+kgXcorte = chanValf;
+else if(tVarProceso == 1)
+m3Xcorte = chanValf;
+else if(tVarProceso == 2)
+tiXcorte = chanValf;
 actualScreen = 4;
 saveSysParams();
 }else {
@@ -9786,7 +9890,7 @@ selSN = 1;
 break;
 }case (3): {
 if(yes) {
-
+numCortes = chanVals;
 actualScreen = 4;
 saveSysParams();
 }else {
@@ -9797,7 +9901,7 @@ selSN = 1;
 break;
 }case (4): {
 if(yes) {
-
+diamTubo = chanValf;
 actualScreen = 4;
 saveSysParams();
 }else {
@@ -9808,7 +9912,7 @@ selSN = 1;
 break;
 }case (5): {
 if(yes) {
-
+densidadMasa = chanValf;
 actualScreen = 4;
 saveSysParams();
 }else {
@@ -9819,7 +9923,7 @@ selSN = 1;
 break;
 }case (6): {
 if(yes) {
-
+velocidadMasa = chanValf;
 actualScreen = 4;
 saveSysParams();
 }else {
@@ -9856,19 +9960,19 @@ if(selKMT > 2)
 selKMT = 0;
 break;
 }case (2): {
-
+chanValDigUP();
 break;
 }case (3): {
-
+chanVals++;
 break;
 }case (4): {
-
+chanValDigUP();
 break;
 }case (5): {
-
+chanValDigUP();
 break;
 }case (6): {
-
+chanValDigUP();
 break;
 }
 }
@@ -9887,6 +9991,9 @@ fd = 0;
 actualScreen = 9;
 } else
 menuSection = 0;
+}else if(actualScreen == 5) {
+if(menuSection == 3)
+chanVals += 10;
 }
 }
 }
@@ -9920,19 +10027,19 @@ if(selKMT < 0)
 selKMT = 2;
 break;
 }case (2): {
-
+chanValDigDOWN();
 break;
 }case (3): {
-
+chanVals--;
 break;
 }case (4): {
-
+chanValDigDOWN();
 break;
 }case (5): {
-
+chanValDigDOWN();
 break;
 }case (6): {
-
+chanValDigDOWN();
 break;
 }
 }
@@ -9942,7 +10049,10 @@ break;
 void longPressDOWN() {
 if (!DOWNisLP) {
 DOWNisLP = 1;
-
+if(actualScreen == 5) {
+if(menuSection == 3)
+chanVals -= 10;
+}
 }
 }
 
@@ -9955,10 +10065,17 @@ void pressRETRO() {
 if (actualScreen == 1) {
 actualScreen = 0;
 }else if (actualScreen == 2 || actualScreen == 3
-|| actualScreen == 10)
+|| actualScreen == 10) {
 actualScreen = tempLastScreen;
-else if(actualScreen == 5)
+}else if(actualScreen == 5) {
+if(menuSection != 3 && menuSection != 1) {
+chanValSection++;
+if(chanValSection > 5)
+chanValSection = 0;
+}else
 actualScreen = 4;
+}
+
 }
 
 void longPressRETRO() {
@@ -9970,7 +10087,8 @@ tempLastScreen = actualScreen;
 actualScreen = 3;
 selSN = 0;
 }
-}
+}else if(actualScreen == 5)
+actualScreen = 4;
 }
 }
 
@@ -10007,19 +10125,34 @@ selKMT = tVarProceso;
 actualScreen = 5;
 break;
 }case (2): {
+if(tVarProceso == 0)
+chanValf = kgXcorte;
+else if(tVarProceso == 1)
+chanValf = m3Xcorte;
+else if(tVarProceso == 2)
+chanValf = tiXcorte;
 
+desintegrator();
+actualScreen = 5;
 break;
 }case (3): {
-
+chanVals = numCortes;
+actualScreen = 5;
 break;
 }case (4): {
-
+chanValf = diamTubo;
+desintegrator();
+actualScreen = 5;
 break;
 }case (5): {
-
+chanValf = densidadMasa;
+desintegrator();
+actualScreen = 5;
 break;
 }case (6): {
-
+chanValf = velocidadMasa;
+desintegrator();
+actualScreen = 5;
 break;
 }
 }
@@ -10027,9 +10160,14 @@ break;
 actualScreen = 1;
 else if(actualScreen == 6) {
 
-}else if(actualScreen == 5)
+}else if(actualScreen == 5) {
+if(menuSection != 3 && menuSection != 1) {
+chanValSection--;
+if(chanValSection < 0)
+chanValSection = 5;
+}else
 confirmEdition(!ProcessStarted);
-else if(actualScreen == 2) {
+}else if(actualScreen == 2) {
 ProcessStarted = !selSN;
 actualScreen = tempLastScreen;
 }else if(actualScreen == 3) {
@@ -10061,6 +10199,10 @@ tempLastScreen = actualScreen;
 actualScreen = 2;
 selSN = 1;
 }
+}else if(actualScreen == 5) {
+if(menuSection != 3 && menuSection != 1)
+integrator();
+confirmEdition(!ProcessStarted);
 }
 }
 }
@@ -10086,9 +10228,18 @@ putchUART(passSection);
 saveSysParams();
 }else if(sas == 'C') {
 sysParamInit();
+}else if(sas == 'D') {
+putchUART(chanValdig[0]);
+putchUART(chanValdig[1]);
+putchUART(chanValdig[2]);
+putchUART(chanValdig[3]);
+putchUART(chanValdig[4]);
+putchUART(chanValdig[5]);
+}else if(sas == 'E') {
+
 }
 
-# 58
+# 67
 }
 
 void UARTConfig() {
@@ -10199,8 +10350,7 @@ delay_ms(50);
 if(PORTAbits.RA2) {
 holdUPcont = 0;
 releaseUP();
-}
-else {
+}else {
 if(!UPsecurLock)
 holdUPcont++;
 if(holdUPcont > 9) {
@@ -10224,8 +10374,7 @@ delay_ms(50);
 if(PORTAbits.RA3) {
 holdDOWNcont = 0;
 releaseDOWN();
-}
-else {
+}else {
 if(!DOWNsecurLock)
 holdDOWNcont++;
 if(holdDOWNcont > 9) {
@@ -10249,8 +10398,7 @@ delay_ms(50);
 if(PORTAbits.RA4) {
 holdRETROcont = 0;
 releaseRETRO();
-}
-else {
+}else {
 if(!RETROsecurLock)
 holdRETROcont++;
 if(holdRETROcont > 9) {
@@ -10274,8 +10422,7 @@ delay_ms(50);
 if(PORTAbits.RA5) {
 holdENTERcont = 0;
 releaseENTER();
-}
-else {
+}else {
 if(!ENTERsecurLock)
 holdENTERcont++;
 if(holdENTERcont > 9) {

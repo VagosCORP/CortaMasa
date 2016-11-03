@@ -9123,319 +9123,393 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 1172 ]
 }
 "72
-[v _saveSysParams `(v ~T0 @X0 1 ef ]
+[v _calcVars2ti `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 72: void saveSysParams() {
-[e :U _saveSysParams ]
+[; ;sysParams.h: 72: void calcVars2ti() {
+[e :U _calcVars2ti ]
 [f ]
-[; ;sysParams.h: 73: EECON1bits.WREN = 1;
 "73
-[e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
-[; ;sysParams.h: 74: ie = INTCONbits.GIE;
+[v _temp `f ~T0 @X0 1 a ]
+[; ;sysParams.h: 73: float temp = 0;
+[e = _temp -> -> 0 `i `f ]
+[; ;sysParams.h: 74: temp = (float)diamTubo / 2000.0f;
 "74
-[e = _ie . . _INTCONbits 1 7 ]
-[; ;sysParams.h: 75: INTCONbits.GIE = 0;
+[e = _temp / _diamTubo -> .2000.0 `f ]
+[; ;sysParams.h: 75: temp *= temp;
 "75
-[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-[; ;sysParams.h: 76: writeEEPROM(1, tVarProceso);
+[e =* _temp _temp ]
+[; ;sysParams.h: 76: temp *= pi;
 "76
-[e ( _writeEEPROM (2 , -> -> 1 `i `uc _tVarProceso ]
-[; ;sysParams.h: 77: fData.floatdat = tiXcorte;
+[e =* _temp _pi ]
+[; ;sysParams.h: 77: temp *= velocidadMasa;
 "77
-[e = . _fData 0 _tiXcorte ]
-[; ;sysParams.h: 78: writeEEPROM(2, fData.floatMB);
+[e =* _temp _velocidadMasa ]
+[; ;sysParams.h: 78: if(tVarProceso == 0) {
 "78
-[e ( _writeEEPROM (2 , -> -> 2 `i `uc . . _fData 1 3 ]
-[; ;sysParams.h: 79: writeEEPROM(3, fData.floatUB);
+[e $ ! == -> _tVarProceso `i -> 0 `i 1174  ]
+{
+[; ;sysParams.h: 79: m3Xcorte = (float)kgXcorte / densidadMasa;
 "79
-[e ( _writeEEPROM (2 , -> -> 3 `i `uc . . _fData 1 2 ]
-[; ;sysParams.h: 80: writeEEPROM(4, fData.floatHB);
+[e = _m3Xcorte / _kgXcorte _densidadMasa ]
+[; ;sysParams.h: 80: tiXcorte = (float)m3Xcorte / temp;
 "80
-[e ( _writeEEPROM (2 , -> -> 4 `i `uc . . _fData 1 1 ]
-[; ;sysParams.h: 81: writeEEPROM(5, fData.floatLB);
+[e = _tiXcorte / _m3Xcorte _temp ]
 "81
-[e ( _writeEEPROM (2 , -> -> 5 `i `uc . . _fData 1 0 ]
-[; ;sysParams.h: 82: i16Data.int16dat = numCortes;
+}
+[; ;sysParams.h: 81: }else if(tVarProceso == 1) {
+[e $U 1175  ]
+[e :U 1174 ]
+[e $ ! == -> _tVarProceso `i -> 1 `i 1176  ]
+{
+[; ;sysParams.h: 82: tiXcorte = (float)m3Xcorte / temp;
 "82
-[e = . _i16Data 0 _numCortes ]
-[; ;sysParams.h: 83: writeEEPROM(6, i16Data.int16HB);
+[e = _tiXcorte / _m3Xcorte _temp ]
+[; ;sysParams.h: 83: kgXcorte = (float)densidadMasa * m3Xcorte;
 "83
-[e ( _writeEEPROM (2 , -> -> 6 `i `uc . . _i16Data 1 1 ]
-[; ;sysParams.h: 84: writeEEPROM(7, i16Data.int16LB);
+[e = _kgXcorte * _densidadMasa _m3Xcorte ]
 "84
-[e ( _writeEEPROM (2 , -> -> 7 `i `uc . . _i16Data 1 0 ]
-[; ;sysParams.h: 85: fData.floatdat = diamTubo;
+}
+[; ;sysParams.h: 84: }else if(tVarProceso == 2) {
+[e $U 1177  ]
+[e :U 1176 ]
+[e $ ! == -> _tVarProceso `i -> 2 `i 1178  ]
+{
+[; ;sysParams.h: 85: m3Xcorte = (float)temp * tiXcorte;
 "85
-[e = . _fData 0 _diamTubo ]
-[; ;sysParams.h: 86: writeEEPROM(8, fData.floatMB);
+[e = _m3Xcorte * _temp _tiXcorte ]
+[; ;sysParams.h: 86: kgXcorte = (float)densidadMasa * m3Xcorte;
 "86
-[e ( _writeEEPROM (2 , -> -> 8 `i `uc . . _fData 1 3 ]
-[; ;sysParams.h: 87: writeEEPROM(9, fData.floatUB);
+[e = _kgXcorte * _densidadMasa _m3Xcorte ]
 "87
-[e ( _writeEEPROM (2 , -> -> 9 `i `uc . . _fData 1 2 ]
-[; ;sysParams.h: 88: writeEEPROM(10, fData.floatHB);
+}
+[e :U 1178 ]
 "88
-[e ( _writeEEPROM (2 , -> -> 10 `i `uc . . _fData 1 1 ]
-[; ;sysParams.h: 89: writeEEPROM(11, fData.floatLB);
-"89
-[e ( _writeEEPROM (2 , -> -> 11 `i `uc . . _fData 1 0 ]
-[; ;sysParams.h: 90: fData.floatdat = densidadMasa;
-"90
-[e = . _fData 0 _densidadMasa ]
-[; ;sysParams.h: 91: writeEEPROM(12, fData.floatMB);
-"91
-[e ( _writeEEPROM (2 , -> -> 12 `i `uc . . _fData 1 3 ]
-[; ;sysParams.h: 92: writeEEPROM(13, fData.floatUB);
-"92
-[e ( _writeEEPROM (2 , -> -> 13 `i `uc . . _fData 1 2 ]
-[; ;sysParams.h: 93: writeEEPROM(14, fData.floatHB);
-"93
-[e ( _writeEEPROM (2 , -> -> 14 `i `uc . . _fData 1 1 ]
-[; ;sysParams.h: 94: writeEEPROM(15, fData.floatLB);
-"94
-[e ( _writeEEPROM (2 , -> -> 15 `i `uc . . _fData 1 0 ]
-[; ;sysParams.h: 95: fData.floatdat = velocidadMasa;
-"95
-[e = . _fData 0 _velocidadMasa ]
-[; ;sysParams.h: 96: writeEEPROM(16, fData.floatMB);
-"96
-[e ( _writeEEPROM (2 , -> -> 16 `i `uc . . _fData 1 3 ]
-[; ;sysParams.h: 97: writeEEPROM(17, fData.floatUB);
-"97
-[e ( _writeEEPROM (2 , -> -> 17 `i `uc . . _fData 1 2 ]
-[; ;sysParams.h: 98: writeEEPROM(18, fData.floatHB);
-"98
-[e ( _writeEEPROM (2 , -> -> 18 `i `uc . . _fData 1 1 ]
-[; ;sysParams.h: 99: writeEEPROM(19, fData.floatLB);
-"99
-[e ( _writeEEPROM (2 , -> -> 19 `i `uc . . _fData 1 0 ]
-[; ;sysParams.h: 100: EECON1bits.WREN = 0;
-"100
-[e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
-[; ;sysParams.h: 101: INTCONbits.GIE = ie;
-"101
-[e = . . _INTCONbits 1 7 _ie ]
-[; ;sysParams.h: 102: calcSysVars();
-"102
-[e ( _calcSysVars ..  ]
-[; ;sysParams.h: 103: }
-"103
+[e :U 1177 ]
+[e :U 1175 ]
+[; ;sysParams.h: 87: }
+[; ;sysParams.h: 88: }
 [e :UE 1173 ]
 }
+"90
+[v _saveSysParams `(v ~T0 @X0 1 ef ]
+{
+[; ;sysParams.h: 90: void saveSysParams() {
+[e :U _saveSysParams ]
+[f ]
+[; ;sysParams.h: 91: EECON1bits.WREN = 1;
+"91
+[e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
+[; ;sysParams.h: 92: ie = INTCONbits.GIE;
+"92
+[e = _ie . . _INTCONbits 1 7 ]
+[; ;sysParams.h: 93: INTCONbits.GIE = 0;
+"93
+[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
+[; ;sysParams.h: 94: writeEEPROM(1, tVarProceso);
+"94
+[e ( _writeEEPROM (2 , -> -> 1 `i `uc _tVarProceso ]
+[; ;sysParams.h: 95: fData.floatdat = tiXcorte;
+"95
+[e = . _fData 0 _tiXcorte ]
+[; ;sysParams.h: 96: writeEEPROM(2, fData.floatMB);
+"96
+[e ( _writeEEPROM (2 , -> -> 2 `i `uc . . _fData 1 3 ]
+[; ;sysParams.h: 97: writeEEPROM(3, fData.floatUB);
+"97
+[e ( _writeEEPROM (2 , -> -> 3 `i `uc . . _fData 1 2 ]
+[; ;sysParams.h: 98: writeEEPROM(4, fData.floatHB);
+"98
+[e ( _writeEEPROM (2 , -> -> 4 `i `uc . . _fData 1 1 ]
+[; ;sysParams.h: 99: writeEEPROM(5, fData.floatLB);
+"99
+[e ( _writeEEPROM (2 , -> -> 5 `i `uc . . _fData 1 0 ]
+[; ;sysParams.h: 100: i16Data.int16dat = numCortes;
+"100
+[e = . _i16Data 0 _numCortes ]
+[; ;sysParams.h: 101: writeEEPROM(6, i16Data.int16HB);
+"101
+[e ( _writeEEPROM (2 , -> -> 6 `i `uc . . _i16Data 1 1 ]
+[; ;sysParams.h: 102: writeEEPROM(7, i16Data.int16LB);
+"102
+[e ( _writeEEPROM (2 , -> -> 7 `i `uc . . _i16Data 1 0 ]
+[; ;sysParams.h: 103: fData.floatdat = diamTubo;
+"103
+[e = . _fData 0 _diamTubo ]
+[; ;sysParams.h: 104: writeEEPROM(8, fData.floatMB);
+"104
+[e ( _writeEEPROM (2 , -> -> 8 `i `uc . . _fData 1 3 ]
+[; ;sysParams.h: 105: writeEEPROM(9, fData.floatUB);
 "105
+[e ( _writeEEPROM (2 , -> -> 9 `i `uc . . _fData 1 2 ]
+[; ;sysParams.h: 106: writeEEPROM(10, fData.floatHB);
+"106
+[e ( _writeEEPROM (2 , -> -> 10 `i `uc . . _fData 1 1 ]
+[; ;sysParams.h: 107: writeEEPROM(11, fData.floatLB);
+"107
+[e ( _writeEEPROM (2 , -> -> 11 `i `uc . . _fData 1 0 ]
+[; ;sysParams.h: 108: fData.floatdat = densidadMasa;
+"108
+[e = . _fData 0 _densidadMasa ]
+[; ;sysParams.h: 109: writeEEPROM(12, fData.floatMB);
+"109
+[e ( _writeEEPROM (2 , -> -> 12 `i `uc . . _fData 1 3 ]
+[; ;sysParams.h: 110: writeEEPROM(13, fData.floatUB);
+"110
+[e ( _writeEEPROM (2 , -> -> 13 `i `uc . . _fData 1 2 ]
+[; ;sysParams.h: 111: writeEEPROM(14, fData.floatHB);
+"111
+[e ( _writeEEPROM (2 , -> -> 14 `i `uc . . _fData 1 1 ]
+[; ;sysParams.h: 112: writeEEPROM(15, fData.floatLB);
+"112
+[e ( _writeEEPROM (2 , -> -> 15 `i `uc . . _fData 1 0 ]
+[; ;sysParams.h: 113: fData.floatdat = velocidadMasa;
+"113
+[e = . _fData 0 _velocidadMasa ]
+[; ;sysParams.h: 114: writeEEPROM(16, fData.floatMB);
+"114
+[e ( _writeEEPROM (2 , -> -> 16 `i `uc . . _fData 1 3 ]
+[; ;sysParams.h: 115: writeEEPROM(17, fData.floatUB);
+"115
+[e ( _writeEEPROM (2 , -> -> 17 `i `uc . . _fData 1 2 ]
+[; ;sysParams.h: 116: writeEEPROM(18, fData.floatHB);
+"116
+[e ( _writeEEPROM (2 , -> -> 18 `i `uc . . _fData 1 1 ]
+[; ;sysParams.h: 117: writeEEPROM(19, fData.floatLB);
+"117
+[e ( _writeEEPROM (2 , -> -> 19 `i `uc . . _fData 1 0 ]
+[; ;sysParams.h: 118: EECON1bits.WREN = 0;
+"118
+[e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
+[; ;sysParams.h: 119: INTCONbits.GIE = ie;
+"119
+[e = . . _INTCONbits 1 7 _ie ]
+[; ;sysParams.h: 120: calcVars2ti();
+"120
+[e ( _calcVars2ti ..  ]
+[; ;sysParams.h: 121: }
+"121
+[e :UE 1179 ]
+}
+"123
 [v _preAutoCal `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 105: void preAutoCal() {
+[; ;sysParams.h: 123: void preAutoCal() {
 [e :U _preAutoCal ]
 [f ]
-"106
+"124
 [v _temp `f ~T0 @X0 1 a ]
-[; ;sysParams.h: 106: float temp = 0;
+[; ;sysParams.h: 124: float temp = 0;
 [e = _temp -> -> 0 `i `f ]
-"107
+"125
 [v _temp2 `f ~T0 @X0 1 a ]
-[; ;sysParams.h: 107: float temp2 = 2000.0f * 2000.0f;
+[; ;sysParams.h: 125: float temp2 = 2000.0f * 2000.0f;
 [e = _temp2 * -> .2000.0 `f -> .2000.0 `f ]
-[; ;sysParams.h: 108: tempNumCortes = numCortes;
-"108
+[; ;sysParams.h: 126: tempNumCortes = numCortes;
+"126
 [e = _tempNumCortes _numCortes ]
-[; ;sysParams.h: 109: numCortes = 10;
-"109
+[; ;sysParams.h: 127: numCortes = 10;
+"127
 [e = _numCortes -> -> 10 `i `s ]
-[; ;sysParams.h: 110: tempkgXcorte = kgXcorte;
-"110
+[; ;sysParams.h: 128: tempkgXcorte = kgXcorte;
+"128
 [e = _tempkgXcorte _kgXcorte ]
-[; ;sysParams.h: 111: kgXcorte = 1.0f;
-"111
+[; ;sysParams.h: 129: kgXcorte = 1.0f;
+"129
 [e = _kgXcorte -> .1.0 `f ]
-[; ;sysParams.h: 112: temp = (float)pi*densidadMasa*numCortes*diamTubo*diamTubo*tiXcorte;
-"112
+[; ;sysParams.h: 130: temp = (float)pi*densidadMasa*numCortes*diamTubo*diamTubo*tiXcorte;
+"130
 [e = _temp * * * * * _pi _densidadMasa -> _numCortes `f _diamTubo _diamTubo _tiXcorte ]
-[; ;sysParams.h: 113: calFactor = (float)temp2/temp;
-"113
+[; ;sysParams.h: 131: calFactor = (float)temp2/temp;
+"131
 [e = _calFactor / _temp2 _temp ]
-[; ;sysParams.h: 114: velocidadMasa = (float)kgXcorte * calFactor;
-"114
+[; ;sysParams.h: 132: velocidadMasa = (float)kgXcorte * calFactor;
+"132
 [e = _velocidadMasa * _kgXcorte _calFactor ]
-[; ;sysParams.h: 115: }
-"115
-[e :UE 1174 ]
+[; ;sysParams.h: 133: }
+"133
+[e :UE 1180 ]
 }
-"117
+"135
 [v _autoCal `(v ~T0 @X0 1 ef1`f ]
 {
-[; ;sysParams.h: 117: void autoCal(float pesoReal) {
+[; ;sysParams.h: 135: void autoCal(float pesoReal) {
 [e :U _autoCal ]
 [v _pesoReal `f ~T0 @X0 1 r1 ]
 [f ]
-"118
+"136
 [v _temp `f ~T0 @X0 1 a ]
-[; ;sysParams.h: 118: float temp = 0;
+[; ;sysParams.h: 136: float temp = 0;
 [e = _temp -> -> 0 `i `f ]
-[; ;sysParams.h: 119: velocidadMasa = (float)calFactor * pesoReal;
-"119
+[; ;sysParams.h: 137: velocidadMasa = (float)calFactor * pesoReal;
+"137
 [e = _velocidadMasa * _calFactor _pesoReal ]
-[; ;sysParams.h: 120: numCortes = tempNumCortes;
-"120
+[; ;sysParams.h: 138: numCortes = tempNumCortes;
+"138
 [e = _numCortes _tempNumCortes ]
-[; ;sysParams.h: 121: kgXcorte = tempkgXcorte;
-"121
+[; ;sysParams.h: 139: kgXcorte = tempkgXcorte;
+"139
 [e = _kgXcorte _tempkgXcorte ]
-[; ;sysParams.h: 122: temp = (float)diamTubo / 2000.0f;
-"122
+[; ;sysParams.h: 140: temp = (float)diamTubo / 2000.0f;
+"140
 [e = _temp / _diamTubo -> .2000.0 `f ]
-[; ;sysParams.h: 123: temp *= temp;
-"123
+[; ;sysParams.h: 141: temp *= temp;
+"141
 [e =* _temp _temp ]
-[; ;sysParams.h: 124: temp *= pi;
-"124
+[; ;sysParams.h: 142: temp *= pi;
+"142
 [e =* _temp _pi ]
-[; ;sysParams.h: 125: temp *= velocidadMasa;
-"125
+[; ;sysParams.h: 143: temp *= velocidadMasa;
+"143
 [e =* _temp _velocidadMasa ]
-[; ;sysParams.h: 126: if(tVarProceso == 0) {
-"126
-[e $ ! == -> _tVarProceso `i -> 0 `i 1176  ]
+[; ;sysParams.h: 144: if(tVarProceso == 0) {
+"144
+[e $ ! == -> _tVarProceso `i -> 0 `i 1182  ]
 {
-[; ;sysParams.h: 127: temp *= densidadMasa;
-"127
+[; ;sysParams.h: 145: temp *= densidadMasa;
+"145
 [e =* _temp _densidadMasa ]
-[; ;sysParams.h: 128: tiXcorte = (float)kgXcorte / temp;
-"128
+[; ;sysParams.h: 146: tiXcorte = (float)kgXcorte / temp;
+"146
 [e = _tiXcorte / _kgXcorte _temp ]
-"129
+"147
 }
-[; ;sysParams.h: 129: }else if(tVarProceso == 1)
-[e $U 1177  ]
-[e :U 1176 ]
-[e $ ! == -> _tVarProceso `i -> 1 `i 1178  ]
-[; ;sysParams.h: 130: tiXcorte = (float)m3Xcorte / temp;
-"130
+[; ;sysParams.h: 147: }else if(tVarProceso == 1)
+[e $U 1183  ]
+[e :U 1182 ]
+[e $ ! == -> _tVarProceso `i -> 1 `i 1184  ]
+[; ;sysParams.h: 148: tiXcorte = (float)m3Xcorte / temp;
+"148
 [e = _tiXcorte / _m3Xcorte _temp ]
-[e :U 1178 ]
-"131
-[e :U 1177 ]
-[; ;sysParams.h: 131: saveSysParams();
+[e :U 1184 ]
+"149
+[e :U 1183 ]
+[; ;sysParams.h: 149: saveSysParams();
 [e ( _saveSysParams ..  ]
-[; ;sysParams.h: 132: }
-"132
-[e :UE 1175 ]
+[; ;sysParams.h: 150: }
+"150
+[e :UE 1181 ]
 }
-"134
+"152
 [v _sysParamInit `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 134: void sysParamInit() {
+[; ;sysParams.h: 152: void sysParamInit() {
 [e :U _sysParamInit ]
 [f ]
-[; ;sysParams.h: 135: tVarProceso = readEEPROM(1);
-"135
-[e = _tVarProceso ( _readEEPROM (1 -> -> 1 `i `uc ]
-[; ;sysParams.h: 136: fData.floatMB = readEEPROM(2);
-"136
-[e = . . _fData 1 3 ( _readEEPROM (1 -> -> 2 `i `uc ]
-[; ;sysParams.h: 137: fData.floatUB = readEEPROM(3);
-"137
-[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 3 `i `uc ]
-[; ;sysParams.h: 138: fData.floatHB = readEEPROM(4);
-"138
-[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 4 `i `uc ]
-[; ;sysParams.h: 139: fData.floatLB = readEEPROM(5);
-"139
-[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 5 `i `uc ]
-[; ;sysParams.h: 140: tiXcorte = fData.floatdat;
-"140
-[e = _tiXcorte . _fData 0 ]
-[; ;sysParams.h: 141: i16Data.int16HB = readEEPROM(6);
-"141
-[e = . . _i16Data 1 1 ( _readEEPROM (1 -> -> 6 `i `uc ]
-[; ;sysParams.h: 142: i16Data.int16LB = readEEPROM(7);
-"142
-[e = . . _i16Data 1 0 ( _readEEPROM (1 -> -> 7 `i `uc ]
-[; ;sysParams.h: 143: numCortes = i16Data.int16dat;
-"143
-[e = _numCortes . _i16Data 0 ]
-[; ;sysParams.h: 144: fData.floatMB = readEEPROM(8);
-"144
-[e = . . _fData 1 3 ( _readEEPROM (1 -> -> 8 `i `uc ]
-[; ;sysParams.h: 145: fData.floatUB = readEEPROM(9);
-"145
-[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 9 `i `uc ]
-[; ;sysParams.h: 146: fData.floatHB = readEEPROM(10);
-"146
-[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 10 `i `uc ]
-[; ;sysParams.h: 147: fData.floatLB = readEEPROM(11);
-"147
-[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 11 `i `uc ]
-[; ;sysParams.h: 148: diamTubo = fData.floatdat;
-"148
-[e = _diamTubo . _fData 0 ]
-[; ;sysParams.h: 149: fData.floatMB = readEEPROM(12);
-"149
-[e = . . _fData 1 3 ( _readEEPROM (1 -> -> 12 `i `uc ]
-[; ;sysParams.h: 150: fData.floatUB = readEEPROM(13);
-"150
-[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 13 `i `uc ]
-[; ;sysParams.h: 151: fData.floatHB = readEEPROM(14);
-"151
-[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 14 `i `uc ]
-[; ;sysParams.h: 152: fData.floatLB = readEEPROM(15);
-"152
-[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 15 `i `uc ]
-[; ;sysParams.h: 153: densidadMasa = fData.floatdat;
+[; ;sysParams.h: 153: tVarProceso = readEEPROM(1);
 "153
-[e = _densidadMasa . _fData 0 ]
-[; ;sysParams.h: 154: fData.floatMB = readEEPROM(16);
+[e = _tVarProceso ( _readEEPROM (1 -> -> 1 `i `uc ]
+[; ;sysParams.h: 154: fData.floatMB = readEEPROM(2);
 "154
-[e = . . _fData 1 3 ( _readEEPROM (1 -> -> 16 `i `uc ]
-[; ;sysParams.h: 155: fData.floatUB = readEEPROM(17);
+[e = . . _fData 1 3 ( _readEEPROM (1 -> -> 2 `i `uc ]
+[; ;sysParams.h: 155: fData.floatUB = readEEPROM(3);
 "155
-[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 17 `i `uc ]
-[; ;sysParams.h: 156: fData.floatHB = readEEPROM(18);
+[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 3 `i `uc ]
+[; ;sysParams.h: 156: fData.floatHB = readEEPROM(4);
 "156
-[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 18 `i `uc ]
-[; ;sysParams.h: 157: fData.floatLB = readEEPROM(19);
+[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 4 `i `uc ]
+[; ;sysParams.h: 157: fData.floatLB = readEEPROM(5);
 "157
-[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 19 `i `uc ]
-[; ;sysParams.h: 158: velocidadMasa = fData.floatdat;
+[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 5 `i `uc ]
+[; ;sysParams.h: 158: tiXcorte = fData.floatdat;
 "158
-[e = _velocidadMasa . _fData 0 ]
-[; ;sysParams.h: 159: calcSysVars();
+[e = _tiXcorte . _fData 0 ]
+[; ;sysParams.h: 159: i16Data.int16HB = readEEPROM(6);
 "159
-[e ( _calcSysVars ..  ]
-[; ;sysParams.h: 160: }
+[e = . . _i16Data 1 1 ( _readEEPROM (1 -> -> 6 `i `uc ]
+[; ;sysParams.h: 160: i16Data.int16LB = readEEPROM(7);
 "160
-[e :UE 1179 ]
+[e = . . _i16Data 1 0 ( _readEEPROM (1 -> -> 7 `i `uc ]
+[; ;sysParams.h: 161: numCortes = i16Data.int16dat;
+"161
+[e = _numCortes . _i16Data 0 ]
+[; ;sysParams.h: 162: fData.floatMB = readEEPROM(8);
+"162
+[e = . . _fData 1 3 ( _readEEPROM (1 -> -> 8 `i `uc ]
+[; ;sysParams.h: 163: fData.floatUB = readEEPROM(9);
+"163
+[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 9 `i `uc ]
+[; ;sysParams.h: 164: fData.floatHB = readEEPROM(10);
+"164
+[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 10 `i `uc ]
+[; ;sysParams.h: 165: fData.floatLB = readEEPROM(11);
+"165
+[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 11 `i `uc ]
+[; ;sysParams.h: 166: diamTubo = fData.floatdat;
+"166
+[e = _diamTubo . _fData 0 ]
+[; ;sysParams.h: 167: fData.floatMB = readEEPROM(12);
+"167
+[e = . . _fData 1 3 ( _readEEPROM (1 -> -> 12 `i `uc ]
+[; ;sysParams.h: 168: fData.floatUB = readEEPROM(13);
+"168
+[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 13 `i `uc ]
+[; ;sysParams.h: 169: fData.floatHB = readEEPROM(14);
+"169
+[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 14 `i `uc ]
+[; ;sysParams.h: 170: fData.floatLB = readEEPROM(15);
+"170
+[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 15 `i `uc ]
+[; ;sysParams.h: 171: densidadMasa = fData.floatdat;
+"171
+[e = _densidadMasa . _fData 0 ]
+[; ;sysParams.h: 172: fData.floatMB = readEEPROM(16);
+"172
+[e = . . _fData 1 3 ( _readEEPROM (1 -> -> 16 `i `uc ]
+[; ;sysParams.h: 173: fData.floatUB = readEEPROM(17);
+"173
+[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 17 `i `uc ]
+[; ;sysParams.h: 174: fData.floatHB = readEEPROM(18);
+"174
+[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 18 `i `uc ]
+[; ;sysParams.h: 175: fData.floatLB = readEEPROM(19);
+"175
+[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 19 `i `uc ]
+[; ;sysParams.h: 176: velocidadMasa = fData.floatdat;
+"176
+[e = _velocidadMasa . _fData 0 ]
+[; ;sysParams.h: 177: calcSysVars();
+"177
+[e ( _calcSysVars ..  ]
+[; ;sysParams.h: 178: }
+"178
+[e :UE 1185 ]
 }
-"34 source/screenDrawers.h
+"36 source/screenDrawers.h
 [v _actualScreen `c ~T0 @X0 1 e ]
 [i _actualScreen
 -> -> 0 `i `c
 ]
-[; ;screenDrawers.h: 34: signed char actualScreen = 0;
-"35
+[; ;screenDrawers.h: 36: signed char actualScreen = 0;
+"37
 [v _menuSection `c ~T0 @X0 1 e ]
 [i _menuSection
 -> -> 0 `i `c
 ]
-[; ;screenDrawers.h: 35: signed char menuSection = 0;
-"36
+[; ;screenDrawers.h: 37: signed char menuSection = 0;
+"38
 [v _passSection `c ~T0 @X0 1 e ]
 [i _passSection
 -> -> 0 `i `c
 ]
-[; ;screenDrawers.h: 36: signed char passSection = 0;
-"37
+[; ;screenDrawers.h: 38: signed char passSection = 0;
+"39
+[v _chanValSection `c ~T0 @X0 1 e ]
+[i _chanValSection
+-> -> 5 `i `c
+]
+[; ;screenDrawers.h: 39: signed char chanValSection = 5;
+"40
 [v _contra `uc ~T0 @X0 -> 4 `i e ]
 [i _contra
 :U ..
--> -> 1 `i `uc
--> -> 2 `i `uc
--> -> 3 `i `uc
--> -> 4 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
 ..
 ]
-[; ;screenDrawers.h: 37: char contra[4] = {1, 2, 3, 4};
-"38
+[; ;screenDrawers.h: 40: char contra[4] = {0,0,0,0};
+"41
 [v _introducido `c ~T0 @X0 -> 4 `i e ]
 [i _introducido
 :U ..
@@ -9445,8 +9519,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `c
 ..
 ]
-[; ;screenDrawers.h: 38: signed char introducido[4] = {0, 0, 0, 0};
-"39
+[; ;screenDrawers.h: 41: signed char introducido[4] = {0, 0, 0, 0};
+"42
 [v _passChar `uc ~T0 @X0 -> 4 `i e ]
 [i _passChar
 :U ..
@@ -9456,8 +9530,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ..
 ]
-[; ;screenDrawers.h: 39: char passChar[4] = {0, 0, 0, 0};
-"40
+[; ;screenDrawers.h: 42: char passChar[4] = {0, 0, 0, 0};
+"43
 [v _questKMT `uc ~T0 @X0 -> 3 `i e ]
 [i _questKMT
 :U ..
@@ -9466,14 +9540,52 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ..
 ]
-[; ;screenDrawers.h: 40: char questKMT[3] = {0, 0, 0};
-"41
+[; ;screenDrawers.h: 43: char questKMT[3] = {0, 0, 0};
+"44
 [v _selKMT `c ~T0 @X0 1 e ]
 [i _selKMT
 -> -> 0 `i `c
 ]
-[; ;screenDrawers.h: 41: signed char selKMT = 0;
-"42
+[; ;screenDrawers.h: 44: signed char selKMT = 0;
+"45
+[v _chanValf `f ~T0 @X0 1 e ]
+[i _chanValf
+-> .000.000 `f
+]
+[; ;screenDrawers.h: 45: float chanValf = 000.000f;
+"46
+[v _chanVals `s ~T0 @X0 1 e ]
+[i _chanVals
+-> -> 0 `i `s
+]
+[; ;screenDrawers.h: 46: short chanVals = 0;
+"47
+[v _chanValdig `c ~T0 @X0 -> 6 `i e ]
+[i _chanValdig
+:U ..
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+..
+]
+[; ;screenDrawers.h: 47: signed char chanValdig[6] = {0,0,0,0,0,0};
+"48
+[v _exp10 `l ~T0 @X0 -> 6 `i e ]
+[i _exp10
+:U ..
+-> 100000 `l
+-> -> 10000 `i `l
+-> -> 1000 `i `l
+-> -> 100 `i `l
+-> -> 10 `i `l
+-> -> 1 `i `l
+..
+]
+[; ;screenDrawers.h: 48: long exp10[6] = {100000,10000,1000,100,10,1};
+"49
 [v _questSN `uc ~T0 @X0 -> 2 `i e ]
 [i _questSN
 :U ..
@@ -9481,879 +9593,990 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ..
 ]
-[; ;screenDrawers.h: 42: char questSN[2] = {0, 0};
-"43
+[; ;screenDrawers.h: 49: char questSN[2] = {0, 0};
+"50
 [v _selSN `uc ~T0 @X0 1 e ]
 [i _selSN
 -> -> 0 `i `uc
 ]
-[; ;screenDrawers.h: 43: char selSN = 0;
-"44
+[; ;screenDrawers.h: 50: char selSN = 0;
+"51
 [v _fd `uc ~T0 @X0 1 e ]
 [i _fd
 -> -> 0 `i `uc
 ]
-[; ;screenDrawers.h: 44: char fd = 0;
-"45
+[; ;screenDrawers.h: 51: char fd = 0;
+"52
 [v _tempLastScreen `uc ~T0 @X0 1 e ]
 [i _tempLastScreen
 -> -> 0 `i `uc
 ]
-[; ;screenDrawers.h: 45: char tempLastScreen = 0;
-"47
+[; ;screenDrawers.h: 52: char tempLastScreen = 0;
+"53
+[v _screen_calibVelRes `uc ~T0 @X0 1 e ]
+[i _screen_calibVelRes
+-> -> 0 `i `uc
+]
+[; ;screenDrawers.h: 53: char screen_calibVelRes = 0;
+"55
+[v _drawValEditor `(v ~T0 @X0 1 ef ]
+{
+[; ;screenDrawers.h: 55: void drawValEditor() {
+[e :U _drawValEditor ]
+[f ]
+[; ;screenDrawers.h: 56: printf("  %u%u%u.%u%u%u ", chanValdig[0], chanValdig[1],
+[; ;screenDrawers.h: 57: chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
+"57
+[e ( _printf , , , , , , (. :s 1C -> *U + &U _chanValdig * -> -> -> 0 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `i -> *U + &U _chanValdig * -> -> -> 1 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `i -> *U + &U _chanValdig * -> -> -> 2 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `i -> *U + &U _chanValdig * -> -> -> 3 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `i -> *U + &U _chanValdig * -> -> -> 4 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `i -> *U + &U _chanValdig * -> -> -> 5 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `i ]
+[; ;screenDrawers.h: 58: lcd_gotoxy(11, 2);
+"58
+[e ( _lcd_gotoxy (2 , -> -> 11 `i `uc -> -> 2 `i `uc ]
+[; ;screenDrawers.h: 59: }
+"59
+[e :UE 1186 ]
+}
+"61
 [v _drawMenu `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;screenDrawers.h: 47: void drawMenu(char adv) {
+[; ;screenDrawers.h: 61: void drawMenu(char adv) {
 [e :U _drawMenu ]
 [v _adv `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;screenDrawers.h: 48: switch (menuSection) {
-"48
-[e $U 1182  ]
-{
-[; ;screenDrawers.h: 49: case (0): {
-"49
-[e :U 1183 ]
-{
-[; ;screenDrawers.h: 50: lcd_gotoxy(1, 1);
-"50
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 51: printf("Estado proceso: \n");
-"51
-[e ( _printf :s 1C ]
-[; ;screenDrawers.h: 52: if (adv)
-"52
-[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1184  ]
-[; ;screenDrawers.h: 53: lcd_putc('A');
-"53
-[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
-[e $U 1185  ]
-"54
-[e :U 1184 ]
-[; ;screenDrawers.h: 54: else
-[; ;screenDrawers.h: 55: lcd_putc(' ');
-"55
-[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
-[e :U 1185 ]
-[; ;screenDrawers.h: 56: lcd_gotoxy(2, 2);
-"56
-[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 57: if (ProcessStarted)
-"57
-[e $ ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1186  ]
-[; ;screenDrawers.h: 58: printf("   %d / %d    ", proceso, numCortes);
-"58
-[e ( _printf , , (. :s 2C -> _proceso `i -> _numCortes `i ]
-[e $U 1187  ]
-"59
-[e :U 1186 ]
-[; ;screenDrawers.h: 59: else
-[; ;screenDrawers.h: 60: printf("    Detenido    ");
-"60
-[e ( _printf :s 3C ]
-[e :U 1187 ]
-[; ;screenDrawers.h: 61: break;
-"61
-[e $U 1181  ]
+[; ;screenDrawers.h: 62: switch (menuSection) {
 "62
-}
-[; ;screenDrawers.h: 62: }case (1): {
-[e :U 1188 ]
+[e $U 1189  ]
 {
-[; ;screenDrawers.h: 63: lcd_gotoxy(1, 1);
+[; ;screenDrawers.h: 63: case (0): {
 "63
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 64: printf("Proceso en:     \n");
-"64
-[e ( _printf :s 4C ]
-[; ;screenDrawers.h: 65: if (adv)
-"65
-[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1189  ]
-[; ;screenDrawers.h: 66: lcd_putc('A');
-"66
-[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
-[e $U 1190  ]
-"67
-[e :U 1189 ]
-[; ;screenDrawers.h: 67: else
-[; ;screenDrawers.h: 68: lcd_putc(' ');
-"68
-[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
 [e :U 1190 ]
-[; ;screenDrawers.h: 69: lcd_gotoxy(2, 2);
-"69
-[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 70: if(tVarProceso == 0)
-"70
-[e $ ! == -> _tVarProceso `i -> 0 `i 1191  ]
-[; ;screenDrawers.h: 71: printf("       kg        ");
-"71
-[e ( _printf :s 5C ]
+{
+[; ;screenDrawers.h: 64: lcd_gotoxy(1, 1);
+"64
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 65: printf("Estado proceso: \n");
+"65
+[e ( _printf :s 2C ]
+[; ;screenDrawers.h: 66: if (adv)
+"66
+[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1191  ]
+[; ;screenDrawers.h: 67: lcd_putc('A');
+"67
+[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
 [e $U 1192  ]
-"72
+"68
 [e :U 1191 ]
-[; ;screenDrawers.h: 72: else if(tVarProceso == 1)
-[e $ ! == -> _tVarProceso `i -> 1 `i 1193  ]
-[; ;screenDrawers.h: 73: printf("       m3       ");
-"73
-[e ( _printf :s 6C ]
-[e $U 1194  ]
-"74
-[e :U 1193 ]
-[; ;screenDrawers.h: 74: else if(tVarProceso == 2)
-[e $ ! == -> _tVarProceso `i -> 2 `i 1195  ]
-[; ;screenDrawers.h: 75: printf("      sec       ");
-"75
-[e ( _printf :s 7C ]
-[e :U 1195 ]
-"76
-[e :U 1194 ]
+[; ;screenDrawers.h: 68: else
+[; ;screenDrawers.h: 69: lcd_putc(' ');
+"69
+[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
 [e :U 1192 ]
-[; ;screenDrawers.h: 76: break;
-[e $U 1181  ]
+[; ;screenDrawers.h: 70: lcd_gotoxy(2, 2);
+"70
+[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
+[; ;screenDrawers.h: 71: if (ProcessStarted)
+"71
+[e $ ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1193  ]
+[; ;screenDrawers.h: 72: printf("   %d / %d    ", proceso, numCortes);
+"72
+[e ( _printf , , (. :s 3C -> _proceso `i -> _numCortes `i ]
+[e $U 1194  ]
+"73
+[e :U 1193 ]
+[; ;screenDrawers.h: 73: else
+[; ;screenDrawers.h: 74: printf("    Detenido    ");
+"74
+[e ( _printf :s 4C ]
+[e :U 1194 ]
+[; ;screenDrawers.h: 75: break;
+"75
+[e $U 1188  ]
+"76
+}
+[; ;screenDrawers.h: 76: }case (1): {
+[e :U 1195 ]
+{
+[; ;screenDrawers.h: 77: lcd_gotoxy(1, 1);
 "77
-}
-[; ;screenDrawers.h: 77: }case (2): {
-[e :U 1196 ]
-{
-[; ;screenDrawers.h: 78: lcd_gotoxy(1, 1);
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 78: printf("Proceso en:     \n");
 "78
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 79: printf("Valor por Corte:\n");
+[e ( _printf :s 5C ]
+[; ;screenDrawers.h: 79: if (adv)
 "79
-[e ( _printf :s 8C ]
-[; ;screenDrawers.h: 80: if (adv)
+[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1196  ]
+[; ;screenDrawers.h: 80: lcd_putc('A');
 "80
-[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1197  ]
-[; ;screenDrawers.h: 81: lcd_putc('A');
+[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
+[e $U 1197  ]
 "81
-[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
-[e $U 1198  ]
+[e :U 1196 ]
+[; ;screenDrawers.h: 81: else
+[; ;screenDrawers.h: 82: lcd_putc(' ');
 "82
+[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
 [e :U 1197 ]
-[; ;screenDrawers.h: 82: else
-[; ;screenDrawers.h: 83: lcd_putc(' ');
+[; ;screenDrawers.h: 83: lcd_gotoxy(2, 2);
 "83
-[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
-[e :U 1198 ]
-[; ;screenDrawers.h: 84: lcd_gotoxy(2, 2);
+[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
+[; ;screenDrawers.h: 84: if(tVarProceso == 0)
 "84
-[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 85: if(tVarProceso == 0)
+[e $ ! == -> _tVarProceso `i -> 0 `i 1198  ]
+[; ;screenDrawers.h: 85: printf("       kg        ");
 "85
-[e $ ! == -> _tVarProceso `i -> 0 `i 1199  ]
-[; ;screenDrawers.h: 86: printf("   %3.3f kg   ", kgXcorte);
+[e ( _printf :s 6C ]
+[e $U 1199  ]
 "86
-[e ( _printf , (. :s 9C -> _kgXcorte `d ]
-[e $U 1200  ]
+[e :U 1198 ]
+[; ;screenDrawers.h: 86: else if(tVarProceso == 1)
+[e $ ! == -> _tVarProceso `i -> 1 `i 1200  ]
+[; ;screenDrawers.h: 87: printf("       m3       ");
 "87
-[e :U 1199 ]
-[; ;screenDrawers.h: 87: else if(tVarProceso == 1)
-[e $ ! == -> _tVarProceso `i -> 1 `i 1201  ]
-[; ;screenDrawers.h: 88: printf("   %3.3f m3   ", m3Xcorte);
+[e ( _printf :s 7C ]
+[e $U 1201  ]
 "88
-[e ( _printf , (. :s 10C -> _m3Xcorte `d ]
-[e $U 1202  ]
-"89
-[e :U 1201 ]
-[; ;screenDrawers.h: 89: else if(tVarProceso == 2)
-[e $ ! == -> _tVarProceso `i -> 2 `i 1203  ]
-[; ;screenDrawers.h: 90: printf("   %3.3f sec  ", tiXcorte);
-"90
-[e ( _printf , (. :s 11C -> _tiXcorte `d ]
-[e :U 1203 ]
-"91
-[e :U 1202 ]
 [e :U 1200 ]
-[; ;screenDrawers.h: 91: break;
-[e $U 1181  ]
+[; ;screenDrawers.h: 88: else if(tVarProceso == 2)
+[e $ ! == -> _tVarProceso `i -> 2 `i 1202  ]
+[; ;screenDrawers.h: 89: printf("      sec       ");
+"89
+[e ( _printf :s 8C ]
+[e :U 1202 ]
+"90
+[e :U 1201 ]
+[e :U 1199 ]
+[; ;screenDrawers.h: 90: break;
+[e $U 1188  ]
+"91
+}
+[; ;screenDrawers.h: 91: }case (2): {
+[e :U 1203 ]
+{
+[; ;screenDrawers.h: 92: lcd_gotoxy(1, 1);
 "92
-}
-[; ;screenDrawers.h: 92: }case (3): {
-[e :U 1204 ]
-{
-[; ;screenDrawers.h: 93: lcd_gotoxy(1, 1);
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 93: printf("Valor por Corte:\n");
 "93
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 94: printf("Cantidad Cortes:\n");
+[e ( _printf :s 9C ]
+[; ;screenDrawers.h: 94: if (adv)
 "94
-[e ( _printf :s 12C ]
-[; ;screenDrawers.h: 95: if (adv)
+[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1204  ]
+[; ;screenDrawers.h: 95: lcd_putc('A');
 "95
-[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1205  ]
-[; ;screenDrawers.h: 96: lcd_putc('A');
+[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
+[e $U 1205  ]
 "96
-[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
-[e $U 1206  ]
+[e :U 1204 ]
+[; ;screenDrawers.h: 96: else
+[; ;screenDrawers.h: 97: lcd_putc(' ');
 "97
+[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
 [e :U 1205 ]
-[; ;screenDrawers.h: 97: else
-[; ;screenDrawers.h: 98: lcd_putc(' ');
+[; ;screenDrawers.h: 98: lcd_gotoxy(2, 2);
 "98
-[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
-[e :U 1206 ]
-[; ;screenDrawers.h: 99: lcd_gotoxy(2, 2);
+[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
+[; ;screenDrawers.h: 99: if(tVarProceso == 0)
 "99
-[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 100: printf("      %d       ", numCortes);
+[e $ ! == -> _tVarProceso `i -> 0 `i 1206  ]
+[; ;screenDrawers.h: 100: printf("   %3.3f kg   ", kgXcorte);
 "100
-[e ( _printf , (. :s 13C -> _numCortes `i ]
-[; ;screenDrawers.h: 101: break;
+[e ( _printf , (. :s 10C -> _kgXcorte `d ]
+[e $U 1207  ]
 "101
-[e $U 1181  ]
+[e :U 1206 ]
+[; ;screenDrawers.h: 101: else if(tVarProceso == 1)
+[e $ ! == -> _tVarProceso `i -> 1 `i 1208  ]
+[; ;screenDrawers.h: 102: printf("   %3.3f m3   ", m3Xcorte);
 "102
-}
-[; ;screenDrawers.h: 102: }case (4): {
-[e :U 1207 ]
-{
-[; ;screenDrawers.h: 103: lcd_gotoxy(1, 1);
-"103
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 104: printf("Diametro Tubo:  \n");
-"104
-[e ( _printf :s 14C ]
-[; ;screenDrawers.h: 105: if (adv)
-"105
-[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1208  ]
-[; ;screenDrawers.h: 106: lcd_putc('A');
-"106
-[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
+[e ( _printf , (. :s 11C -> _m3Xcorte `d ]
 [e $U 1209  ]
-"107
+"103
 [e :U 1208 ]
-[; ;screenDrawers.h: 107: else
-[; ;screenDrawers.h: 108: lcd_putc(' ');
-"108
-[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
-[e :U 1209 ]
-[; ;screenDrawers.h: 109: lcd_gotoxy(2, 2);
-"109
-[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 110: printf("   %3.3f mm   ", diamTubo);
-"110
-[e ( _printf , (. :s 15C -> _diamTubo `d ]
-[; ;screenDrawers.h: 111: break;
-"111
-[e $U 1181  ]
-"112
-}
-[; ;screenDrawers.h: 112: }case (5): {
+[; ;screenDrawers.h: 103: else if(tVarProceso == 2)
+[e $ ! == -> _tVarProceso `i -> 2 `i 1210  ]
+[; ;screenDrawers.h: 104: printf("   %3.3f sec  ", tiXcorte);
+"104
+[e ( _printf , (. :s 12C -> _tiXcorte `d ]
 [e :U 1210 ]
-{
-[; ;screenDrawers.h: 113: lcd_gotoxy(1, 1);
-"113
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 114: printf("Densidad Masa:  \n");
-"114
-[e ( _printf :s 16C ]
-[; ;screenDrawers.h: 115: if (adv)
-"115
-[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1211  ]
-[; ;screenDrawers.h: 116: lcd_putc('A');
-"116
-[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
-[e $U 1212  ]
-"117
+"105
+[e :U 1209 ]
+[e :U 1207 ]
+[; ;screenDrawers.h: 105: break;
+[e $U 1188  ]
+"106
+}
+[; ;screenDrawers.h: 106: }case (3): {
 [e :U 1211 ]
-[; ;screenDrawers.h: 117: else
-[; ;screenDrawers.h: 118: lcd_putc(' ');
-"118
-[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
-[e :U 1212 ]
-[; ;screenDrawers.h: 119: lcd_gotoxy(2, 2);
-"119
-[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 120: printf("  %3.3f kg/m3 ", densidadMasa);
-"120
-[e ( _printf , (. :s 17C -> _densidadMasa `d ]
-[; ;screenDrawers.h: 121: break;
-"121
-[e $U 1181  ]
-"122
-}
-[; ;screenDrawers.h: 122: }case (6): {
-[e :U 1213 ]
 {
-[; ;screenDrawers.h: 123: lcd_gotoxy(1, 1);
-"123
+[; ;screenDrawers.h: 107: lcd_gotoxy(1, 1);
+"107
 [e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 124: printf("Velocidad Masa: \n");
-"124
-[e ( _printf :s 18C ]
-[; ;screenDrawers.h: 125: if (adv)
-"125
-[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1214  ]
-[; ;screenDrawers.h: 126: lcd_putc('A');
-"126
+[; ;screenDrawers.h: 108: printf("Cantidad Cortes:\n");
+"108
+[e ( _printf :s 13C ]
+[; ;screenDrawers.h: 109: if (adv)
+"109
+[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1212  ]
+[; ;screenDrawers.h: 110: lcd_putc('A');
+"110
 [e ( _lcd_putc (1 -> -> 65 `ui `uc ]
-[e $U 1215  ]
-"127
-[e :U 1214 ]
-[; ;screenDrawers.h: 127: else
-[; ;screenDrawers.h: 128: lcd_putc(' ');
-"128
+[e $U 1213  ]
+"111
+[e :U 1212 ]
+[; ;screenDrawers.h: 111: else
+[; ;screenDrawers.h: 112: lcd_putc(' ');
+"112
 [e ( _lcd_putc (1 -> -> 32 `ui `uc ]
-[e :U 1215 ]
-[; ;screenDrawers.h: 129: lcd_gotoxy(2, 2);
-"129
+[e :U 1213 ]
+[; ;screenDrawers.h: 113: lcd_gotoxy(2, 2);
+"113
 [e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 130: printf("   %3.3f m/s  ", velocidadMasa);
+[; ;screenDrawers.h: 114: printf("      %d       ", numCortes);
+"114
+[e ( _printf , (. :s 14C -> _numCortes `i ]
+[; ;screenDrawers.h: 115: break;
+"115
+[e $U 1188  ]
+"116
+}
+[; ;screenDrawers.h: 116: }case (4): {
+[e :U 1214 ]
+{
+[; ;screenDrawers.h: 117: lcd_gotoxy(1, 1);
+"117
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 118: printf("Diametro Tubo:  \n");
+"118
+[e ( _printf :s 15C ]
+[; ;screenDrawers.h: 119: if (adv)
+"119
+[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1215  ]
+[; ;screenDrawers.h: 120: lcd_putc('A');
+"120
+[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
+[e $U 1216  ]
+"121
+[e :U 1215 ]
+[; ;screenDrawers.h: 121: else
+[; ;screenDrawers.h: 122: lcd_putc(' ');
+"122
+[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
+[e :U 1216 ]
+[; ;screenDrawers.h: 123: lcd_gotoxy(2, 2);
+"123
+[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
+[; ;screenDrawers.h: 124: printf("   %3.3f mm   ", diamTubo);
+"124
+[e ( _printf , (. :s 16C -> _diamTubo `d ]
+[; ;screenDrawers.h: 125: break;
+"125
+[e $U 1188  ]
+"126
+}
+[; ;screenDrawers.h: 126: }case (5): {
+[e :U 1217 ]
+{
+[; ;screenDrawers.h: 127: lcd_gotoxy(1, 1);
+"127
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 128: printf("Densidad Masa:  \n");
+"128
+[e ( _printf :s 17C ]
+[; ;screenDrawers.h: 129: if (adv)
+"129
+[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1218  ]
+[; ;screenDrawers.h: 130: lcd_putc('A');
 "130
-[e ( _printf , (. :s 19C -> _velocidadMasa `d ]
-[; ;screenDrawers.h: 131: break;
+[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
+[e $U 1219  ]
 "131
-[e $U 1181  ]
+[e :U 1218 ]
+[; ;screenDrawers.h: 131: else
+[; ;screenDrawers.h: 132: lcd_putc(' ');
 "132
-}
-"133
-}
-[; ;screenDrawers.h: 132: }
-[; ;screenDrawers.h: 133: }
-[e $U 1181  ]
-"48
-[e :U 1182 ]
-[e [\ _menuSection , $ -> -> 0 `i `c 1183
- , $ -> -> 1 `i `c 1188
- , $ -> -> 2 `i `c 1196
- , $ -> -> 3 `i `c 1204
- , $ -> -> 4 `i `c 1207
- , $ -> -> 5 `i `c 1210
- , $ -> -> 6 `i `c 1213
- 1181 ]
-"133
-[e :U 1181 ]
-[; ;screenDrawers.h: 134: }
-"134
-[e :UE 1180 ]
-}
-"136
-[v _drawChanVal `(v ~T0 @X0 1 ef ]
-{
-[; ;screenDrawers.h: 136: void drawChanVal() {
-[e :U _drawChanVal ]
-[f ]
-[; ;screenDrawers.h: 137: switch (menuSection) {
-"137
-[e $U 1218  ]
-{
-[; ;screenDrawers.h: 138: case (0): {
-"138
+[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
 [e :U 1219 ]
-{
-[; ;screenDrawers.h: 139: break;
-"139
-[e $U 1217  ]
-"140
+[; ;screenDrawers.h: 133: lcd_gotoxy(2, 2);
+"133
+[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
+[; ;screenDrawers.h: 134: printf("  %3.3f kg/m3 ", densidadMasa);
+"134
+[e ( _printf , (. :s 18C -> _densidadMasa `d ]
+[; ;screenDrawers.h: 135: break;
+"135
+[e $U 1188  ]
+"136
 }
-[; ;screenDrawers.h: 140: }case (1): {
+[; ;screenDrawers.h: 136: }case (6): {
 [e :U 1220 ]
 {
+[; ;screenDrawers.h: 137: lcd_gotoxy(1, 1);
+"137
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 138: printf("Velocidad Masa: \n");
+"138
+[e ( _printf :s 19C ]
+[; ;screenDrawers.h: 139: if (adv)
+"139
+[e $ ! != -> _adv `i -> -> -> 0 `i `uc `i 1221  ]
+[; ;screenDrawers.h: 140: lcd_putc('A');
+"140
+[e ( _lcd_putc (1 -> -> 65 `ui `uc ]
+[e $U 1222  ]
 "141
-[v _i `i ~T0 @X0 1 a ]
-[; ;screenDrawers.h: 141: int i;
-[; ;screenDrawers.h: 142: for (i = 0; i < 4; i++)
+[e :U 1221 ]
+[; ;screenDrawers.h: 141: else
+[; ;screenDrawers.h: 142: lcd_putc(' ');
 "142
+[e ( _lcd_putc (1 -> -> 32 `ui `uc ]
+[e :U 1222 ]
+[; ;screenDrawers.h: 143: lcd_gotoxy(2, 2);
+"143
+[e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
+[; ;screenDrawers.h: 144: printf("   %3.3f m/s  ", velocidadMasa);
+"144
+[e ( _printf , (. :s 20C -> _velocidadMasa `d ]
+[; ;screenDrawers.h: 145: break;
+"145
+[e $U 1188  ]
+"146
+}
+"147
+}
+[; ;screenDrawers.h: 146: }
+[; ;screenDrawers.h: 147: }
+[e $U 1188  ]
+"62
+[e :U 1189 ]
+[e [\ _menuSection , $ -> -> 0 `i `c 1190
+ , $ -> -> 1 `i `c 1195
+ , $ -> -> 2 `i `c 1203
+ , $ -> -> 3 `i `c 1211
+ , $ -> -> 4 `i `c 1214
+ , $ -> -> 5 `i `c 1217
+ , $ -> -> 6 `i `c 1220
+ 1188 ]
+"147
+[e :U 1188 ]
+[; ;screenDrawers.h: 148: }
+"148
+[e :UE 1187 ]
+}
+"150
+[v _drawChanVal `(v ~T0 @X0 1 ef ]
+{
+[; ;screenDrawers.h: 150: void drawChanVal() {
+[e :U _drawChanVal ]
+[f ]
+[; ;screenDrawers.h: 151: switch (menuSection) {
+"151
+[e $U 1225  ]
+{
+[; ;screenDrawers.h: 152: case (0): {
+"152
+[e :U 1226 ]
+{
+[; ;screenDrawers.h: 153: break;
+"153
+[e $U 1224  ]
+"154
+}
+[; ;screenDrawers.h: 154: }case (1): {
+[e :U 1227 ]
+{
+"155
+[v _i `i ~T0 @X0 1 a ]
+[; ;screenDrawers.h: 155: int i;
+[; ;screenDrawers.h: 156: for (i = 0; i < 4; i++)
+"156
 {
 [e = _i -> 0 `i ]
-[e $ < _i -> 4 `i 1221  ]
-[e $U 1222  ]
-"143
-[e :U 1221 ]
-[; ;screenDrawers.h: 143: questKMT[i] = ' ';
-[e = *U + &U _questKMT * -> -> _i `ui `ux -> -> # *U &U _questKMT `ui `ux -> -> 32 `ui `uc ]
-"142
-[e ++ _i -> 1 `i ]
-[e $ < _i -> 4 `i 1221  ]
-[e :U 1222 ]
-"143
-}
-[; ;screenDrawers.h: 144: questKMT[selKMT] = 0b01111110;
-"144
-[e = *U + &U _questKMT * -> -> _selKMT `uc `ux -> -> # *U &U _questKMT `ui `ux -> -> 126 `i `uc ]
-[; ;screenDrawers.h: 145: lcd_gotoxy(1, 1);
-"145
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 146: printf("Proceso en:     \n");
-"146
-[e ( _printf :s 20C ]
-[; ;screenDrawers.h: 147: printf(" %ckg  %cm3  %csec ", questKMT[0], questKMT[1], questKMT[2]);
-"147
-[e ( _printf , , , (. :s 21C -> *U + &U _questKMT * -> -> -> 0 `i `ui `ux -> -> # *U &U _questKMT `ui `ux `i -> *U + &U _questKMT * -> -> -> 1 `i `ui `ux -> -> # *U &U _questKMT `ui `ux `i -> *U + &U _questKMT * -> -> -> 2 `i `ui `ux -> -> # *U &U _questKMT `ui `ux `i ]
-[; ;screenDrawers.h: 148: break;
-"148
-[e $U 1217  ]
-"149
-}
-[; ;screenDrawers.h: 149: }case (2): {
-[e :U 1224 ]
-{
-[; ;screenDrawers.h: 150: lcd_gotoxy(1, 1);
-"150
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 151: printf("Valor por Corte:\n");
-"151
-[e ( _printf :s 22C ]
-[; ;screenDrawers.h: 152: if(tVarProceso == 0)
-"152
-[e $ ! == -> _tVarProceso `i -> 0 `i 1225  ]
-[; ;screenDrawers.h: 153: printf("   %3.3f kg   ", kgXcorte);
-"153
-[e ( _printf , (. :s 23C -> _kgXcorte `d ]
-[e $U 1226  ]
-"154
-[e :U 1225 ]
-[; ;screenDrawers.h: 154: else if(tVarProceso == 1)
-[e $ ! == -> _tVarProceso `i -> 1 `i 1227  ]
-[; ;screenDrawers.h: 155: printf("   %3.3f m3   ", m3Xcorte);
-"155
-[e ( _printf , (. :s 24C -> _m3Xcorte `d ]
-[e $U 1228  ]
-"156
-[e :U 1227 ]
-[; ;screenDrawers.h: 156: else if(tVarProceso == 2)
-[e $ ! == -> _tVarProceso `i -> 2 `i 1229  ]
-[; ;screenDrawers.h: 157: printf("   %3.3f sec  ", tiXcorte);
+[e $ < _i -> 4 `i 1228  ]
+[e $U 1229  ]
 "157
-[e ( _printf , (. :s 25C -> _tiXcorte `d ]
-[e :U 1229 ]
-"158
 [e :U 1228 ]
-[e :U 1226 ]
-[; ;screenDrawers.h: 158: break;
-[e $U 1217  ]
+[; ;screenDrawers.h: 157: questKMT[i] = ' ';
+[e = *U + &U _questKMT * -> -> _i `ui `ux -> -> # *U &U _questKMT `ui `ux -> -> 32 `ui `uc ]
+"156
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 4 `i 1228  ]
+[e :U 1229 ]
+"157
+}
+[; ;screenDrawers.h: 158: questKMT[selKMT] = 0b01111110;
+"158
+[e = *U + &U _questKMT * -> -> _selKMT `uc `ux -> -> # *U &U _questKMT `ui `ux -> -> 126 `i `uc ]
+[; ;screenDrawers.h: 159: lcd_gotoxy(1, 1);
 "159
-}
-[; ;screenDrawers.h: 159: }case (3): {
-[e :U 1230 ]
-{
-[; ;screenDrawers.h: 160: lcd_gotoxy(1, 1);
-"160
 [e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 161: printf("Cantidad Cortes:\n");
+[; ;screenDrawers.h: 160: printf("Proceso en:     \n");
+"160
+[e ( _printf :s 21C ]
+[; ;screenDrawers.h: 161: printf(" %ckg  %cm3  %csec ", questKMT[0], questKMT[1], questKMT[2]);
 "161
-[e ( _printf :s 26C ]
-[; ;screenDrawers.h: 162: printf("      %d       ", numCortes);
+[e ( _printf , , , (. :s 22C -> *U + &U _questKMT * -> -> -> 0 `i `ui `ux -> -> # *U &U _questKMT `ui `ux `i -> *U + &U _questKMT * -> -> -> 1 `i `ui `ux -> -> # *U &U _questKMT `ui `ux `i -> *U + &U _questKMT * -> -> -> 2 `i `ui `ux -> -> # *U &U _questKMT `ui `ux `i ]
+[; ;screenDrawers.h: 162: break;
 "162
-[e ( _printf , (. :s 27C -> _numCortes `i ]
-[; ;screenDrawers.h: 163: break;
+[e $U 1224  ]
 "163
-[e $U 1217  ]
-"164
 }
-[; ;screenDrawers.h: 164: }case (4): {
+[; ;screenDrawers.h: 163: }case (2): {
 [e :U 1231 ]
 {
-[; ;screenDrawers.h: 165: lcd_gotoxy(1, 1);
+[; ;screenDrawers.h: 164: lcd_gotoxy(1, 1);
+"164
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 165: printf("Valor por Corte:\n");
 "165
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 166: printf("Diametro Tubo:  \n");
+[e ( _printf :s 23C ]
+[; ;screenDrawers.h: 166: drawValEditor();
 "166
-[e ( _printf :s 28C ]
-[; ;screenDrawers.h: 167: printf("   %3.3f mm   ", diamTubo);
+[e ( _drawValEditor ..  ]
+[; ;screenDrawers.h: 167: if(tVarProceso == 0)
 "167
-[e ( _printf , (. :s 29C -> _diamTubo `d ]
-[; ;screenDrawers.h: 168: break;
+[e $ ! == -> _tVarProceso `i -> 0 `i 1232  ]
+[; ;screenDrawers.h: 168: printf("kg    ");
 "168
-[e $U 1217  ]
+[e ( _printf :s 24C ]
+[e $U 1233  ]
 "169
-}
-[; ;screenDrawers.h: 169: }case (5): {
 [e :U 1232 ]
-{
-[; ;screenDrawers.h: 170: lcd_gotoxy(1, 1);
+[; ;screenDrawers.h: 169: else if(tVarProceso == 1)
+[e $ ! == -> _tVarProceso `i -> 1 `i 1234  ]
+[; ;screenDrawers.h: 170: printf("m3    ");
 "170
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 171: printf("Densidad Masa:  \n");
+[e ( _printf :s 25C ]
+[e $U 1235  ]
 "171
-[e ( _printf :s 30C ]
-[; ;screenDrawers.h: 172: printf("  %3.3f kg/m3 ", densidadMasa);
+[e :U 1234 ]
+[; ;screenDrawers.h: 171: else if(tVarProceso == 2)
+[e $ ! == -> _tVarProceso `i -> 2 `i 1236  ]
+[; ;screenDrawers.h: 172: printf("sec   ");
 "172
-[e ( _printf , (. :s 31C -> _densidadMasa `d ]
-[; ;screenDrawers.h: 173: break;
+[e ( _printf :s 26C ]
+[e :U 1236 ]
 "173
-[e $U 1217  ]
+[e :U 1235 ]
+[e :U 1233 ]
+[; ;screenDrawers.h: 173: break;
+[e $U 1224  ]
 "174
 }
-[; ;screenDrawers.h: 174: }case (6): {
-[e :U 1233 ]
+[; ;screenDrawers.h: 174: }case (3): {
+[e :U 1237 ]
 {
 [; ;screenDrawers.h: 175: lcd_gotoxy(1, 1);
 "175
 [e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 176: printf("Velocidad Masa: \n");
+[; ;screenDrawers.h: 176: printf("Cantidad Cortes:\n");
 "176
-[e ( _printf :s 32C ]
-[; ;screenDrawers.h: 177: printf("   %3.3f m/s  ", velocidadMasa);
+[e ( _printf :s 27C ]
+[; ;screenDrawers.h: 177: printf("      %d       ", chanVals);
 "177
-[e ( _printf , (. :s 33C -> _velocidadMasa `d ]
+[e ( _printf , (. :s 28C -> _chanVals `i ]
 [; ;screenDrawers.h: 178: break;
 "178
-[e $U 1217  ]
+[e $U 1224  ]
 "179
 }
+[; ;screenDrawers.h: 179: }case (4): {
+[e :U 1238 ]
+{
+[; ;screenDrawers.h: 180: lcd_gotoxy(1, 1);
 "180
-}
-[; ;screenDrawers.h: 179: }
-[; ;screenDrawers.h: 180: }
-[e $U 1217  ]
-"137
-[e :U 1218 ]
-[e [\ _menuSection , $ -> -> 0 `i `c 1219
- , $ -> -> 1 `i `c 1220
- , $ -> -> 2 `i `c 1224
- , $ -> -> 3 `i `c 1230
- , $ -> -> 4 `i `c 1231
- , $ -> -> 5 `i `c 1232
- , $ -> -> 6 `i `c 1233
- 1217 ]
-"180
-[e :U 1217 ]
-[; ;screenDrawers.h: 181: }
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 181: printf("Diametro Tubo:  \n");
 "181
-[e :UE 1216 ]
-}
+[e ( _printf :s 29C ]
+[; ;screenDrawers.h: 182: drawValEditor();
+"182
+[e ( _drawValEditor ..  ]
+[; ;screenDrawers.h: 183: printf("mm    ");
 "183
-[v _drawPassWord `(v ~T0 @X0 1 ef ]
-{
-[; ;screenDrawers.h: 183: void drawPassWord() {
-[e :U _drawPassWord ]
-[f ]
-[; ;screenDrawers.h: 184: if (!fd) {
+[e ( _printf :s 30C ]
+[; ;screenDrawers.h: 184: break;
 "184
-[e $ ! ! != -> _fd `i -> -> -> 0 `i `uc `i 1235  ]
-{
-[; ;screenDrawers.h: 185: passSection = 0;
+[e $U 1224  ]
 "185
-[e = _passSection -> -> 0 `i `c ]
-[; ;screenDrawers.h: 186: introducido[0] = 0;
+}
+[; ;screenDrawers.h: 185: }case (5): {
+[e :U 1239 ]
+{
+[; ;screenDrawers.h: 186: lcd_gotoxy(1, 1);
 "186
-[e = *U + &U _introducido * -> -> -> 0 `i `ui `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
-[; ;screenDrawers.h: 187: introducido[1] = 0;
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 187: printf("Densidad Masa:  \n");
 "187
-[e = *U + &U _introducido * -> -> -> 1 `i `ui `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
-[; ;screenDrawers.h: 188: introducido[2] = 0;
+[e ( _printf :s 31C ]
+[; ;screenDrawers.h: 188: drawValEditor();
 "188
-[e = *U + &U _introducido * -> -> -> 2 `i `ui `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
-[; ;screenDrawers.h: 189: introducido[3] = 0;
+[e ( _drawValEditor ..  ]
+[; ;screenDrawers.h: 189: printf("kg/m3 ");
 "189
-[e = *U + &U _introducido * -> -> -> 3 `i `ui `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
-[; ;screenDrawers.h: 190: fd = 1;
+[e ( _printf :s 32C ]
+[; ;screenDrawers.h: 190: break;
 "190
-[e = _fd -> -> 1 `i `uc ]
+[e $U 1224  ]
 "191
 }
-[e :U 1235 ]
+[; ;screenDrawers.h: 191: }case (6): {
+[e :U 1240 ]
+{
+[; ;screenDrawers.h: 192: lcd_gotoxy(1, 1);
 "192
-[v _i `i ~T0 @X0 1 a ]
-[; ;screenDrawers.h: 191: }
-[; ;screenDrawers.h: 192: int i;
-[; ;screenDrawers.h: 193: for (i = 0; i < 4; i++)
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 193: printf("Velocidad Masa: \n");
 "193
+[e ( _printf :s 33C ]
+[; ;screenDrawers.h: 194: drawValEditor();
+"194
+[e ( _drawValEditor ..  ]
+[; ;screenDrawers.h: 195: printf("m/s   ");
+"195
+[e ( _printf :s 34C ]
+[; ;screenDrawers.h: 196: break;
+"196
+[e $U 1224  ]
+"197
+}
+"198
+}
+[; ;screenDrawers.h: 197: }
+[; ;screenDrawers.h: 198: }
+[e $U 1224  ]
+"151
+[e :U 1225 ]
+[e [\ _menuSection , $ -> -> 0 `i `c 1226
+ , $ -> -> 1 `i `c 1227
+ , $ -> -> 2 `i `c 1231
+ , $ -> -> 3 `i `c 1237
+ , $ -> -> 4 `i `c 1238
+ , $ -> -> 5 `i `c 1239
+ , $ -> -> 6 `i `c 1240
+ 1224 ]
+"198
+[e :U 1224 ]
+[; ;screenDrawers.h: 199: }
+"199
+[e :UE 1223 ]
+}
+"201
+[v _drawPassWord `(v ~T0 @X0 1 ef ]
+{
+[; ;screenDrawers.h: 201: void drawPassWord() {
+[e :U _drawPassWord ]
+[f ]
+[; ;screenDrawers.h: 202: if (!fd) {
+"202
+[e $ ! ! != -> _fd `i -> -> -> 0 `i `uc `i 1242  ]
+{
+[; ;screenDrawers.h: 203: passSection = 0;
+"203
+[e = _passSection -> -> 0 `i `c ]
+[; ;screenDrawers.h: 204: introducido[0] = 0;
+"204
+[e = *U + &U _introducido * -> -> -> 0 `i `ui `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
+[; ;screenDrawers.h: 205: introducido[1] = 0;
+"205
+[e = *U + &U _introducido * -> -> -> 1 `i `ui `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
+[; ;screenDrawers.h: 206: introducido[2] = 0;
+"206
+[e = *U + &U _introducido * -> -> -> 2 `i `ui `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
+[; ;screenDrawers.h: 207: introducido[3] = 0;
+"207
+[e = *U + &U _introducido * -> -> -> 3 `i `ui `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
+[; ;screenDrawers.h: 208: fd = 1;
+"208
+[e = _fd -> -> 1 `i `uc ]
+"209
+}
+[e :U 1242 ]
+"210
+[v _i `i ~T0 @X0 1 a ]
+[; ;screenDrawers.h: 209: }
+[; ;screenDrawers.h: 210: int i;
+[; ;screenDrawers.h: 211: for (i = 0; i < 4; i++)
+"211
 {
 [e = _i -> 0 `i ]
-[e $ < _i -> 4 `i 1236  ]
-[e $U 1237  ]
-"194
-[e :U 1236 ]
-[; ;screenDrawers.h: 194: passChar[i] = ' ';
-[e = *U + &U _passChar * -> -> _i `ui `ux -> -> # *U &U _passChar `ui `ux -> -> 32 `ui `uc ]
-"193
-[e ++ _i -> 1 `i ]
-[e $ < _i -> 4 `i 1236  ]
-[e :U 1237 ]
-"194
-}
-[; ;screenDrawers.h: 195: passChar[passSection] = 0b01111110;
-"195
-[e = *U + &U _passChar * -> -> _passSection `uc `ux -> -> # *U &U _passChar `ui `ux -> -> 126 `i `uc ]
-[; ;screenDrawers.h: 196: lcd_gotoxy(1, 1);
-"196
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 197: printf("Contrasena:     \n");
-"197
-[e ( _printf :s 34C ]
-[; ;screenDrawers.h: 198: printf("    %c%u%c%u%c%u%c%u    ", passChar[0], introducido[0], passChar[1], introducido[1],
-[; ;screenDrawers.h: 199: passChar[2], introducido[2], passChar[3], introducido[3]);
-"199
-[e ( _printf , , , , , , , , (. :s 35C -> *U + &U _passChar * -> -> -> 0 `i `ui `ux -> -> # *U &U _passChar `ui `ux `i -> *U + &U _introducido * -> -> -> 0 `i `ui `ux -> -> # *U &U _introducido `ui `ux `i -> *U + &U _passChar * -> -> -> 1 `i `ui `ux -> -> # *U &U _passChar `ui `ux `i -> *U + &U _introducido * -> -> -> 1 `i `ui `ux -> -> # *U &U _introducido `ui `ux `i -> *U + &U _passChar * -> -> -> 2 `i `ui `ux -> -> # *U &U _passChar `ui `ux `i -> *U + &U _introducido * -> -> -> 2 `i `ui `ux -> -> # *U &U _introducido `ui `ux `i -> *U + &U _passChar * -> -> -> 3 `i `ui `ux -> -> # *U &U _passChar `ui `ux `i -> *U + &U _introducido * -> -> -> 3 `i `ui `ux -> -> # *U &U _introducido `ui `ux `i ]
-[; ;screenDrawers.h: 200: }
-"200
-[e :UE 1234 ]
-}
-"202
-[v _drawBadPass `(v ~T0 @X0 1 ef ]
-{
-[; ;screenDrawers.h: 202: void drawBadPass() {
-[e :U _drawBadPass ]
-[f ]
-[; ;screenDrawers.h: 203: lcd_gotoxy(1, 1);
-"203
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 204: printf("Contrasena      \n");
-"204
-[e ( _printf :s 36C ]
-[; ;screenDrawers.h: 205: printf("     Erronea    ");
-"205
-[e ( _printf :s 37C ]
-[; ;screenDrawers.h: 206: }
-"206
-[e :UE 1239 ]
-}
-"208
-[v _drawAdvON `(v ~T0 @X0 1 ef ]
-{
-[; ;screenDrawers.h: 208: void drawAdvON() {
-[e :U _drawAdvON ]
-[f ]
-[; ;screenDrawers.h: 209: lcd_gotoxy(1, 1);
-"209
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 210: printf("Modo Configurar:\n");
-"210
-[e ( _printf :s 38C ]
-[; ;screenDrawers.h: 211: printf("    Iniciado    ");
-"211
-[e ( _printf :s 39C ]
-[; ;screenDrawers.h: 212: }
+[e $ < _i -> 4 `i 1243  ]
+[e $U 1244  ]
 "212
-[e :UE 1240 ]
+[e :U 1243 ]
+[; ;screenDrawers.h: 212: passChar[i] = ' ';
+[e = *U + &U _passChar * -> -> _i `ui `ux -> -> # *U &U _passChar `ui `ux -> -> 32 `ui `uc ]
+"211
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 4 `i 1243  ]
+[e :U 1244 ]
+"212
 }
+[; ;screenDrawers.h: 213: passChar[passSection] = 0b01111110;
+"213
+[e = *U + &U _passChar * -> -> _passSection `uc `ux -> -> # *U &U _passChar `ui `ux -> -> 126 `i `uc ]
+[; ;screenDrawers.h: 214: lcd_gotoxy(1, 1);
 "214
-[v _drawAdvOFF `(v ~T0 @X0 1 ef ]
-{
-[; ;screenDrawers.h: 214: void drawAdvOFF() {
-[e :U _drawAdvOFF ]
-[f ]
-[; ;screenDrawers.h: 215: lcd_gotoxy(1, 1);
-"215
 [e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 216: printf("Modo Configurar:\n");
-"216
-[e ( _printf :s 40C ]
-[; ;screenDrawers.h: 217: printf("   Finalizado   ");
+[; ;screenDrawers.h: 215: printf("Contrasena:     \n");
+"215
+[e ( _printf :s 35C ]
+[; ;screenDrawers.h: 216: printf("    %c%u%c%u%c%u%c%u    ", passChar[0], introducido[0], passChar[1], introducido[1],
+[; ;screenDrawers.h: 217: passChar[2], introducido[2], passChar[3], introducido[3]);
 "217
-[e ( _printf :s 41C ]
+[e ( _printf , , , , , , , , (. :s 36C -> *U + &U _passChar * -> -> -> 0 `i `ui `ux -> -> # *U &U _passChar `ui `ux `i -> *U + &U _introducido * -> -> -> 0 `i `ui `ux -> -> # *U &U _introducido `ui `ux `i -> *U + &U _passChar * -> -> -> 1 `i `ui `ux -> -> # *U &U _passChar `ui `ux `i -> *U + &U _introducido * -> -> -> 1 `i `ui `ux -> -> # *U &U _introducido `ui `ux `i -> *U + &U _passChar * -> -> -> 2 `i `ui `ux -> -> # *U &U _passChar `ui `ux `i -> *U + &U _introducido * -> -> -> 2 `i `ui `ux -> -> # *U &U _introducido `ui `ux `i -> *U + &U _passChar * -> -> -> 3 `i `ui `ux -> -> # *U &U _passChar `ui `ux `i -> *U + &U _introducido * -> -> -> 3 `i `ui `ux -> -> # *U &U _introducido `ui `ux `i ]
 [; ;screenDrawers.h: 218: }
 "218
 [e :UE 1241 ]
 }
 "220
+[v _drawBadPass `(v ~T0 @X0 1 ef ]
+{
+[; ;screenDrawers.h: 220: void drawBadPass() {
+[e :U _drawBadPass ]
+[f ]
+[; ;screenDrawers.h: 221: lcd_gotoxy(1, 1);
+"221
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 222: printf("Contrasena      \n");
+"222
+[e ( _printf :s 37C ]
+[; ;screenDrawers.h: 223: printf("     Erronea    ");
+"223
+[e ( _printf :s 38C ]
+[; ;screenDrawers.h: 224: }
+"224
+[e :UE 1246 ]
+}
+"226
+[v _drawAdvON `(v ~T0 @X0 1 ef ]
+{
+[; ;screenDrawers.h: 226: void drawAdvON() {
+[e :U _drawAdvON ]
+[f ]
+[; ;screenDrawers.h: 227: lcd_gotoxy(1, 1);
+"227
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 228: printf("Modo Configurar:\n");
+"228
+[e ( _printf :s 39C ]
+[; ;screenDrawers.h: 229: printf("    Iniciado    ");
+"229
+[e ( _printf :s 40C ]
+[; ;screenDrawers.h: 230: }
+"230
+[e :UE 1247 ]
+}
+"232
+[v _drawAdvOFF `(v ~T0 @X0 1 ef ]
+{
+[; ;screenDrawers.h: 232: void drawAdvOFF() {
+[e :U _drawAdvOFF ]
+[f ]
+[; ;screenDrawers.h: 233: lcd_gotoxy(1, 1);
+"233
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 234: printf("Modo Configurar:\n");
+"234
+[e ( _printf :s 41C ]
+[; ;screenDrawers.h: 235: printf("   Finalizado   ");
+"235
+[e ( _printf :s 42C ]
+[; ;screenDrawers.h: 236: }
+"236
+[e :UE 1248 ]
+}
+"238
 [v _drawSNquest `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;screenDrawers.h: 220: void drawSNquest(char tq) {
+[; ;screenDrawers.h: 238: void drawSNquest(char tq) {
 [e :U _drawSNquest ]
 [v _tq `uc ~T0 @X0 1 r1 ]
 [f ]
-"221
+"239
 [v _i `i ~T0 @X0 1 a ]
-[; ;screenDrawers.h: 221: int i;
-[; ;screenDrawers.h: 222: for (i = 0; i < 2; i++)
-"222
+[; ;screenDrawers.h: 239: int i;
+[; ;screenDrawers.h: 240: for (i = 0; i < 2; i++)
+"240
 {
 [e = _i -> 0 `i ]
-[e $ < _i -> 2 `i 1243  ]
-[e $U 1244  ]
-"223
-[e :U 1243 ]
-[; ;screenDrawers.h: 223: questSN[i] = ' ';
-[e = *U + &U _questSN * -> -> _i `ui `ux -> -> # *U &U _questSN `ui `ux -> -> 32 `ui `uc ]
-"222
-[e ++ _i -> 1 `i ]
-[e $ < _i -> 2 `i 1243  ]
-[e :U 1244 ]
-"223
-}
-[; ;screenDrawers.h: 224: questSN[selSN] = 0b01111110;
-"224
-[e = *U + &U _questSN * -> _selSN `ux -> -> # *U &U _questSN `ui `ux -> -> 126 `i `uc ]
-[; ;screenDrawers.h: 225: lcd_gotoxy(1, 1);
-"225
-[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 226: if (tq == 0)
-"226
-[e $ ! == -> _tq `i -> 0 `i 1246  ]
-[; ;screenDrawers.h: 227: printf("Iniciar Proceso?\n");
-"227
-[e ( _printf :s 42C ]
-[e $U 1247  ]
-"228
-[e :U 1246 ]
-[; ;screenDrawers.h: 228: else if(tq == 1)
-[e $ ! == -> _tq `i -> 1 `i 1248  ]
-[; ;screenDrawers.h: 229: printf("Detener Proceso?\n");
-"229
-[e ( _printf :s 43C ]
-[e $U 1249  ]
-"230
-[e :U 1248 ]
-[; ;screenDrawers.h: 230: else if(tq == 2)
-[e $ ! == -> _tq `i -> 2 `i 1250  ]
-[; ;screenDrawers.h: 231: printf("Guardar Cambio? \n");
-"231
-[e ( _printf :s 44C ]
+[e $ < _i -> 2 `i 1250  ]
+[e $U 1251  ]
+"241
 [e :U 1250 ]
-"232
-[e :U 1249 ]
-[e :U 1247 ]
-[; ;screenDrawers.h: 232: printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
-[e ( _printf , , (. :s 45C -> *U + &U _questSN * -> -> -> 0 `i `ui `ux -> -> # *U &U _questSN `ui `ux `i -> *U + &U _questSN * -> -> -> 1 `i `ui `ux -> -> # *U &U _questSN `ui `ux `i ]
-[; ;screenDrawers.h: 233: }
-"233
-[e :UE 1242 ]
+[; ;screenDrawers.h: 241: questSN[i] = ' ';
+[e = *U + &U _questSN * -> -> _i `ui `ux -> -> # *U &U _questSN `ui `ux -> -> 32 `ui `uc ]
+"240
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 2 `i 1250  ]
+[e :U 1251 ]
+"241
 }
-"235
+[; ;screenDrawers.h: 242: questSN[selSN] = 0b01111110;
+"242
+[e = *U + &U _questSN * -> _selSN `ux -> -> # *U &U _questSN `ui `ux -> -> 126 `i `uc ]
+[; ;screenDrawers.h: 243: lcd_gotoxy(1, 1);
+"243
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 244: if (tq == 0)
+"244
+[e $ ! == -> _tq `i -> 0 `i 1253  ]
+[; ;screenDrawers.h: 245: printf("Iniciar Proceso?\n");
+"245
+[e ( _printf :s 43C ]
+[e $U 1254  ]
+"246
+[e :U 1253 ]
+[; ;screenDrawers.h: 246: else if(tq == 1)
+[e $ ! == -> _tq `i -> 1 `i 1255  ]
+[; ;screenDrawers.h: 247: printf("Detener Proceso?\n");
+"247
+[e ( _printf :s 44C ]
+[e $U 1256  ]
+"248
+[e :U 1255 ]
+[; ;screenDrawers.h: 248: else if(tq == 2)
+[e $ ! == -> _tq `i -> 2 `i 1257  ]
+[; ;screenDrawers.h: 249: printf("Guardar Cambio? \n");
+"249
+[e ( _printf :s 45C ]
+[e $U 1258  ]
+"250
+[e :U 1257 ]
+[; ;screenDrawers.h: 250: else if(tq == 3)
+[e $ ! == -> _tq `i -> 3 `i 1259  ]
+[; ;screenDrawers.h: 251: printf("Init autoCalib? \n");
+"251
+[e ( _printf :s 46C ]
+[e :U 1259 ]
+"252
+[e :U 1258 ]
+[e :U 1256 ]
+[e :U 1254 ]
+[; ;screenDrawers.h: 252: printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
+[e ( _printf , , (. :s 47C -> *U + &U _questSN * -> -> -> 0 `i `ui `ux -> -> # *U &U _questSN `ui `ux `i -> *U + &U _questSN * -> -> -> 1 `i `ui `ux -> -> # *U &U _questSN `ui `ux `i ]
+[; ;screenDrawers.h: 253: }
+"253
+[e :UE 1249 ]
+}
+"255
+[v _drawAutoCalibRes `(v ~T0 @X0 1 ef ]
+{
+[; ;screenDrawers.h: 255: void drawAutoCalibRes() {
+[e :U _drawAutoCalibRes ]
+[f ]
+[; ;screenDrawers.h: 256: lcd_gotoxy(1, 1);
+"256
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 257: printf("Autocalib usando\n");
+"257
+[e ( _printf :s 48C ]
+[; ;screenDrawers.h: 258: printf("1 kg @ 10 cortes");
+"258
+[e ( _printf :s 49C ]
+[; ;screenDrawers.h: 259: }
+"259
+[e :UE 1260 ]
+}
+"261
+[v _drawAutoCalibRM `(v ~T0 @X0 1 ef ]
+{
+[; ;screenDrawers.h: 261: void drawAutoCalibRM() {
+[e :U _drawAutoCalibRM ]
+[f ]
+[; ;screenDrawers.h: 262: lcd_gotoxy(1, 1);
+"262
+[e ( _lcd_gotoxy (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 263: printf("Peso Real:     \n");
+"263
+[e ( _printf :s 50C ]
+[; ;screenDrawers.h: 264: drawValEditor();
+"264
+[e ( _drawValEditor ..  ]
+[; ;screenDrawers.h: 265: printf("kg    ");
+"265
+[e ( _printf :s 51C ]
+[; ;screenDrawers.h: 266: }
+"266
+[e :UE 1261 ]
+}
+"268
 [v _drawScreen `(v ~T0 @X0 1 ef ]
 {
-[; ;screenDrawers.h: 235: void drawScreen() {
+[; ;screenDrawers.h: 268: void drawScreen() {
 [e :U _drawScreen ]
 [f ]
-[; ;screenDrawers.h: 236: switch (actualScreen) {
-"236
-[e $U 1253  ]
-{
-[; ;screenDrawers.h: 237: case (0): {
-"237
-[e :U 1254 ]
-{
-[; ;screenDrawers.h: 238: drawMenu(0);
-"238
-[e ( _drawMenu (1 -> -> 0 `i `uc ]
-[; ;screenDrawers.h: 239: break;
-"239
-[e $U 1252  ]
-"240
-}
-[; ;screenDrawers.h: 240: }case (1): {
-[e :U 1255 ]
-{
-[; ;screenDrawers.h: 241: drawPassWord();
-"241
-[e ( _drawPassWord ..  ]
-[; ;screenDrawers.h: 242: break;
-"242
-[e $U 1252  ]
-"243
-}
-[; ;screenDrawers.h: 243: }case (7): {
-[e :U 1256 ]
-{
-[; ;screenDrawers.h: 244: drawBadPass();
-"244
-[e ( _drawBadPass ..  ]
-[; ;screenDrawers.h: 245: break;
-"245
-[e $U 1252  ]
-"246
-}
-[; ;screenDrawers.h: 246: }case (4): {
-[e :U 1257 ]
-{
-[; ;screenDrawers.h: 247: drawMenu(1);
-"247
-[e ( _drawMenu (1 -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 248: break;
-"248
-[e $U 1252  ]
-"249
-}
-[; ;screenDrawers.h: 249: }case (8): {
-[e :U 1258 ]
-{
-[; ;screenDrawers.h: 250: drawAdvON();
-"250
-[e ( _drawAdvON ..  ]
-[; ;screenDrawers.h: 251: break;
-"251
-[e $U 1252  ]
-"252
-}
-[; ;screenDrawers.h: 252: }case (9): {
-[e :U 1259 ]
-{
-[; ;screenDrawers.h: 253: drawAdvOFF();
-"253
-[e ( _drawAdvOFF ..  ]
-[; ;screenDrawers.h: 254: break;
-"254
-[e $U 1252  ]
-"255
-}
-[; ;screenDrawers.h: 255: }case (6): {
-[e :U 1260 ]
-{
-[; ;screenDrawers.h: 257: break;
-"257
-[e $U 1252  ]
-"258
-}
-[; ;screenDrawers.h: 258: }case (5): {
-[e :U 1261 ]
-{
-[; ;screenDrawers.h: 259: drawChanVal();
-"259
-[e ( _drawChanVal ..  ]
-[; ;screenDrawers.h: 260: break;
-"260
-[e $U 1252  ]
-"261
-}
-[; ;screenDrawers.h: 261: }case (2): {
-[e :U 1262 ]
-{
-[; ;screenDrawers.h: 262: drawSNquest(0);
-"262
-[e ( _drawSNquest (1 -> -> 0 `i `uc ]
-[; ;screenDrawers.h: 263: break;
-"263
-[e $U 1252  ]
-"264
-}
-[; ;screenDrawers.h: 264: }case (3): {
-[e :U 1263 ]
-{
-[; ;screenDrawers.h: 265: drawSNquest(1);
-"265
-[e ( _drawSNquest (1 -> -> 1 `i `uc ]
-[; ;screenDrawers.h: 266: break;
-"266
-[e $U 1252  ]
-"267
-}
-[; ;screenDrawers.h: 267: }case (10): {
-[e :U 1264 ]
-{
-[; ;screenDrawers.h: 268: drawSNquest(2);
-"268
-[e ( _drawSNquest (1 -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 269: break;
+[; ;screenDrawers.h: 269: switch (actualScreen) {
 "269
-[e $U 1252  ]
+[e $U 1264  ]
+{
+[; ;screenDrawers.h: 270: case (0): {
 "270
-}
+[e :U 1265 ]
+{
+[; ;screenDrawers.h: 271: drawMenu(0);
 "271
-}
-[; ;screenDrawers.h: 270: }
-[; ;screenDrawers.h: 271: }
-[e $U 1252  ]
-"236
-[e :U 1253 ]
-[e [\ _actualScreen , $ -> -> 0 `i `c 1254
- , $ -> -> 1 `i `c 1255
- , $ -> -> 7 `i `c 1256
- , $ -> -> 4 `i `c 1257
- , $ -> -> 8 `i `c 1258
- , $ -> -> 9 `i `c 1259
- , $ -> -> 6 `i `c 1260
- , $ -> -> 5 `i `c 1261
- , $ -> -> 2 `i `c 1262
- , $ -> -> 3 `i `c 1263
- , $ -> -> 10 `i `c 1264
- 1252 ]
-"271
-[e :U 1252 ]
-[; ;screenDrawers.h: 272: }
+[e ( _drawMenu (1 -> -> 0 `i `uc ]
+[; ;screenDrawers.h: 272: break;
 "272
-[e :UE 1251 ]
+[e $U 1263  ]
+"273
+}
+[; ;screenDrawers.h: 273: }case (1): {
+[e :U 1266 ]
+{
+[; ;screenDrawers.h: 274: drawPassWord();
+"274
+[e ( _drawPassWord ..  ]
+[; ;screenDrawers.h: 275: break;
+"275
+[e $U 1263  ]
+"276
+}
+[; ;screenDrawers.h: 276: }case (7): {
+[e :U 1267 ]
+{
+[; ;screenDrawers.h: 277: drawBadPass();
+"277
+[e ( _drawBadPass ..  ]
+[; ;screenDrawers.h: 278: break;
+"278
+[e $U 1263  ]
+"279
+}
+[; ;screenDrawers.h: 279: }case (4): {
+[e :U 1268 ]
+{
+[; ;screenDrawers.h: 280: drawMenu(1);
+"280
+[e ( _drawMenu (1 -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 281: break;
+"281
+[e $U 1263  ]
+"282
+}
+[; ;screenDrawers.h: 282: }case (8): {
+[e :U 1269 ]
+{
+[; ;screenDrawers.h: 283: drawAdvON();
+"283
+[e ( _drawAdvON ..  ]
+[; ;screenDrawers.h: 284: break;
+"284
+[e $U 1263  ]
+"285
+}
+[; ;screenDrawers.h: 285: }case (9): {
+[e :U 1270 ]
+{
+[; ;screenDrawers.h: 286: drawAdvOFF();
+"286
+[e ( _drawAdvOFF ..  ]
+[; ;screenDrawers.h: 287: break;
+"287
+[e $U 1263  ]
+"288
+}
+[; ;screenDrawers.h: 288: }case (5): {
+[e :U 1271 ]
+{
+[; ;screenDrawers.h: 289: drawChanVal();
+"289
+[e ( _drawChanVal ..  ]
+[; ;screenDrawers.h: 290: break;
+"290
+[e $U 1263  ]
+"291
+}
+[; ;screenDrawers.h: 291: }case (2): {
+[e :U 1272 ]
+{
+[; ;screenDrawers.h: 292: drawSNquest(0);
+"292
+[e ( _drawSNquest (1 -> -> 0 `i `uc ]
+[; ;screenDrawers.h: 293: break;
+"293
+[e $U 1263  ]
+"294
+}
+[; ;screenDrawers.h: 294: }case (3): {
+[e :U 1273 ]
+{
+[; ;screenDrawers.h: 295: drawSNquest(1);
+"295
+[e ( _drawSNquest (1 -> -> 1 `i `uc ]
+[; ;screenDrawers.h: 296: break;
+"296
+[e $U 1263  ]
+"297
+}
+[; ;screenDrawers.h: 297: }case (10): {
+[e :U 1274 ]
+{
+[; ;screenDrawers.h: 298: drawSNquest(2);
+"298
+[e ( _drawSNquest (1 -> -> 2 `i `uc ]
+[; ;screenDrawers.h: 299: break;
+"299
+[e $U 1263  ]
+"300
+}
+[; ;screenDrawers.h: 300: }case (6): {
+[e :U 1275 ]
+{
+[; ;screenDrawers.h: 301: if(screen_calibVelRes)
+"301
+[e $ ! != -> _screen_calibVelRes `i -> -> -> 0 `i `uc `i 1276  ]
+[; ;screenDrawers.h: 302: drawAutoCalibRes();
+"302
+[e ( _drawAutoCalibRes ..  ]
+[e $U 1277  ]
+"303
+[e :U 1276 ]
+[; ;screenDrawers.h: 303: else
+[; ;screenDrawers.h: 304: drawSNquest(3);
+"304
+[e ( _drawSNquest (1 -> -> 3 `i `uc ]
+[e :U 1277 ]
+[; ;screenDrawers.h: 305: break;
+"305
+[e $U 1263  ]
+"306
+}
+[; ;screenDrawers.h: 306: }case (11): {
+[e :U 1278 ]
+{
+[; ;screenDrawers.h: 307: drawAutoCalibRM();
+"307
+[e ( _drawAutoCalibRM ..  ]
+[; ;screenDrawers.h: 308: break;
+"308
+[e $U 1263  ]
+"309
+}
+"310
+}
+[; ;screenDrawers.h: 309: }
+[; ;screenDrawers.h: 310: }
+[e $U 1263  ]
+"269
+[e :U 1264 ]
+[e [\ _actualScreen , $ -> -> 0 `i `c 1265
+ , $ -> -> 1 `i `c 1266
+ , $ -> -> 7 `i `c 1267
+ , $ -> -> 4 `i `c 1268
+ , $ -> -> 8 `i `c 1269
+ , $ -> -> 9 `i `c 1270
+ , $ -> -> 5 `i `c 1271
+ , $ -> -> 2 `i `c 1272
+ , $ -> -> 3 `i `c 1273
+ , $ -> -> 10 `i `c 1274
+ , $ -> -> 6 `i `c 1275
+ , $ -> -> 11 `i `c 1278
+ 1263 ]
+"310
+[e :U 1263 ]
+[; ;screenDrawers.h: 311: }
+"311
+[e :UE 1262 ]
 }
 "13 source/DisplayProtocol.h
 [v _checkPass `(uc ~T0 @X0 1 ef ]
@@ -10372,19 +10595,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 "16
 {
 [e = _i -> 0 `i ]
-[e $ < _i -> 4 `i 1266  ]
-[e $U 1267  ]
-[e :U 1266 ]
+[e $ < _i -> 4 `i 1280  ]
+[e $U 1281  ]
+[e :U 1280 ]
 {
 [; ;DisplayProtocol.h: 17: if (introducido[i] == contra[i])
 "17
-[e $ ! == -> *U + &U _introducido * -> -> _i `ui `ux -> -> # *U &U _introducido `ui `ux `i -> *U + &U _contra * -> -> _i `ui `ux -> -> # *U &U _contra `ui `ux `i 1269  ]
+[e $ ! == -> *U + &U _introducido * -> -> _i `ui `ux -> -> # *U &U _introducido `ui `ux `i -> *U + &U _contra * -> -> _i `ui `ux -> -> # *U &U _contra `ui `ux `i 1283  ]
 [; ;DisplayProtocol.h: 18: passOK = 1;
 "18
 [e = _passOK -> -> 1 `i `uc ]
-[e $U 1270  ]
+[e $U 1284  ]
 "19
-[e :U 1269 ]
+[e :U 1283 ]
 [; ;DisplayProtocol.h: 19: else {
 {
 [; ;DisplayProtocol.h: 20: passOK = 0;
@@ -10392,16 +10615,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _passOK -> -> 0 `i `uc ]
 [; ;DisplayProtocol.h: 21: break;
 "21
-[e $U 1267  ]
+[e $U 1281  ]
 "22
 }
-[e :U 1270 ]
+[e :U 1284 ]
 "23
 }
 "16
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 4 `i 1266  ]
-[e :U 1267 ]
+[e $ < _i -> 4 `i 1280  ]
+[e :U 1281 ]
 "23
 }
 [; ;DisplayProtocol.h: 22: }
@@ -10409,189 +10632,211 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;DisplayProtocol.h: 24: return passOK;
 "24
 [e ) _passOK ]
-[e $UE 1265  ]
+[e $UE 1279  ]
 [; ;DisplayProtocol.h: 25: }
 "25
-[e :UE 1265 ]
+[e :UE 1279 ]
 }
 "27
+[v _chanValDigUP `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 27: void chanValDigUP() {
+[e :U _chanValDigUP ]
+[f ]
+[; ;DisplayProtocol.h: 28: chanValdig[chanValSection]++;
+"28
+[e ++ *U + &U _chanValdig * -> -> _chanValSection `uc `ux -> -> # *U &U _chanValdig `ui `ux -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 29: if(chanValdig[chanValSection] > 9) {
+"29
+[e $ ! > -> *U + &U _chanValdig * -> -> _chanValSection `uc `ux -> -> # *U &U _chanValdig `ui `ux `i -> 9 `i 1286  ]
+{
+[; ;DisplayProtocol.h: 30: chanValdig[chanValSection] = 0;
+"30
+[e = *U + &U _chanValdig * -> -> _chanValSection `uc `ux -> -> # *U &U _chanValdig `ui `ux -> -> 0 `i `c ]
+[; ;DisplayProtocol.h: 31: if(chanValSection > 1 && chanValdig[chanValSection - 1] < 9)
+"31
+[e $ ! && > -> _chanValSection `i -> 1 `i < -> *U + &U _chanValdig * -> -> - -> _chanValSection `i -> 1 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `i -> 9 `i 1287  ]
+[; ;DisplayProtocol.h: 32: chanValdig[chanValSection - 1]++;
+"32
+[e ++ *U + &U _chanValdig * -> -> - -> _chanValSection `i -> 1 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux -> -> 1 `i `c ]
+[e :U 1287 ]
+"33
+}
+[e :U 1286 ]
+[; ;DisplayProtocol.h: 33: }
+[; ;DisplayProtocol.h: 34: }
+"34
+[e :UE 1285 ]
+}
+"36
+[v _chanValDigDOWN `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 36: void chanValDigDOWN() {
+[e :U _chanValDigDOWN ]
+[f ]
+[; ;DisplayProtocol.h: 37: chanValdig[chanValSection]--;
+"37
+[e -- *U + &U _chanValdig * -> -> _chanValSection `uc `ux -> -> # *U &U _chanValdig `ui `ux -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 38: if(chanValdig[chanValSection] < 0) {
+"38
+[e $ ! < -> *U + &U _chanValdig * -> -> _chanValSection `uc `ux -> -> # *U &U _chanValdig `ui `ux `i -> 0 `i 1289  ]
+{
+[; ;DisplayProtocol.h: 39: chanValdig[chanValSection] = 9;
+"39
+[e = *U + &U _chanValdig * -> -> _chanValSection `uc `ux -> -> # *U &U _chanValdig `ui `ux -> -> 9 `i `c ]
+[; ;DisplayProtocol.h: 40: if(chanValSection > 1 && chanValdig[chanValSection - 1] > 0)
+"40
+[e $ ! && > -> _chanValSection `i -> 1 `i > -> *U + &U _chanValdig * -> -> - -> _chanValSection `i -> 1 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `i -> 0 `i 1290  ]
+[; ;DisplayProtocol.h: 41: chanValdig[chanValSection - 1]--;
+"41
+[e -- *U + &U _chanValdig * -> -> - -> _chanValSection `i -> 1 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux -> -> 1 `i `c ]
+[e :U 1290 ]
+"42
+}
+[e :U 1289 ]
+[; ;DisplayProtocol.h: 42: }
+[; ;DisplayProtocol.h: 43: }
+"43
+[e :UE 1288 ]
+}
+"45
+[v _desintegrator `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 45: void desintegrator() {
+[e :U _desintegrator ]
+[f ]
+[; ;DisplayProtocol.h: 46: chanValSection = 5;
+"46
+[e = _chanValSection -> -> 5 `i `c ]
+"47
+[v _temp `f ~T0 @X0 1 a ]
+[; ;DisplayProtocol.h: 47: float temp = (float)chanValf*1000;
+[e = _temp * _chanValf -> -> 1000 `i `f ]
+"48
+[v _tempL `l ~T0 @X0 1 a ]
+[; ;DisplayProtocol.h: 48: long tempL = (long)temp;
+[e = _tempL -> _temp `l ]
+"49
+[v _temp2 `l ~T0 @X0 1 a ]
+[; ;DisplayProtocol.h: 49: long temp2 = 0;
+[e = _temp2 -> -> 0 `i `l ]
+"50
+[v _temp3 `l ~T0 @X0 1 a ]
+[; ;DisplayProtocol.h: 50: long temp3 = 0;
+[e = _temp3 -> -> 0 `i `l ]
+"51
+[v _i `i ~T0 @X0 1 a ]
+[; ;DisplayProtocol.h: 51: int i;
+[; ;DisplayProtocol.h: 52: for(i = 0; i < 6; i++) {
+"52
+{
+[e = _i -> 0 `i ]
+[e $ < _i -> 6 `i 1292  ]
+[e $U 1293  ]
+[e :U 1292 ]
+{
+[; ;DisplayProtocol.h: 53: temp2 = tempL/exp10[i];
+"53
+[e = _temp2 / _tempL *U + &U _exp10 * -> -> _i `ui `ux -> -> # *U &U _exp10 `ui `ux ]
+[; ;DisplayProtocol.h: 54: temp3 = temp2*exp10[i];
+"54
+[e = _temp3 * _temp2 *U + &U _exp10 * -> -> _i `ui `ux -> -> # *U &U _exp10 `ui `ux ]
+[; ;DisplayProtocol.h: 55: chanValdig[i] = temp2;
+"55
+[e = *U + &U _chanValdig * -> -> _i `ui `ux -> -> # *U &U _chanValdig `ui `ux -> _temp2 `c ]
+[; ;DisplayProtocol.h: 56: tempL -= temp3;
+"56
+[e =- _tempL _temp3 ]
+"57
+}
+"52
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 6 `i 1292  ]
+[e :U 1293 ]
+"57
+}
+[; ;DisplayProtocol.h: 57: }
+[; ;DisplayProtocol.h: 58: }
+"58
+[e :UE 1291 ]
+}
+"60
+[v _integrator `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 60: void integrator() {
+[e :U _integrator ]
+[f ]
+"61
+[v _acum `l ~T0 @X0 1 a ]
+[; ;DisplayProtocol.h: 61: long acum = 0;
+[e = _acum -> -> 0 `i `l ]
+"62
+[v _temp `l ~T0 @X0 1 a ]
+[; ;DisplayProtocol.h: 62: long temp = 0;
+[e = _temp -> -> 0 `i `l ]
+"63
+[v _i `i ~T0 @X0 1 a ]
+[; ;DisplayProtocol.h: 63: int i;
+[; ;DisplayProtocol.h: 64: for(i = 0; i < 6; i++) {
+"64
+{
+[e = _i -> 0 `i ]
+[e $ < _i -> 6 `i 1296  ]
+[e $U 1297  ]
+[e :U 1296 ]
+{
+[; ;DisplayProtocol.h: 65: temp = (long)chanValdig[i]*exp10[i];
+"65
+[e = _temp * -> *U + &U _chanValdig * -> -> _i `ui `ux -> -> # *U &U _chanValdig `ui `ux `l *U + &U _exp10 * -> -> _i `ui `ux -> -> # *U &U _exp10 `ui `ux ]
+[; ;DisplayProtocol.h: 66: acum += temp;
+"66
+[e =+ _acum _temp ]
+"67
+}
+"64
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 6 `i 1296  ]
+[e :U 1297 ]
+"67
+}
+[; ;DisplayProtocol.h: 67: }
+[; ;DisplayProtocol.h: 68: chanValf = (float)acum / 1000;
+"68
+[e = _chanValf / -> _acum `f -> -> 1000 `i `f ]
+[; ;DisplayProtocol.h: 69: }
+"69
+[e :UE 1295 ]
+}
+"71
 [v _confirmEdition `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;DisplayProtocol.h: 27: void confirmEdition(char yes) {
+[; ;DisplayProtocol.h: 71: void confirmEdition(char yes) {
 [e :U _confirmEdition ]
 [v _yes `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;DisplayProtocol.h: 28: switch (menuSection) {
-"28
-[e $U 1273  ]
-{
-[; ;DisplayProtocol.h: 29: case (0): {
-"29
-[e :U 1274 ]
-{
-[; ;DisplayProtocol.h: 30: break;
-"30
-[e $U 1272  ]
-"31
-}
-[; ;DisplayProtocol.h: 31: }case (1): {
-[e :U 1275 ]
-{
-[; ;DisplayProtocol.h: 32: if(yes) {
-"32
-[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1276  ]
-{
-[; ;DisplayProtocol.h: 33: tVarProceso = selKMT;
-"33
-[e = _tVarProceso -> _selKMT `uc ]
-[; ;DisplayProtocol.h: 34: actualScreen = 4;
-"34
-[e = _actualScreen -> -> 4 `i `c ]
-[; ;DisplayProtocol.h: 35: saveSysParams();
-"35
-[e ( _saveSysParams ..  ]
-"36
-}
-[; ;DisplayProtocol.h: 36: }else {
-[e $U 1277  ]
-[e :U 1276 ]
-{
-[; ;DisplayProtocol.h: 37: tempLastScreen = actualScreen;
-"37
-[e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 38: actualScreen = 10;
-"38
-[e = _actualScreen -> -> 10 `i `c ]
-[; ;DisplayProtocol.h: 39: selSN = 1;
-"39
-[e = _selSN -> -> 1 `i `uc ]
-"40
-}
-[e :U 1277 ]
-[; ;DisplayProtocol.h: 40: }
-[; ;DisplayProtocol.h: 41: break;
-"41
-[e $U 1272  ]
-"42
-}
-[; ;DisplayProtocol.h: 42: }case (2): {
-[e :U 1278 ]
-{
-[; ;DisplayProtocol.h: 43: if(yes) {
-"43
-[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1279  ]
-{
-[; ;DisplayProtocol.h: 45: actualScreen = 4;
-"45
-[e = _actualScreen -> -> 4 `i `c ]
-[; ;DisplayProtocol.h: 46: saveSysParams();
-"46
-[e ( _saveSysParams ..  ]
-"47
-}
-[; ;DisplayProtocol.h: 47: }else {
-[e $U 1280  ]
-[e :U 1279 ]
-{
-[; ;DisplayProtocol.h: 48: tempLastScreen = actualScreen;
-"48
-[e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 49: actualScreen = 10;
-"49
-[e = _actualScreen -> -> 10 `i `c ]
-[; ;DisplayProtocol.h: 50: selSN = 1;
-"50
-[e = _selSN -> -> 1 `i `uc ]
-"51
-}
-[e :U 1280 ]
-[; ;DisplayProtocol.h: 51: }
-[; ;DisplayProtocol.h: 52: break;
-"52
-[e $U 1272  ]
-"53
-}
-[; ;DisplayProtocol.h: 53: }case (3): {
-[e :U 1281 ]
-{
-[; ;DisplayProtocol.h: 54: if(yes) {
-"54
-[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1282  ]
-{
-[; ;DisplayProtocol.h: 56: actualScreen = 4;
-"56
-[e = _actualScreen -> -> 4 `i `c ]
-[; ;DisplayProtocol.h: 57: saveSysParams();
-"57
-[e ( _saveSysParams ..  ]
-"58
-}
-[; ;DisplayProtocol.h: 58: }else {
-[e $U 1283  ]
-[e :U 1282 ]
-{
-[; ;DisplayProtocol.h: 59: tempLastScreen = actualScreen;
-"59
-[e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 60: actualScreen = 10;
-"60
-[e = _actualScreen -> -> 10 `i `c ]
-[; ;DisplayProtocol.h: 61: selSN = 1;
-"61
-[e = _selSN -> -> 1 `i `uc ]
-"62
-}
-[e :U 1283 ]
-[; ;DisplayProtocol.h: 62: }
-[; ;DisplayProtocol.h: 63: break;
-"63
-[e $U 1272  ]
-"64
-}
-[; ;DisplayProtocol.h: 64: }case (4): {
-[e :U 1284 ]
-{
-[; ;DisplayProtocol.h: 65: if(yes) {
-"65
-[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1285  ]
-{
-[; ;DisplayProtocol.h: 67: actualScreen = 4;
-"67
-[e = _actualScreen -> -> 4 `i `c ]
-[; ;DisplayProtocol.h: 68: saveSysParams();
-"68
-[e ( _saveSysParams ..  ]
-"69
-}
-[; ;DisplayProtocol.h: 69: }else {
-[e $U 1286  ]
-[e :U 1285 ]
-{
-[; ;DisplayProtocol.h: 70: tempLastScreen = actualScreen;
-"70
-[e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 71: actualScreen = 10;
-"71
-[e = _actualScreen -> -> 10 `i `c ]
-[; ;DisplayProtocol.h: 72: selSN = 1;
+[; ;DisplayProtocol.h: 72: switch (menuSection) {
 "72
-[e = _selSN -> -> 1 `i `uc ]
+[e $U 1301  ]
+{
+[; ;DisplayProtocol.h: 73: case (0): {
 "73
-}
-[e :U 1286 ]
-[; ;DisplayProtocol.h: 73: }
+[e :U 1302 ]
+{
 [; ;DisplayProtocol.h: 74: break;
 "74
-[e $U 1272  ]
+[e $U 1300  ]
 "75
 }
-[; ;DisplayProtocol.h: 75: }case (5): {
-[e :U 1287 ]
+[; ;DisplayProtocol.h: 75: }case (1): {
+[e :U 1303 ]
 {
 [; ;DisplayProtocol.h: 76: if(yes) {
 "76
-[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1288  ]
+[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1304  ]
 {
+[; ;DisplayProtocol.h: 77: tVarProceso = selKMT;
+"77
+[e = _tVarProceso -> _selKMT `uc ]
 [; ;DisplayProtocol.h: 78: actualScreen = 4;
 "78
 [e = _actualScreen -> -> 4 `i `c ]
@@ -10601,8 +10846,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 "80
 }
 [; ;DisplayProtocol.h: 80: }else {
-[e $U 1289  ]
-[e :U 1288 ]
+[e $U 1305  ]
+[e :U 1304 ]
 {
 [; ;DisplayProtocol.h: 81: tempLastScreen = actualScreen;
 "81
@@ -10615,964 +10860,1346 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _selSN -> -> 1 `i `uc ]
 "84
 }
-[e :U 1289 ]
+[e :U 1305 ]
 [; ;DisplayProtocol.h: 84: }
 [; ;DisplayProtocol.h: 85: break;
 "85
-[e $U 1272  ]
+[e $U 1300  ]
 "86
 }
-[; ;DisplayProtocol.h: 86: }case (6): {
-[e :U 1290 ]
+[; ;DisplayProtocol.h: 86: }case (2): {
+[e :U 1306 ]
 {
 [; ;DisplayProtocol.h: 87: if(yes) {
 "87
-[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1291  ]
+[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1307  ]
 {
-[; ;DisplayProtocol.h: 89: actualScreen = 4;
+[; ;DisplayProtocol.h: 88: if(tVarProceso == 0)
+"88
+[e $ ! == -> _tVarProceso `i -> 0 `i 1308  ]
+[; ;DisplayProtocol.h: 89: kgXcorte = chanValf;
 "89
-[e = _actualScreen -> -> 4 `i `c ]
-[; ;DisplayProtocol.h: 90: saveSysParams();
+[e = _kgXcorte _chanValf ]
+[e $U 1309  ]
 "90
-[e ( _saveSysParams ..  ]
+[e :U 1308 ]
+[; ;DisplayProtocol.h: 90: else if(tVarProceso == 1)
+[e $ ! == -> _tVarProceso `i -> 1 `i 1310  ]
+[; ;DisplayProtocol.h: 91: m3Xcorte = chanValf;
 "91
-}
-[; ;DisplayProtocol.h: 91: }else {
-[e $U 1292  ]
-[e :U 1291 ]
-{
-[; ;DisplayProtocol.h: 92: tempLastScreen = actualScreen;
+[e = _m3Xcorte _chanValf ]
+[e $U 1311  ]
 "92
-[e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 93: actualScreen = 10;
+[e :U 1310 ]
+[; ;DisplayProtocol.h: 92: else if(tVarProceso == 2)
+[e $ ! == -> _tVarProceso `i -> 2 `i 1312  ]
+[; ;DisplayProtocol.h: 93: tiXcorte = chanValf;
 "93
-[e = _actualScreen -> -> 10 `i `c ]
-[; ;DisplayProtocol.h: 94: selSN = 1;
+[e = _tiXcorte _chanValf ]
+[e :U 1312 ]
 "94
-[e = _selSN -> -> 1 `i `uc ]
+[e :U 1311 ]
+[e :U 1309 ]
+[; ;DisplayProtocol.h: 94: actualScreen = 4;
+[e = _actualScreen -> -> 4 `i `c ]
+[; ;DisplayProtocol.h: 95: saveSysParams();
 "95
-}
-[e :U 1292 ]
-[; ;DisplayProtocol.h: 95: }
-[; ;DisplayProtocol.h: 96: break;
+[e ( _saveSysParams ..  ]
 "96
-[e $U 1272  ]
-"97
 }
-"98
-}
-[; ;DisplayProtocol.h: 97: }
-[; ;DisplayProtocol.h: 98: }
-[e $U 1272  ]
-"28
-[e :U 1273 ]
-[e [\ _menuSection , $ -> -> 0 `i `c 1274
- , $ -> -> 1 `i `c 1275
- , $ -> -> 2 `i `c 1278
- , $ -> -> 3 `i `c 1281
- , $ -> -> 4 `i `c 1284
- , $ -> -> 5 `i `c 1287
- , $ -> -> 6 `i `c 1290
- 1272 ]
-"98
-[e :U 1272 ]
-[; ;DisplayProtocol.h: 99: }
-"99
-[e :UE 1271 ]
-}
-"101
-[v _pressUP `(v ~T0 @X0 1 ef ]
-{
-[; ;DisplayProtocol.h: 101: void pressUP() {
-[e :U _pressUP ]
-[f ]
-[; ;DisplayProtocol.h: 102: if (actualScreen == 0 || actualScreen == 4) {
-"102
-[e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1294  ]
-{
-[; ;DisplayProtocol.h: 103: menuSection++;
-"103
-[e ++ _menuSection -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 104: if (menuSection > 6)
-"104
-[e $ ! > -> _menuSection `i -> 6 `i 1295  ]
-[; ;DisplayProtocol.h: 105: menuSection = 0;
-"105
-[e = _menuSection -> -> 0 `i `c ]
-[e :U 1295 ]
-"106
-}
-[; ;DisplayProtocol.h: 106: } else if (actualScreen == 1) {
-[e $U 1296  ]
-[e :U 1294 ]
-[e $ ! == -> _actualScreen `i -> 1 `i 1297  ]
-{
-[; ;DisplayProtocol.h: 107: introducido[passSection]++;
-"107
-[e ++ *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 108: if (introducido[passSection] > 9)
-"108
-[e $ ! > -> *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux `i -> 9 `i 1298  ]
-[; ;DisplayProtocol.h: 109: introducido[passSection] = 0;
-"109
-[e = *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
-[e :U 1298 ]
-"110
-}
-[; ;DisplayProtocol.h: 110: } else if (actualScreen == 2 || actualScreen == 3
-[e $U 1299  ]
-[e :U 1297 ]
-[; ;DisplayProtocol.h: 111: || actualScreen == 10) {
-"111
-[e $ ! || || == -> _actualScreen `i -> 2 `i == -> _actualScreen `i -> 3 `i == -> _actualScreen `i -> 10 `i 1300  ]
-{
-[; ;DisplayProtocol.h: 112: selSN = !selSN;
-"112
-[e = _selSN -> -> ! != -> _selSN `i -> -> -> 0 `i `uc `i `i `uc ]
-[; ;DisplayProtocol.h: 113: if(selSN > 1)
-"113
-[e $ ! > -> _selSN `i -> 1 `i 1301  ]
-[; ;DisplayProtocol.h: 114: selSN = 0;
-"114
-[e = _selSN -> -> 0 `i `uc ]
-[e :U 1301 ]
-"115
-}
-[; ;DisplayProtocol.h: 115: }else if(actualScreen == 5) {
-[e $U 1302  ]
-[e :U 1300 ]
-[e $ ! == -> _actualScreen `i -> 5 `i 1303  ]
-{
-[; ;DisplayProtocol.h: 116: switch (menuSection) {
-"116
-[e $U 1305  ]
-{
-[; ;DisplayProtocol.h: 117: case (0): {
-"117
-[e :U 1306 ]
-{
-[; ;DisplayProtocol.h: 118: break;
-"118
-[e $U 1304  ]
-"119
-}
-[; ;DisplayProtocol.h: 119: }case (1): {
+[; ;DisplayProtocol.h: 96: }else {
+[e $U 1313  ]
 [e :U 1307 ]
 {
-[; ;DisplayProtocol.h: 120: selKMT++;
-"120
-[e ++ _selKMT -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 121: if(selKMT > 2)
-"121
-[e $ ! > -> _selKMT `i -> 2 `i 1308  ]
-[; ;DisplayProtocol.h: 122: selKMT = 0;
-"122
-[e = _selKMT -> -> 0 `i `c ]
-[e :U 1308 ]
-[; ;DisplayProtocol.h: 123: break;
-"123
-[e $U 1304  ]
-"124
+[; ;DisplayProtocol.h: 97: tempLastScreen = actualScreen;
+"97
+[e = _tempLastScreen -> _actualScreen `uc ]
+[; ;DisplayProtocol.h: 98: actualScreen = 10;
+"98
+[e = _actualScreen -> -> 10 `i `c ]
+[; ;DisplayProtocol.h: 99: selSN = 1;
+"99
+[e = _selSN -> -> 1 `i `uc ]
+"100
 }
-[; ;DisplayProtocol.h: 124: }case (2): {
-[e :U 1309 ]
-{
-[; ;DisplayProtocol.h: 126: break;
-"126
-[e $U 1304  ]
-"127
-}
-[; ;DisplayProtocol.h: 127: }case (3): {
-[e :U 1310 ]
-{
-[; ;DisplayProtocol.h: 129: break;
-"129
-[e $U 1304  ]
-"130
-}
-[; ;DisplayProtocol.h: 130: }case (4): {
-[e :U 1311 ]
-{
-[; ;DisplayProtocol.h: 132: break;
-"132
-[e $U 1304  ]
-"133
-}
-[; ;DisplayProtocol.h: 133: }case (5): {
-[e :U 1312 ]
-{
-[; ;DisplayProtocol.h: 135: break;
-"135
-[e $U 1304  ]
-"136
-}
-[; ;DisplayProtocol.h: 136: }case (6): {
 [e :U 1313 ]
-{
-[; ;DisplayProtocol.h: 138: break;
-"138
-[e $U 1304  ]
-"139
+[; ;DisplayProtocol.h: 100: }
+[; ;DisplayProtocol.h: 101: break;
+"101
+[e $U 1300  ]
+"102
 }
-"140
-}
-[; ;DisplayProtocol.h: 139: }
-[; ;DisplayProtocol.h: 140: }
-[e $U 1304  ]
-"116
-[e :U 1305 ]
-[e [\ _menuSection , $ -> -> 0 `i `c 1306
- , $ -> -> 1 `i `c 1307
- , $ -> -> 2 `i `c 1309
- , $ -> -> 3 `i `c 1310
- , $ -> -> 4 `i `c 1311
- , $ -> -> 5 `i `c 1312
- , $ -> -> 6 `i `c 1313
- 1304 ]
-"140
-[e :U 1304 ]
-"141
-}
-[e :U 1303 ]
-"142
-[e :U 1302 ]
-[e :U 1299 ]
-[e :U 1296 ]
-[; ;DisplayProtocol.h: 141: }
-[; ;DisplayProtocol.h: 142: }
-[e :UE 1293 ]
-}
-"144
-[v _longPressUP `(v ~T0 @X0 1 ef ]
+[; ;DisplayProtocol.h: 102: }case (3): {
+[e :U 1314 ]
 {
-[; ;DisplayProtocol.h: 144: void longPressUP() {
-[e :U _longPressUP ]
-[f ]
-[; ;DisplayProtocol.h: 145: if (!UPisLP) {
-"145
-[e $ ! ! != -> _UPisLP `i -> -> -> 0 `i `uc `i 1315  ]
+[; ;DisplayProtocol.h: 103: if(yes) {
+"103
+[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1315  ]
 {
-[; ;DisplayProtocol.h: 146: UPisLP = 1;
-"146
-[e = _UPisLP -> -> 1 `i `uc ]
-[; ;DisplayProtocol.h: 147: if (actualScreen == 0 || actualScreen == 4) {
-"147
-[e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1316  ]
-{
-[; ;DisplayProtocol.h: 148: if (holdENTERcont > 5) {
-"148
-[e $ ! > -> _holdENTERcont `i -> 5 `i 1317  ]
-{
-[; ;DisplayProtocol.h: 149: if (actualScreen == 0) {
-"149
-[e $ ! == -> _actualScreen `i -> 0 `i 1318  ]
-{
-[; ;DisplayProtocol.h: 150: actualScreen = 1;
-"150
-[e = _actualScreen -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 151: fd = 0;
-"151
-[e = _fd -> -> 0 `i `uc ]
-"152
+[; ;DisplayProtocol.h: 104: numCortes = chanVals;
+"104
+[e = _numCortes _chanVals ]
+[; ;DisplayProtocol.h: 105: actualScreen = 4;
+"105
+[e = _actualScreen -> -> 4 `i `c ]
+[; ;DisplayProtocol.h: 106: saveSysParams();
+"106
+[e ( _saveSysParams ..  ]
+"107
 }
-[; ;DisplayProtocol.h: 152: } else if (actualScreen == 4)
-[e $U 1319  ]
-[e :U 1318 ]
-[e $ ! == -> _actualScreen `i -> 4 `i 1320  ]
-[; ;DisplayProtocol.h: 153: actualScreen = 9;
-"153
-[e = _actualScreen -> -> 9 `i `c ]
-[e :U 1320 ]
-"154
-[e :U 1319 ]
-}
-[; ;DisplayProtocol.h: 154: } else
-[e $U 1321  ]
-[e :U 1317 ]
-[; ;DisplayProtocol.h: 155: menuSection = 0;
-"155
-[e = _menuSection -> -> 0 `i `c ]
-[e :U 1321 ]
-"156
+[; ;DisplayProtocol.h: 107: }else {
+[e $U 1316  ]
+[e :U 1315 ]
+{
+[; ;DisplayProtocol.h: 108: tempLastScreen = actualScreen;
+"108
+[e = _tempLastScreen -> _actualScreen `uc ]
+[; ;DisplayProtocol.h: 109: actualScreen = 10;
+"109
+[e = _actualScreen -> -> 10 `i `c ]
+[; ;DisplayProtocol.h: 110: selSN = 1;
+"110
+[e = _selSN -> -> 1 `i `uc ]
+"111
 }
 [e :U 1316 ]
-"157
+[; ;DisplayProtocol.h: 111: }
+[; ;DisplayProtocol.h: 112: break;
+"112
+[e $U 1300  ]
+"113
 }
-[e :U 1315 ]
-[; ;DisplayProtocol.h: 156: }
-[; ;DisplayProtocol.h: 157: }
-[; ;DisplayProtocol.h: 158: }
-"158
-[e :UE 1314 ]
-}
-"160
-[v _releaseUP `(v ~T0 @X0 1 ef ]
+[; ;DisplayProtocol.h: 113: }case (4): {
+[e :U 1317 ]
 {
-[; ;DisplayProtocol.h: 160: void releaseUP() {
-[e :U _releaseUP ]
-[f ]
-[; ;DisplayProtocol.h: 161: UPisLP = 0;
-"161
-[e = _UPisLP -> -> 0 `i `uc ]
-[; ;DisplayProtocol.h: 162: UPsecurLock = 0;
-"162
-[e = _UPsecurLock -> -> 0 `i `uc ]
-[; ;DisplayProtocol.h: 163: }
-"163
-[e :UE 1322 ]
-}
-"165
-[v _pressDOWN `(v ~T0 @X0 1 ef ]
+[; ;DisplayProtocol.h: 114: if(yes) {
+"114
+[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1318  ]
 {
-[; ;DisplayProtocol.h: 165: void pressDOWN() {
-[e :U _pressDOWN ]
-[f ]
-[; ;DisplayProtocol.h: 166: if (actualScreen == 0 || actualScreen == 4) {
-"166
-[e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1324  ]
-{
-[; ;DisplayProtocol.h: 167: menuSection--;
-"167
-[e -- _menuSection -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 168: if (menuSection < 0)
-"168
-[e $ ! < -> _menuSection `i -> 0 `i 1325  ]
-[; ;DisplayProtocol.h: 169: menuSection = 6;
-"169
-[e = _menuSection -> -> 6 `i `c ]
-[e :U 1325 ]
-"170
+[; ;DisplayProtocol.h: 115: diamTubo = chanValf;
+"115
+[e = _diamTubo _chanValf ]
+[; ;DisplayProtocol.h: 116: actualScreen = 4;
+"116
+[e = _actualScreen -> -> 4 `i `c ]
+[; ;DisplayProtocol.h: 117: saveSysParams();
+"117
+[e ( _saveSysParams ..  ]
+"118
 }
-[; ;DisplayProtocol.h: 170: } else if (actualScreen == 1) {
-[e $U 1326  ]
+[; ;DisplayProtocol.h: 118: }else {
+[e $U 1319  ]
+[e :U 1318 ]
+{
+[; ;DisplayProtocol.h: 119: tempLastScreen = actualScreen;
+"119
+[e = _tempLastScreen -> _actualScreen `uc ]
+[; ;DisplayProtocol.h: 120: actualScreen = 10;
+"120
+[e = _actualScreen -> -> 10 `i `c ]
+[; ;DisplayProtocol.h: 121: selSN = 1;
+"121
+[e = _selSN -> -> 1 `i `uc ]
+"122
+}
+[e :U 1319 ]
+[; ;DisplayProtocol.h: 122: }
+[; ;DisplayProtocol.h: 123: break;
+"123
+[e $U 1300  ]
+"124
+}
+[; ;DisplayProtocol.h: 124: }case (5): {
+[e :U 1320 ]
+{
+[; ;DisplayProtocol.h: 125: if(yes) {
+"125
+[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1321  ]
+{
+[; ;DisplayProtocol.h: 126: densidadMasa = chanValf;
+"126
+[e = _densidadMasa _chanValf ]
+[; ;DisplayProtocol.h: 127: actualScreen = 4;
+"127
+[e = _actualScreen -> -> 4 `i `c ]
+[; ;DisplayProtocol.h: 128: saveSysParams();
+"128
+[e ( _saveSysParams ..  ]
+"129
+}
+[; ;DisplayProtocol.h: 129: }else {
+[e $U 1322  ]
+[e :U 1321 ]
+{
+[; ;DisplayProtocol.h: 130: tempLastScreen = actualScreen;
+"130
+[e = _tempLastScreen -> _actualScreen `uc ]
+[; ;DisplayProtocol.h: 131: actualScreen = 10;
+"131
+[e = _actualScreen -> -> 10 `i `c ]
+[; ;DisplayProtocol.h: 132: selSN = 1;
+"132
+[e = _selSN -> -> 1 `i `uc ]
+"133
+}
+[e :U 1322 ]
+[; ;DisplayProtocol.h: 133: }
+[; ;DisplayProtocol.h: 134: break;
+"134
+[e $U 1300  ]
+"135
+}
+[; ;DisplayProtocol.h: 135: }case (6): {
+[e :U 1323 ]
+{
+[; ;DisplayProtocol.h: 136: if(yes) {
+"136
+[e $ ! != -> _yes `i -> -> -> 0 `i `uc `i 1324  ]
+{
+[; ;DisplayProtocol.h: 137: velocidadMasa = chanValf;
+"137
+[e = _velocidadMasa _chanValf ]
+[; ;DisplayProtocol.h: 138: actualScreen = 4;
+"138
+[e = _actualScreen -> -> 4 `i `c ]
+[; ;DisplayProtocol.h: 139: saveSysParams();
+"139
+[e ( _saveSysParams ..  ]
+"140
+}
+[; ;DisplayProtocol.h: 140: }else {
+[e $U 1325  ]
 [e :U 1324 ]
-[e $ ! == -> _actualScreen `i -> 1 `i 1327  ]
 {
-[; ;DisplayProtocol.h: 171: introducido[passSection]--;
-"171
-[e -- *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 172: if (introducido[passSection] < 0)
-"172
-[e $ ! < -> *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux `i -> 0 `i 1328  ]
-[; ;DisplayProtocol.h: 173: introducido[passSection] = 9;
-"173
-[e = *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux -> -> 9 `i `c ]
-[e :U 1328 ]
-"174
+[; ;DisplayProtocol.h: 141: tempLastScreen = actualScreen;
+"141
+[e = _tempLastScreen -> _actualScreen `uc ]
+[; ;DisplayProtocol.h: 142: actualScreen = 10;
+"142
+[e = _actualScreen -> -> 10 `i `c ]
+[; ;DisplayProtocol.h: 143: selSN = 1;
+"143
+[e = _selSN -> -> 1 `i `uc ]
+"144
 }
-[; ;DisplayProtocol.h: 174: } else if (actualScreen == 2 || actualScreen == 3
+[e :U 1325 ]
+[; ;DisplayProtocol.h: 144: }
+[; ;DisplayProtocol.h: 145: break;
+"145
+[e $U 1300  ]
+"146
+}
+"147
+}
+[; ;DisplayProtocol.h: 146: }
+[; ;DisplayProtocol.h: 147: }
+[e $U 1300  ]
+"72
+[e :U 1301 ]
+[e [\ _menuSection , $ -> -> 0 `i `c 1302
+ , $ -> -> 1 `i `c 1303
+ , $ -> -> 2 `i `c 1306
+ , $ -> -> 3 `i `c 1314
+ , $ -> -> 4 `i `c 1317
+ , $ -> -> 5 `i `c 1320
+ , $ -> -> 6 `i `c 1323
+ 1300 ]
+"147
+[e :U 1300 ]
+[; ;DisplayProtocol.h: 148: }
+"148
+[e :UE 1299 ]
+}
+"150
+[v _pressUP `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 150: void pressUP() {
+[e :U _pressUP ]
+[f ]
+[; ;DisplayProtocol.h: 151: if (actualScreen == 0 || actualScreen == 4) {
+"151
+[e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1327  ]
+{
+[; ;DisplayProtocol.h: 152: menuSection++;
+"152
+[e ++ _menuSection -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 153: if (menuSection > 6)
+"153
+[e $ ! > -> _menuSection `i -> 6 `i 1328  ]
+[; ;DisplayProtocol.h: 154: menuSection = 0;
+"154
+[e = _menuSection -> -> 0 `i `c ]
+[e :U 1328 ]
+"155
+}
+[; ;DisplayProtocol.h: 155: } else if (actualScreen == 1) {
 [e $U 1329  ]
 [e :U 1327 ]
-[; ;DisplayProtocol.h: 175: || actualScreen == 10) {
-"175
-[e $ ! || || == -> _actualScreen `i -> 2 `i == -> _actualScreen `i -> 3 `i == -> _actualScreen `i -> 10 `i 1330  ]
+[e $ ! == -> _actualScreen `i -> 1 `i 1330  ]
 {
-[; ;DisplayProtocol.h: 176: selSN = !selSN;
-"176
-[e = _selSN -> -> ! != -> _selSN `i -> -> -> 0 `i `uc `i `i `uc ]
-[; ;DisplayProtocol.h: 177: if(selSN > 1)
-"177
-[e $ ! > -> _selSN `i -> 1 `i 1331  ]
-[; ;DisplayProtocol.h: 178: selSN = 0;
-"178
-[e = _selSN -> -> 0 `i `uc ]
+[; ;DisplayProtocol.h: 156: introducido[passSection]++;
+"156
+[e ++ *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 157: if (introducido[passSection] > 9)
+"157
+[e $ ! > -> *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux `i -> 9 `i 1331  ]
+[; ;DisplayProtocol.h: 158: introducido[passSection] = 0;
+"158
+[e = *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux -> -> 0 `i `c ]
 [e :U 1331 ]
-"179
+"159
 }
-[; ;DisplayProtocol.h: 179: }else if(actualScreen == 5) {
+[; ;DisplayProtocol.h: 159: } else if (actualScreen == 2 || actualScreen == 3
 [e $U 1332  ]
 [e :U 1330 ]
-[e $ ! == -> _actualScreen `i -> 5 `i 1333  ]
+[; ;DisplayProtocol.h: 160: || actualScreen == 10) {
+"160
+[e $ ! || || == -> _actualScreen `i -> 2 `i == -> _actualScreen `i -> 3 `i == -> _actualScreen `i -> 10 `i 1333  ]
 {
-[; ;DisplayProtocol.h: 180: switch (menuSection) {
-"180
+[; ;DisplayProtocol.h: 161: selSN = !selSN;
+"161
+[e = _selSN -> -> ! != -> _selSN `i -> -> -> 0 `i `uc `i `i `uc ]
+[; ;DisplayProtocol.h: 162: if(selSN > 1)
+"162
+[e $ ! > -> _selSN `i -> 1 `i 1334  ]
+[; ;DisplayProtocol.h: 163: selSN = 0;
+"163
+[e = _selSN -> -> 0 `i `uc ]
+[e :U 1334 ]
+"164
+}
+[; ;DisplayProtocol.h: 164: }else if(actualScreen == 5) {
 [e $U 1335  ]
+[e :U 1333 ]
+[e $ ! == -> _actualScreen `i -> 5 `i 1336  ]
 {
-[; ;DisplayProtocol.h: 181: case (0): {
-"181
-[e :U 1336 ]
+[; ;DisplayProtocol.h: 165: switch (menuSection) {
+"165
+[e $U 1338  ]
 {
-[; ;DisplayProtocol.h: 182: break;
-"182
-[e $U 1334  ]
-"183
-}
-[; ;DisplayProtocol.h: 183: }case (1): {
-[e :U 1337 ]
-{
-[; ;DisplayProtocol.h: 184: selKMT--;
-"184
-[e -- _selKMT -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 185: if(selKMT < 0)
-"185
-[e $ ! < -> _selKMT `i -> 0 `i 1338  ]
-[; ;DisplayProtocol.h: 186: selKMT = 2;
-"186
-[e = _selKMT -> -> 2 `i `c ]
-[e :U 1338 ]
-[; ;DisplayProtocol.h: 187: break;
-"187
-[e $U 1334  ]
-"188
-}
-[; ;DisplayProtocol.h: 188: }case (2): {
+[; ;DisplayProtocol.h: 166: case (0): {
+"166
 [e :U 1339 ]
 {
-[; ;DisplayProtocol.h: 190: break;
-"190
-[e $U 1334  ]
-"191
+[; ;DisplayProtocol.h: 167: break;
+"167
+[e $U 1337  ]
+"168
 }
-[; ;DisplayProtocol.h: 191: }case (3): {
+[; ;DisplayProtocol.h: 168: }case (1): {
 [e :U 1340 ]
 {
-[; ;DisplayProtocol.h: 193: break;
-"193
-[e $U 1334  ]
-"194
-}
-[; ;DisplayProtocol.h: 194: }case (4): {
+[; ;DisplayProtocol.h: 169: selKMT++;
+"169
+[e ++ _selKMT -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 170: if(selKMT > 2)
+"170
+[e $ ! > -> _selKMT `i -> 2 `i 1341  ]
+[; ;DisplayProtocol.h: 171: selKMT = 0;
+"171
+[e = _selKMT -> -> 0 `i `c ]
 [e :U 1341 ]
-{
-[; ;DisplayProtocol.h: 196: break;
-"196
-[e $U 1334  ]
-"197
+[; ;DisplayProtocol.h: 172: break;
+"172
+[e $U 1337  ]
+"173
 }
-[; ;DisplayProtocol.h: 197: }case (5): {
+[; ;DisplayProtocol.h: 173: }case (2): {
 [e :U 1342 ]
 {
-[; ;DisplayProtocol.h: 199: break;
-"199
-[e $U 1334  ]
-"200
+[; ;DisplayProtocol.h: 174: chanValDigUP();
+"174
+[e ( _chanValDigUP ..  ]
+[; ;DisplayProtocol.h: 175: break;
+"175
+[e $U 1337  ]
+"176
 }
-[; ;DisplayProtocol.h: 200: }case (6): {
+[; ;DisplayProtocol.h: 176: }case (3): {
 [e :U 1343 ]
 {
-[; ;DisplayProtocol.h: 202: break;
-"202
-[e $U 1334  ]
-"203
+[; ;DisplayProtocol.h: 177: chanVals++;
+"177
+[e ++ _chanVals -> -> 1 `i `s ]
+[; ;DisplayProtocol.h: 178: break;
+"178
+[e $U 1337  ]
+"179
 }
-"204
-}
-[; ;DisplayProtocol.h: 203: }
-[; ;DisplayProtocol.h: 204: }
-[e $U 1334  ]
+[; ;DisplayProtocol.h: 179: }case (4): {
+[e :U 1344 ]
+{
+[; ;DisplayProtocol.h: 180: chanValDigUP();
 "180
-[e :U 1335 ]
-[e [\ _menuSection , $ -> -> 0 `i `c 1336
- , $ -> -> 1 `i `c 1337
- , $ -> -> 2 `i `c 1339
- , $ -> -> 3 `i `c 1340
- , $ -> -> 4 `i `c 1341
- , $ -> -> 5 `i `c 1342
- , $ -> -> 6 `i `c 1343
- 1334 ]
-"204
-[e :U 1334 ]
-"205
+[e ( _chanValDigUP ..  ]
+[; ;DisplayProtocol.h: 181: break;
+"181
+[e $U 1337  ]
+"182
 }
-[e :U 1333 ]
-"206
+[; ;DisplayProtocol.h: 182: }case (5): {
+[e :U 1345 ]
+{
+[; ;DisplayProtocol.h: 183: chanValDigUP();
+"183
+[e ( _chanValDigUP ..  ]
+[; ;DisplayProtocol.h: 184: break;
+"184
+[e $U 1337  ]
+"185
+}
+[; ;DisplayProtocol.h: 185: }case (6): {
+[e :U 1346 ]
+{
+[; ;DisplayProtocol.h: 186: chanValDigUP();
+"186
+[e ( _chanValDigUP ..  ]
+[; ;DisplayProtocol.h: 187: break;
+"187
+[e $U 1337  ]
+"188
+}
+"189
+}
+[; ;DisplayProtocol.h: 188: }
+[; ;DisplayProtocol.h: 189: }
+[e $U 1337  ]
+"165
+[e :U 1338 ]
+[e [\ _menuSection , $ -> -> 0 `i `c 1339
+ , $ -> -> 1 `i `c 1340
+ , $ -> -> 2 `i `c 1342
+ , $ -> -> 3 `i `c 1343
+ , $ -> -> 4 `i `c 1344
+ , $ -> -> 5 `i `c 1345
+ , $ -> -> 6 `i `c 1346
+ 1337 ]
+"189
+[e :U 1337 ]
+"190
+}
+[e :U 1336 ]
+"191
+[e :U 1335 ]
 [e :U 1332 ]
 [e :U 1329 ]
-[e :U 1326 ]
-[; ;DisplayProtocol.h: 205: }
-[; ;DisplayProtocol.h: 206: }
-[e :UE 1323 ]
+[; ;DisplayProtocol.h: 190: }
+[; ;DisplayProtocol.h: 191: }
+[e :UE 1326 ]
 }
-"208
-[v _longPressDOWN `(v ~T0 @X0 1 ef ]
+"193
+[v _longPressUP `(v ~T0 @X0 1 ef ]
 {
-[; ;DisplayProtocol.h: 208: void longPressDOWN() {
-[e :U _longPressDOWN ]
+[; ;DisplayProtocol.h: 193: void longPressUP() {
+[e :U _longPressUP ]
 [f ]
-[; ;DisplayProtocol.h: 209: if (!DOWNisLP) {
-"209
-[e $ ! ! != -> _DOWNisLP `i -> -> -> 0 `i `uc `i 1345  ]
+[; ;DisplayProtocol.h: 194: if (!UPisLP) {
+"194
+[e $ ! ! != -> _UPisLP `i -> -> -> 0 `i `uc `i 1348  ]
 {
-[; ;DisplayProtocol.h: 210: DOWNisLP = 1;
-"210
-[e = _DOWNisLP -> -> 1 `i `uc ]
-"212
-}
-[e :U 1345 ]
-[; ;DisplayProtocol.h: 212: }
-[; ;DisplayProtocol.h: 213: }
-"213
-[e :UE 1344 ]
-}
-"215
-[v _releaseDOWN `(v ~T0 @X0 1 ef ]
+[; ;DisplayProtocol.h: 195: UPisLP = 1;
+"195
+[e = _UPisLP -> -> 1 `i `uc ]
+[; ;DisplayProtocol.h: 196: if (actualScreen == 0 || actualScreen == 4) {
+"196
+[e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1349  ]
 {
-[; ;DisplayProtocol.h: 215: void releaseDOWN() {
-[e :U _releaseDOWN ]
-[f ]
-[; ;DisplayProtocol.h: 216: DOWNisLP = 0;
-"216
-[e = _DOWNisLP -> -> 0 `i `uc ]
-[; ;DisplayProtocol.h: 217: DOWNsecurLock = 0;
-"217
-[e = _DOWNsecurLock -> -> 0 `i `uc ]
-[; ;DisplayProtocol.h: 218: }
-"218
-[e :UE 1346 ]
-}
-"220
-[v _pressRETRO `(v ~T0 @X0 1 ef ]
+[; ;DisplayProtocol.h: 197: if (holdENTERcont > 5) {
+"197
+[e $ ! > -> _holdENTERcont `i -> 5 `i 1350  ]
 {
-[; ;DisplayProtocol.h: 220: void pressRETRO() {
-[e :U _pressRETRO ]
-[f ]
-[; ;DisplayProtocol.h: 221: if (actualScreen == 1) {
-"221
-[e $ ! == -> _actualScreen `i -> 1 `i 1348  ]
+[; ;DisplayProtocol.h: 198: if (actualScreen == 0) {
+"198
+[e $ ! == -> _actualScreen `i -> 0 `i 1351  ]
 {
-[; ;DisplayProtocol.h: 222: actualScreen = 0;
-"222
-[e = _actualScreen -> -> 0 `i `c ]
-"223
+[; ;DisplayProtocol.h: 199: actualScreen = 1;
+"199
+[e = _actualScreen -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 200: fd = 0;
+"200
+[e = _fd -> -> 0 `i `uc ]
+"201
 }
-[; ;DisplayProtocol.h: 223: }else if (actualScreen == 2 || actualScreen == 3
-[e $U 1349  ]
-[e :U 1348 ]
-[; ;DisplayProtocol.h: 224: || actualScreen == 10)
-"224
-[e $ ! || || == -> _actualScreen `i -> 2 `i == -> _actualScreen `i -> 3 `i == -> _actualScreen `i -> 10 `i 1350  ]
-[; ;DisplayProtocol.h: 225: actualScreen = tempLastScreen;
-"225
-[e = _actualScreen -> _tempLastScreen `c ]
-[e $U 1351  ]
-"226
-[e :U 1350 ]
-[; ;DisplayProtocol.h: 226: else if(actualScreen == 5)
-[e $ ! == -> _actualScreen `i -> 5 `i 1352  ]
-[; ;DisplayProtocol.h: 227: actualScreen = 4;
-"227
-[e = _actualScreen -> -> 4 `i `c ]
-[e :U 1352 ]
-"228
+[; ;DisplayProtocol.h: 201: } else if (actualScreen == 4)
+[e $U 1352  ]
 [e :U 1351 ]
-[e :U 1349 ]
-[; ;DisplayProtocol.h: 228: }
-[e :UE 1347 ]
+[e $ ! == -> _actualScreen `i -> 4 `i 1353  ]
+[; ;DisplayProtocol.h: 202: actualScreen = 9;
+"202
+[e = _actualScreen -> -> 9 `i `c ]
+[e :U 1353 ]
+"203
+[e :U 1352 ]
 }
-"230
-[v _longPressRETRO `(v ~T0 @X0 1 ef ]
+[; ;DisplayProtocol.h: 203: } else
+[e $U 1354  ]
+[e :U 1350 ]
+[; ;DisplayProtocol.h: 204: menuSection = 0;
+"204
+[e = _menuSection -> -> 0 `i `c ]
+[e :U 1354 ]
+"205
+}
+[; ;DisplayProtocol.h: 205: }else if(actualScreen == 5) {
+[e $U 1355  ]
+[e :U 1349 ]
+[e $ ! == -> _actualScreen `i -> 5 `i 1356  ]
 {
-[; ;DisplayProtocol.h: 230: void longPressRETRO() {
-[e :U _longPressRETRO ]
-[f ]
-[; ;DisplayProtocol.h: 231: if (!RETROisLP) {
-"231
-[e $ ! ! != -> _RETROisLP `i -> -> -> 0 `i `uc `i 1354  ]
-{
-[; ;DisplayProtocol.h: 232: RETROisLP = 1;
-"232
-[e = _RETROisLP -> -> 1 `i `uc ]
-[; ;DisplayProtocol.h: 233: if(actualScreen == 0 || actualScreen == 4) {
-"233
-[e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1355  ]
-{
-[; ;DisplayProtocol.h: 234: if(ProcessStarted) {
-"234
-[e $ ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1356  ]
-{
-[; ;DisplayProtocol.h: 235: tempLastScreen = actualScreen;
-"235
-[e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 236: actualScreen = 3;
-"236
-[e = _actualScreen -> -> 3 `i `c ]
-[; ;DisplayProtocol.h: 237: selSN = 0;
-"237
-[e = _selSN -> -> 0 `i `uc ]
-"238
+[; ;DisplayProtocol.h: 206: if(menuSection == 3)
+"206
+[e $ ! == -> _menuSection `i -> 3 `i 1357  ]
+[; ;DisplayProtocol.h: 207: chanVals += 10;
+"207
+[e =+ _chanVals -> -> 10 `i `s ]
+[e :U 1357 ]
+"208
 }
 [e :U 1356 ]
-"239
-}
+"209
 [e :U 1355 ]
-"240
 }
-[e :U 1354 ]
-[; ;DisplayProtocol.h: 238: }
-[; ;DisplayProtocol.h: 239: }
-[; ;DisplayProtocol.h: 240: }
-[; ;DisplayProtocol.h: 241: }
-"241
-[e :UE 1353 ]
+[e :U 1348 ]
+[; ;DisplayProtocol.h: 208: }
+[; ;DisplayProtocol.h: 209: }
+[; ;DisplayProtocol.h: 210: }
+"210
+[e :UE 1347 ]
 }
-"243
-[v _releaseRETRO `(v ~T0 @X0 1 ef ]
+"212
+[v _releaseUP `(v ~T0 @X0 1 ef ]
 {
-[; ;DisplayProtocol.h: 243: void releaseRETRO() {
-[e :U _releaseRETRO ]
+[; ;DisplayProtocol.h: 212: void releaseUP() {
+[e :U _releaseUP ]
 [f ]
-[; ;DisplayProtocol.h: 244: RETROisLP = 0;
-"244
-[e = _RETROisLP -> -> 0 `i `uc ]
-[; ;DisplayProtocol.h: 245: RETROsecurLock = 0;
-"245
-[e = _RETROsecurLock -> -> 0 `i `uc ]
-[; ;DisplayProtocol.h: 246: }
-"246
-[e :UE 1357 ]
-}
-"248
-[v _pressENTER `(v ~T0 @X0 1 ef ]
-{
-[; ;DisplayProtocol.h: 248: void pressENTER() {
-[e :U _pressENTER ]
-[f ]
-[; ;DisplayProtocol.h: 249: if (actualScreen == 1) {
-"249
-[e $ ! == -> _actualScreen `i -> 1 `i 1359  ]
-{
-[; ;DisplayProtocol.h: 250: passSection++;
-"250
-[e ++ _passSection -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 251: if (passSection > 3) {
-"251
-[e $ ! > -> _passSection `i -> 3 `i 1360  ]
-{
-[; ;DisplayProtocol.h: 252: passSection = 0;
-"252
-[e = _passSection -> -> 0 `i `c ]
-[; ;DisplayProtocol.h: 253: if (checkPass())
-"253
-[e $ ! != -> ( _checkPass ..  `i -> -> -> 0 `i `uc `i 1361  ]
-[; ;DisplayProtocol.h: 254: actualScreen = 8;
-"254
-[e = _actualScreen -> -> 8 `i `c ]
-[e $U 1362  ]
-"255
-[e :U 1361 ]
-[; ;DisplayProtocol.h: 255: else
-[; ;DisplayProtocol.h: 256: actualScreen = 7;
-"256
-[e = _actualScreen -> -> 7 `i `c ]
-[e :U 1362 ]
-"257
-}
-[e :U 1360 ]
-"258
-}
-[; ;DisplayProtocol.h: 257: }
-[; ;DisplayProtocol.h: 258: }else if(actualScreen == 4) {
-[e $U 1363  ]
-[e :U 1359 ]
-[e $ ! == -> _actualScreen `i -> 4 `i 1364  ]
-{
-[; ;DisplayProtocol.h: 259: switch (menuSection) {
-"259
-[e $U 1366  ]
-{
-[; ;DisplayProtocol.h: 260: case (0): {
-"260
-[e :U 1367 ]
-{
-[; ;DisplayProtocol.h: 261: tempLastScreen = actualScreen;
-"261
-[e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 262: if(ProcessStarted) {
-"262
-[e $ ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1368  ]
-{
-[; ;DisplayProtocol.h: 263: actualScreen = 3;
-"263
-[e = _actualScreen -> -> 3 `i `c ]
-[; ;DisplayProtocol.h: 264: selSN = 0;
-"264
-[e = _selSN -> -> 0 `i `uc ]
-"265
-}
-[; ;DisplayProtocol.h: 265: }else {
-[e $U 1369  ]
-[e :U 1368 ]
-{
-[; ;DisplayProtocol.h: 266: actualScreen = 2;
-"266
-[e = _actualScreen -> -> 2 `i `c ]
-[; ;DisplayProtocol.h: 267: selSN = 1;
-"267
-[e = _selSN -> -> 1 `i `uc ]
-"268
-}
-[e :U 1369 ]
-[; ;DisplayProtocol.h: 268: }
-[; ;DisplayProtocol.h: 269: break;
-"269
-[e $U 1365  ]
-"270
-}
-[; ;DisplayProtocol.h: 270: }case (1): {
-[e :U 1370 ]
-{
-[; ;DisplayProtocol.h: 271: tempLastScreen = actualScreen;
-"271
-[e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 272: selKMT = tVarProceso;
-"272
-[e = _selKMT -> _tVarProceso `c ]
-[; ;DisplayProtocol.h: 273: actualScreen = 5;
-"273
-[e = _actualScreen -> -> 5 `i `c ]
-[; ;DisplayProtocol.h: 274: break;
-"274
-[e $U 1365  ]
-"275
-}
-[; ;DisplayProtocol.h: 275: }case (2): {
-[e :U 1371 ]
-{
-[; ;DisplayProtocol.h: 277: break;
-"277
-[e $U 1365  ]
-"278
-}
-[; ;DisplayProtocol.h: 278: }case (3): {
-[e :U 1372 ]
-{
-[; ;DisplayProtocol.h: 280: break;
-"280
-[e $U 1365  ]
-"281
-}
-[; ;DisplayProtocol.h: 281: }case (4): {
-[e :U 1373 ]
-{
-[; ;DisplayProtocol.h: 283: break;
-"283
-[e $U 1365  ]
-"284
-}
-[; ;DisplayProtocol.h: 284: }case (5): {
-[e :U 1374 ]
-{
-[; ;DisplayProtocol.h: 286: break;
-"286
-[e $U 1365  ]
-"287
-}
-[; ;DisplayProtocol.h: 287: }case (6): {
-[e :U 1375 ]
-{
-[; ;DisplayProtocol.h: 289: break;
-"289
-[e $U 1365  ]
-"290
-}
-"291
-}
-[; ;DisplayProtocol.h: 290: }
-[; ;DisplayProtocol.h: 291: }
-[e $U 1365  ]
-"259
-[e :U 1366 ]
-[e [\ _menuSection , $ -> -> 0 `i `c 1367
- , $ -> -> 1 `i `c 1370
- , $ -> -> 2 `i `c 1371
- , $ -> -> 3 `i `c 1372
- , $ -> -> 4 `i `c 1373
- , $ -> -> 5 `i `c 1374
- , $ -> -> 6 `i `c 1375
- 1365 ]
-"291
-[e :U 1365 ]
-"292
-}
-[; ;DisplayProtocol.h: 292: }else if(actualScreen == 7)
-[e $U 1376  ]
-[e :U 1364 ]
-[e $ ! == -> _actualScreen `i -> 7 `i 1377  ]
-[; ;DisplayProtocol.h: 293: actualScreen = 1;
-"293
-[e = _actualScreen -> -> 1 `i `c ]
-[e $U 1378  ]
-"294
-[e :U 1377 ]
-[; ;DisplayProtocol.h: 294: else if(actualScreen == 6) {
-[e $ ! == -> _actualScreen `i -> 6 `i 1379  ]
-{
-"296
-}
-[; ;DisplayProtocol.h: 296: }else if(actualScreen == 5)
-[e $U 1380  ]
-[e :U 1379 ]
-[e $ ! == -> _actualScreen `i -> 5 `i 1381  ]
-[; ;DisplayProtocol.h: 297: confirmEdition(!ProcessStarted);
-"297
-[e ( _confirmEdition (1 -> -> ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i `i `uc ]
-[e $U 1382  ]
-"298
-[e :U 1381 ]
-[; ;DisplayProtocol.h: 298: else if(actualScreen == 2) {
-[e $ ! == -> _actualScreen `i -> 2 `i 1383  ]
-{
-[; ;DisplayProtocol.h: 299: ProcessStarted = !selSN;
-"299
-[e = _ProcessStarted -> -> ! != -> _selSN `i -> -> -> 0 `i `uc `i `i `uc ]
-[; ;DisplayProtocol.h: 300: actualScreen = tempLastScreen;
-"300
-[e = _actualScreen -> _tempLastScreen `c ]
-"301
-}
-[; ;DisplayProtocol.h: 301: }else if(actualScreen == 3) {
-[e $U 1384  ]
-[e :U 1383 ]
-[e $ ! == -> _actualScreen `i -> 3 `i 1385  ]
-{
-[; ;DisplayProtocol.h: 302: ProcessStarted = selSN;
-"302
-[e = _ProcessStarted _selSN ]
-[; ;DisplayProtocol.h: 303: actualScreen = tempLastScreen;
-"303
-[e = _actualScreen -> _tempLastScreen `c ]
-"304
-}
-[; ;DisplayProtocol.h: 304: }else if(actualScreen == 10) {
-[e $U 1386  ]
-[e :U 1385 ]
-[e $ ! == -> _actualScreen `i -> 10 `i 1387  ]
-{
-[; ;DisplayProtocol.h: 305: if(!selSN)
-"305
-[e $ ! ! != -> _selSN `i -> -> -> 0 `i `uc `i 1388  ]
-[; ;DisplayProtocol.h: 306: confirmEdition(1);
-"306
-[e ( _confirmEdition (1 -> -> 1 `i `uc ]
-[e $U 1389  ]
-"307
-[e :U 1388 ]
-[; ;DisplayProtocol.h: 307: else
-[; ;DisplayProtocol.h: 308: actualScreen = tempLastScreen;
-"308
-[e = _actualScreen -> _tempLastScreen `c ]
-[e :U 1389 ]
-"309
-}
-[; ;DisplayProtocol.h: 309: }else if(actualScreen == 8)
-[e $U 1390  ]
-[e :U 1387 ]
-[e $ ! == -> _actualScreen `i -> 8 `i 1391  ]
-[; ;DisplayProtocol.h: 310: actualScreen = 4;
-"310
-[e = _actualScreen -> -> 4 `i `c ]
-[e $U 1392  ]
-"311
-[e :U 1391 ]
-[; ;DisplayProtocol.h: 311: else if(actualScreen == 9)
-[e $ ! == -> _actualScreen `i -> 9 `i 1393  ]
-[; ;DisplayProtocol.h: 312: actualScreen = 0;
-"312
-[e = _actualScreen -> -> 0 `i `c ]
-[e :U 1393 ]
-"313
-[e :U 1392 ]
-[e :U 1390 ]
-[e :U 1386 ]
-[e :U 1384 ]
-[e :U 1382 ]
-[e :U 1380 ]
-[e :U 1378 ]
-[e :U 1376 ]
-[e :U 1363 ]
-[; ;DisplayProtocol.h: 313: }
+[; ;DisplayProtocol.h: 213: UPisLP = 0;
+"213
+[e = _UPisLP -> -> 0 `i `uc ]
+[; ;DisplayProtocol.h: 214: UPsecurLock = 0;
+"214
+[e = _UPsecurLock -> -> 0 `i `uc ]
+[; ;DisplayProtocol.h: 215: }
+"215
 [e :UE 1358 ]
 }
-"315
-[v _longPressENTER `(v ~T0 @X0 1 ef ]
+"217
+[v _pressDOWN `(v ~T0 @X0 1 ef ]
 {
-[; ;DisplayProtocol.h: 315: void longPressENTER() {
-[e :U _longPressENTER ]
+[; ;DisplayProtocol.h: 217: void pressDOWN() {
+[e :U _pressDOWN ]
 [f ]
-[; ;DisplayProtocol.h: 316: if (!ENTERisLP) {
-"316
-[e $ ! ! != -> _ENTERisLP `i -> -> -> 0 `i `uc `i 1395  ]
+[; ;DisplayProtocol.h: 218: if (actualScreen == 0 || actualScreen == 4) {
+"218
+[e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1360  ]
 {
-[; ;DisplayProtocol.h: 317: ENTERisLP = 1;
-"317
-[e = _ENTERisLP -> -> 1 `i `uc ]
-[; ;DisplayProtocol.h: 318: if(actualScreen == 0 || actualScreen == 4) {
-"318
+[; ;DisplayProtocol.h: 219: menuSection--;
+"219
+[e -- _menuSection -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 220: if (menuSection < 0)
+"220
+[e $ ! < -> _menuSection `i -> 0 `i 1361  ]
+[; ;DisplayProtocol.h: 221: menuSection = 6;
+"221
+[e = _menuSection -> -> 6 `i `c ]
+[e :U 1361 ]
+"222
+}
+[; ;DisplayProtocol.h: 222: } else if (actualScreen == 1) {
+[e $U 1362  ]
+[e :U 1360 ]
+[e $ ! == -> _actualScreen `i -> 1 `i 1363  ]
+{
+[; ;DisplayProtocol.h: 223: introducido[passSection]--;
+"223
+[e -- *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 224: if (introducido[passSection] < 0)
+"224
+[e $ ! < -> *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux `i -> 0 `i 1364  ]
+[; ;DisplayProtocol.h: 225: introducido[passSection] = 9;
+"225
+[e = *U + &U _introducido * -> -> _passSection `uc `ux -> -> # *U &U _introducido `ui `ux -> -> 9 `i `c ]
+[e :U 1364 ]
+"226
+}
+[; ;DisplayProtocol.h: 226: } else if (actualScreen == 2 || actualScreen == 3
+[e $U 1365  ]
+[e :U 1363 ]
+[; ;DisplayProtocol.h: 227: || actualScreen == 10) {
+"227
+[e $ ! || || == -> _actualScreen `i -> 2 `i == -> _actualScreen `i -> 3 `i == -> _actualScreen `i -> 10 `i 1366  ]
+{
+[; ;DisplayProtocol.h: 228: selSN = !selSN;
+"228
+[e = _selSN -> -> ! != -> _selSN `i -> -> -> 0 `i `uc `i `i `uc ]
+[; ;DisplayProtocol.h: 229: if(selSN > 1)
+"229
+[e $ ! > -> _selSN `i -> 1 `i 1367  ]
+[; ;DisplayProtocol.h: 230: selSN = 0;
+"230
+[e = _selSN -> -> 0 `i `uc ]
+[e :U 1367 ]
+"231
+}
+[; ;DisplayProtocol.h: 231: }else if(actualScreen == 5) {
+[e $U 1368  ]
+[e :U 1366 ]
+[e $ ! == -> _actualScreen `i -> 5 `i 1369  ]
+{
+[; ;DisplayProtocol.h: 232: switch (menuSection) {
+"232
+[e $U 1371  ]
+{
+[; ;DisplayProtocol.h: 233: case (0): {
+"233
+[e :U 1372 ]
+{
+[; ;DisplayProtocol.h: 234: break;
+"234
+[e $U 1370  ]
+"235
+}
+[; ;DisplayProtocol.h: 235: }case (1): {
+[e :U 1373 ]
+{
+[; ;DisplayProtocol.h: 236: selKMT--;
+"236
+[e -- _selKMT -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 237: if(selKMT < 0)
+"237
+[e $ ! < -> _selKMT `i -> 0 `i 1374  ]
+[; ;DisplayProtocol.h: 238: selKMT = 2;
+"238
+[e = _selKMT -> -> 2 `i `c ]
+[e :U 1374 ]
+[; ;DisplayProtocol.h: 239: break;
+"239
+[e $U 1370  ]
+"240
+}
+[; ;DisplayProtocol.h: 240: }case (2): {
+[e :U 1375 ]
+{
+[; ;DisplayProtocol.h: 241: chanValDigDOWN();
+"241
+[e ( _chanValDigDOWN ..  ]
+[; ;DisplayProtocol.h: 242: break;
+"242
+[e $U 1370  ]
+"243
+}
+[; ;DisplayProtocol.h: 243: }case (3): {
+[e :U 1376 ]
+{
+[; ;DisplayProtocol.h: 244: chanVals--;
+"244
+[e -- _chanVals -> -> 1 `i `s ]
+[; ;DisplayProtocol.h: 245: break;
+"245
+[e $U 1370  ]
+"246
+}
+[; ;DisplayProtocol.h: 246: }case (4): {
+[e :U 1377 ]
+{
+[; ;DisplayProtocol.h: 247: chanValDigDOWN();
+"247
+[e ( _chanValDigDOWN ..  ]
+[; ;DisplayProtocol.h: 248: break;
+"248
+[e $U 1370  ]
+"249
+}
+[; ;DisplayProtocol.h: 249: }case (5): {
+[e :U 1378 ]
+{
+[; ;DisplayProtocol.h: 250: chanValDigDOWN();
+"250
+[e ( _chanValDigDOWN ..  ]
+[; ;DisplayProtocol.h: 251: break;
+"251
+[e $U 1370  ]
+"252
+}
+[; ;DisplayProtocol.h: 252: }case (6): {
+[e :U 1379 ]
+{
+[; ;DisplayProtocol.h: 253: chanValDigDOWN();
+"253
+[e ( _chanValDigDOWN ..  ]
+[; ;DisplayProtocol.h: 254: break;
+"254
+[e $U 1370  ]
+"255
+}
+"256
+}
+[; ;DisplayProtocol.h: 255: }
+[; ;DisplayProtocol.h: 256: }
+[e $U 1370  ]
+"232
+[e :U 1371 ]
+[e [\ _menuSection , $ -> -> 0 `i `c 1372
+ , $ -> -> 1 `i `c 1373
+ , $ -> -> 2 `i `c 1375
+ , $ -> -> 3 `i `c 1376
+ , $ -> -> 4 `i `c 1377
+ , $ -> -> 5 `i `c 1378
+ , $ -> -> 6 `i `c 1379
+ 1370 ]
+"256
+[e :U 1370 ]
+"257
+}
+[e :U 1369 ]
+"258
+[e :U 1368 ]
+[e :U 1365 ]
+[e :U 1362 ]
+[; ;DisplayProtocol.h: 257: }
+[; ;DisplayProtocol.h: 258: }
+[e :UE 1359 ]
+}
+"260
+[v _longPressDOWN `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 260: void longPressDOWN() {
+[e :U _longPressDOWN ]
+[f ]
+[; ;DisplayProtocol.h: 261: if (!DOWNisLP) {
+"261
+[e $ ! ! != -> _DOWNisLP `i -> -> -> 0 `i `uc `i 1381  ]
+{
+[; ;DisplayProtocol.h: 262: DOWNisLP = 1;
+"262
+[e = _DOWNisLP -> -> 1 `i `uc ]
+[; ;DisplayProtocol.h: 263: if(actualScreen == 5) {
+"263
+[e $ ! == -> _actualScreen `i -> 5 `i 1382  ]
+{
+[; ;DisplayProtocol.h: 264: if(menuSection == 3)
+"264
+[e $ ! == -> _menuSection `i -> 3 `i 1383  ]
+[; ;DisplayProtocol.h: 265: chanVals -= 10;
+"265
+[e =- _chanVals -> -> 10 `i `s ]
+[e :U 1383 ]
+"266
+}
+[e :U 1382 ]
+"267
+}
+[e :U 1381 ]
+[; ;DisplayProtocol.h: 266: }
+[; ;DisplayProtocol.h: 267: }
+[; ;DisplayProtocol.h: 268: }
+"268
+[e :UE 1380 ]
+}
+"270
+[v _releaseDOWN `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 270: void releaseDOWN() {
+[e :U _releaseDOWN ]
+[f ]
+[; ;DisplayProtocol.h: 271: DOWNisLP = 0;
+"271
+[e = _DOWNisLP -> -> 0 `i `uc ]
+[; ;DisplayProtocol.h: 272: DOWNsecurLock = 0;
+"272
+[e = _DOWNsecurLock -> -> 0 `i `uc ]
+[; ;DisplayProtocol.h: 273: }
+"273
+[e :UE 1384 ]
+}
+"275
+[v _pressRETRO `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 275: void pressRETRO() {
+[e :U _pressRETRO ]
+[f ]
+[; ;DisplayProtocol.h: 276: if (actualScreen == 1) {
+"276
+[e $ ! == -> _actualScreen `i -> 1 `i 1386  ]
+{
+[; ;DisplayProtocol.h: 277: actualScreen = 0;
+"277
+[e = _actualScreen -> -> 0 `i `c ]
+"278
+}
+[; ;DisplayProtocol.h: 278: }else if (actualScreen == 2 || actualScreen == 3
+[e $U 1387  ]
+[e :U 1386 ]
+[; ;DisplayProtocol.h: 279: || actualScreen == 10) {
+"279
+[e $ ! || || == -> _actualScreen `i -> 2 `i == -> _actualScreen `i -> 3 `i == -> _actualScreen `i -> 10 `i 1388  ]
+{
+[; ;DisplayProtocol.h: 280: actualScreen = tempLastScreen;
+"280
+[e = _actualScreen -> _tempLastScreen `c ]
+"281
+}
+[; ;DisplayProtocol.h: 281: }else if(actualScreen == 5) {
+[e $U 1389  ]
+[e :U 1388 ]
+[e $ ! == -> _actualScreen `i -> 5 `i 1390  ]
+{
+[; ;DisplayProtocol.h: 282: if(menuSection != 3 && menuSection != 1) {
+"282
+[e $ ! && != -> _menuSection `i -> 3 `i != -> _menuSection `i -> 1 `i 1391  ]
+{
+[; ;DisplayProtocol.h: 283: chanValSection++;
+"283
+[e ++ _chanValSection -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 284: if(chanValSection > 5)
+"284
+[e $ ! > -> _chanValSection `i -> 5 `i 1392  ]
+[; ;DisplayProtocol.h: 285: chanValSection = 0;
+"285
+[e = _chanValSection -> -> 0 `i `c ]
+[e :U 1392 ]
+"286
+}
+[; ;DisplayProtocol.h: 286: }else
+[e $U 1393  ]
+[e :U 1391 ]
+[; ;DisplayProtocol.h: 287: actualScreen = 4;
+"287
+[e = _actualScreen -> -> 4 `i `c ]
+[e :U 1393 ]
+"288
+}
+[e :U 1390 ]
+"290
+[e :U 1389 ]
+[e :U 1387 ]
+[; ;DisplayProtocol.h: 288: }
+[; ;DisplayProtocol.h: 290: }
+[e :UE 1385 ]
+}
+"292
+[v _longPressRETRO `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 292: void longPressRETRO() {
+[e :U _longPressRETRO ]
+[f ]
+[; ;DisplayProtocol.h: 293: if (!RETROisLP) {
+"293
+[e $ ! ! != -> _RETROisLP `i -> -> -> 0 `i `uc `i 1395  ]
+{
+[; ;DisplayProtocol.h: 294: RETROisLP = 1;
+"294
+[e = _RETROisLP -> -> 1 `i `uc ]
+[; ;DisplayProtocol.h: 295: if(actualScreen == 0 || actualScreen == 4) {
+"295
 [e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1396  ]
 {
-[; ;DisplayProtocol.h: 319: if (holdUPcont > 5) {
-"319
-[e $ ! > -> _holdUPcont `i -> 5 `i 1397  ]
+[; ;DisplayProtocol.h: 296: if(ProcessStarted) {
+"296
+[e $ ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1397  ]
 {
-[; ;DisplayProtocol.h: 320: if (actualScreen == 0) {
-"320
-[e $ ! == -> _actualScreen `i -> 0 `i 1398  ]
-{
-[; ;DisplayProtocol.h: 321: actualScreen = 1;
-"321
-[e = _actualScreen -> -> 1 `i `c ]
-[; ;DisplayProtocol.h: 322: fd = 0;
-"322
-[e = _fd -> -> 0 `i `uc ]
-"323
-}
-[; ;DisplayProtocol.h: 323: } else if (actualScreen == 4)
-[e $U 1399  ]
-[e :U 1398 ]
-[e $ ! == -> _actualScreen `i -> 4 `i 1400  ]
-[; ;DisplayProtocol.h: 324: actualScreen = 9;
-"324
-[e = _actualScreen -> -> 9 `i `c ]
-[e :U 1400 ]
-"325
-[e :U 1399 ]
-}
-[; ;DisplayProtocol.h: 325: } else if(!ProcessStarted) {
-[e $U 1401  ]
-[e :U 1397 ]
-[e $ ! ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1402  ]
-{
-[; ;DisplayProtocol.h: 326: tempLastScreen = actualScreen;
-"326
+[; ;DisplayProtocol.h: 297: tempLastScreen = actualScreen;
+"297
 [e = _tempLastScreen -> _actualScreen `uc ]
-[; ;DisplayProtocol.h: 327: actualScreen = 2;
-"327
-[e = _actualScreen -> -> 2 `i `c ]
-[; ;DisplayProtocol.h: 328: selSN = 1;
-"328
-[e = _selSN -> -> 1 `i `uc ]
-"329
+[; ;DisplayProtocol.h: 298: actualScreen = 3;
+"298
+[e = _actualScreen -> -> 3 `i `c ]
+[; ;DisplayProtocol.h: 299: selSN = 0;
+"299
+[e = _selSN -> -> 0 `i `uc ]
+"300
 }
-[e :U 1402 ]
-"330
-[e :U 1401 ]
+[e :U 1397 ]
+"301
 }
+[; ;DisplayProtocol.h: 300: }
+[; ;DisplayProtocol.h: 301: }else if(actualScreen == 5)
+[e $U 1398  ]
 [e :U 1396 ]
-"331
+[e $ ! == -> _actualScreen `i -> 5 `i 1399  ]
+[; ;DisplayProtocol.h: 302: actualScreen = 4;
+"302
+[e = _actualScreen -> -> 4 `i `c ]
+[e :U 1399 ]
+"303
+[e :U 1398 ]
 }
 [e :U 1395 ]
-[; ;DisplayProtocol.h: 329: }
-[; ;DisplayProtocol.h: 330: }
-[; ;DisplayProtocol.h: 331: }
-[; ;DisplayProtocol.h: 332: }
-"332
+[; ;DisplayProtocol.h: 303: }
+[; ;DisplayProtocol.h: 304: }
+"304
 [e :UE 1394 ]
 }
+"306
+[v _releaseRETRO `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 306: void releaseRETRO() {
+[e :U _releaseRETRO ]
+[f ]
+[; ;DisplayProtocol.h: 307: RETROisLP = 0;
+"307
+[e = _RETROisLP -> -> 0 `i `uc ]
+[; ;DisplayProtocol.h: 308: RETROsecurLock = 0;
+"308
+[e = _RETROsecurLock -> -> 0 `i `uc ]
+[; ;DisplayProtocol.h: 309: }
+"309
+[e :UE 1400 ]
+}
+"311
+[v _pressENTER `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 311: void pressENTER() {
+[e :U _pressENTER ]
+[f ]
+[; ;DisplayProtocol.h: 312: if (actualScreen == 1) {
+"312
+[e $ ! == -> _actualScreen `i -> 1 `i 1402  ]
+{
+[; ;DisplayProtocol.h: 313: passSection++;
+"313
+[e ++ _passSection -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 314: if (passSection > 3) {
+"314
+[e $ ! > -> _passSection `i -> 3 `i 1403  ]
+{
+[; ;DisplayProtocol.h: 315: passSection = 0;
+"315
+[e = _passSection -> -> 0 `i `c ]
+[; ;DisplayProtocol.h: 316: if (checkPass())
+"316
+[e $ ! != -> ( _checkPass ..  `i -> -> -> 0 `i `uc `i 1404  ]
+[; ;DisplayProtocol.h: 317: actualScreen = 8;
+"317
+[e = _actualScreen -> -> 8 `i `c ]
+[e $U 1405  ]
+"318
+[e :U 1404 ]
+[; ;DisplayProtocol.h: 318: else
+[; ;DisplayProtocol.h: 319: actualScreen = 7;
+"319
+[e = _actualScreen -> -> 7 `i `c ]
+[e :U 1405 ]
+"320
+}
+[e :U 1403 ]
+"321
+}
+[; ;DisplayProtocol.h: 320: }
+[; ;DisplayProtocol.h: 321: }else if(actualScreen == 4) {
+[e $U 1406  ]
+[e :U 1402 ]
+[e $ ! == -> _actualScreen `i -> 4 `i 1407  ]
+{
+[; ;DisplayProtocol.h: 322: switch (menuSection) {
+"322
+[e $U 1409  ]
+{
+[; ;DisplayProtocol.h: 323: case (0): {
+"323
+[e :U 1410 ]
+{
+[; ;DisplayProtocol.h: 324: tempLastScreen = actualScreen;
+"324
+[e = _tempLastScreen -> _actualScreen `uc ]
+[; ;DisplayProtocol.h: 325: if(ProcessStarted) {
+"325
+[e $ ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1411  ]
+{
+[; ;DisplayProtocol.h: 326: actualScreen = 3;
+"326
+[e = _actualScreen -> -> 3 `i `c ]
+[; ;DisplayProtocol.h: 327: selSN = 0;
+"327
+[e = _selSN -> -> 0 `i `uc ]
+"328
+}
+[; ;DisplayProtocol.h: 328: }else {
+[e $U 1412  ]
+[e :U 1411 ]
+{
+[; ;DisplayProtocol.h: 329: actualScreen = 2;
+"329
+[e = _actualScreen -> -> 2 `i `c ]
+[; ;DisplayProtocol.h: 330: selSN = 1;
+"330
+[e = _selSN -> -> 1 `i `uc ]
+"331
+}
+[e :U 1412 ]
+[; ;DisplayProtocol.h: 331: }
+[; ;DisplayProtocol.h: 332: break;
+"332
+[e $U 1408  ]
+"333
+}
+[; ;DisplayProtocol.h: 333: }case (1): {
+[e :U 1413 ]
+{
+[; ;DisplayProtocol.h: 334: tempLastScreen = actualScreen;
 "334
+[e = _tempLastScreen -> _actualScreen `uc ]
+[; ;DisplayProtocol.h: 335: selKMT = tVarProceso;
+"335
+[e = _selKMT -> _tVarProceso `c ]
+[; ;DisplayProtocol.h: 336: actualScreen = 5;
+"336
+[e = _actualScreen -> -> 5 `i `c ]
+[; ;DisplayProtocol.h: 337: break;
+"337
+[e $U 1408  ]
+"338
+}
+[; ;DisplayProtocol.h: 338: }case (2): {
+[e :U 1414 ]
+{
+[; ;DisplayProtocol.h: 339: if(tVarProceso == 0)
+"339
+[e $ ! == -> _tVarProceso `i -> 0 `i 1415  ]
+[; ;DisplayProtocol.h: 340: chanValf = kgXcorte;
+"340
+[e = _chanValf _kgXcorte ]
+[e $U 1416  ]
+"341
+[e :U 1415 ]
+[; ;DisplayProtocol.h: 341: else if(tVarProceso == 1)
+[e $ ! == -> _tVarProceso `i -> 1 `i 1417  ]
+[; ;DisplayProtocol.h: 342: chanValf = m3Xcorte;
+"342
+[e = _chanValf _m3Xcorte ]
+[e $U 1418  ]
+"343
+[e :U 1417 ]
+[; ;DisplayProtocol.h: 343: else if(tVarProceso == 2)
+[e $ ! == -> _tVarProceso `i -> 2 `i 1419  ]
+[; ;DisplayProtocol.h: 344: chanValf = tiXcorte;
+"344
+[e = _chanValf _tiXcorte ]
+[e :U 1419 ]
+"346
+[e :U 1418 ]
+[e :U 1416 ]
+[; ;DisplayProtocol.h: 346: desintegrator();
+[e ( _desintegrator ..  ]
+[; ;DisplayProtocol.h: 347: actualScreen = 5;
+"347
+[e = _actualScreen -> -> 5 `i `c ]
+[; ;DisplayProtocol.h: 348: break;
+"348
+[e $U 1408  ]
+"349
+}
+[; ;DisplayProtocol.h: 349: }case (3): {
+[e :U 1420 ]
+{
+[; ;DisplayProtocol.h: 350: chanVals = numCortes;
+"350
+[e = _chanVals _numCortes ]
+[; ;DisplayProtocol.h: 351: actualScreen = 5;
+"351
+[e = _actualScreen -> -> 5 `i `c ]
+[; ;DisplayProtocol.h: 352: break;
+"352
+[e $U 1408  ]
+"353
+}
+[; ;DisplayProtocol.h: 353: }case (4): {
+[e :U 1421 ]
+{
+[; ;DisplayProtocol.h: 354: chanValf = diamTubo;
+"354
+[e = _chanValf _diamTubo ]
+[; ;DisplayProtocol.h: 355: desintegrator();
+"355
+[e ( _desintegrator ..  ]
+[; ;DisplayProtocol.h: 356: actualScreen = 5;
+"356
+[e = _actualScreen -> -> 5 `i `c ]
+[; ;DisplayProtocol.h: 357: break;
+"357
+[e $U 1408  ]
+"358
+}
+[; ;DisplayProtocol.h: 358: }case (5): {
+[e :U 1422 ]
+{
+[; ;DisplayProtocol.h: 359: chanValf = densidadMasa;
+"359
+[e = _chanValf _densidadMasa ]
+[; ;DisplayProtocol.h: 360: desintegrator();
+"360
+[e ( _desintegrator ..  ]
+[; ;DisplayProtocol.h: 361: actualScreen = 5;
+"361
+[e = _actualScreen -> -> 5 `i `c ]
+[; ;DisplayProtocol.h: 362: break;
+"362
+[e $U 1408  ]
+"363
+}
+[; ;DisplayProtocol.h: 363: }case (6): {
+[e :U 1423 ]
+{
+[; ;DisplayProtocol.h: 364: chanValf = velocidadMasa;
+"364
+[e = _chanValf _velocidadMasa ]
+[; ;DisplayProtocol.h: 365: desintegrator();
+"365
+[e ( _desintegrator ..  ]
+[; ;DisplayProtocol.h: 366: actualScreen = 5;
+"366
+[e = _actualScreen -> -> 5 `i `c ]
+[; ;DisplayProtocol.h: 367: break;
+"367
+[e $U 1408  ]
+"368
+}
+"369
+}
+[; ;DisplayProtocol.h: 368: }
+[; ;DisplayProtocol.h: 369: }
+[e $U 1408  ]
+"322
+[e :U 1409 ]
+[e [\ _menuSection , $ -> -> 0 `i `c 1410
+ , $ -> -> 1 `i `c 1413
+ , $ -> -> 2 `i `c 1414
+ , $ -> -> 3 `i `c 1420
+ , $ -> -> 4 `i `c 1421
+ , $ -> -> 5 `i `c 1422
+ , $ -> -> 6 `i `c 1423
+ 1408 ]
+"369
+[e :U 1408 ]
+"370
+}
+[; ;DisplayProtocol.h: 370: }else if(actualScreen == 7)
+[e $U 1424  ]
+[e :U 1407 ]
+[e $ ! == -> _actualScreen `i -> 7 `i 1425  ]
+[; ;DisplayProtocol.h: 371: actualScreen = 1;
+"371
+[e = _actualScreen -> -> 1 `i `c ]
+[e $U 1426  ]
+"372
+[e :U 1425 ]
+[; ;DisplayProtocol.h: 372: else if(actualScreen == 6) {
+[e $ ! == -> _actualScreen `i -> 6 `i 1427  ]
+{
+"374
+}
+[; ;DisplayProtocol.h: 374: }else if(actualScreen == 5) {
+[e $U 1428  ]
+[e :U 1427 ]
+[e $ ! == -> _actualScreen `i -> 5 `i 1429  ]
+{
+[; ;DisplayProtocol.h: 375: if(menuSection != 3 && menuSection != 1) {
+"375
+[e $ ! && != -> _menuSection `i -> 3 `i != -> _menuSection `i -> 1 `i 1430  ]
+{
+[; ;DisplayProtocol.h: 376: chanValSection--;
+"376
+[e -- _chanValSection -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 377: if(chanValSection < 0)
+"377
+[e $ ! < -> _chanValSection `i -> 0 `i 1431  ]
+[; ;DisplayProtocol.h: 378: chanValSection = 5;
+"378
+[e = _chanValSection -> -> 5 `i `c ]
+[e :U 1431 ]
+"379
+}
+[; ;DisplayProtocol.h: 379: }else
+[e $U 1432  ]
+[e :U 1430 ]
+[; ;DisplayProtocol.h: 380: confirmEdition(!ProcessStarted);
+"380
+[e ( _confirmEdition (1 -> -> ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i `i `uc ]
+[e :U 1432 ]
+"381
+}
+[; ;DisplayProtocol.h: 381: }else if(actualScreen == 2) {
+[e $U 1433  ]
+[e :U 1429 ]
+[e $ ! == -> _actualScreen `i -> 2 `i 1434  ]
+{
+[; ;DisplayProtocol.h: 382: ProcessStarted = !selSN;
+"382
+[e = _ProcessStarted -> -> ! != -> _selSN `i -> -> -> 0 `i `uc `i `i `uc ]
+[; ;DisplayProtocol.h: 383: actualScreen = tempLastScreen;
+"383
+[e = _actualScreen -> _tempLastScreen `c ]
+"384
+}
+[; ;DisplayProtocol.h: 384: }else if(actualScreen == 3) {
+[e $U 1435  ]
+[e :U 1434 ]
+[e $ ! == -> _actualScreen `i -> 3 `i 1436  ]
+{
+[; ;DisplayProtocol.h: 385: ProcessStarted = selSN;
+"385
+[e = _ProcessStarted _selSN ]
+[; ;DisplayProtocol.h: 386: actualScreen = tempLastScreen;
+"386
+[e = _actualScreen -> _tempLastScreen `c ]
+"387
+}
+[; ;DisplayProtocol.h: 387: }else if(actualScreen == 10) {
+[e $U 1437  ]
+[e :U 1436 ]
+[e $ ! == -> _actualScreen `i -> 10 `i 1438  ]
+{
+[; ;DisplayProtocol.h: 388: if(!selSN)
+"388
+[e $ ! ! != -> _selSN `i -> -> -> 0 `i `uc `i 1439  ]
+[; ;DisplayProtocol.h: 389: confirmEdition(1);
+"389
+[e ( _confirmEdition (1 -> -> 1 `i `uc ]
+[e $U 1440  ]
+"390
+[e :U 1439 ]
+[; ;DisplayProtocol.h: 390: else
+[; ;DisplayProtocol.h: 391: actualScreen = tempLastScreen;
+"391
+[e = _actualScreen -> _tempLastScreen `c ]
+[e :U 1440 ]
+"392
+}
+[; ;DisplayProtocol.h: 392: }else if(actualScreen == 8)
+[e $U 1441  ]
+[e :U 1438 ]
+[e $ ! == -> _actualScreen `i -> 8 `i 1442  ]
+[; ;DisplayProtocol.h: 393: actualScreen = 4;
+"393
+[e = _actualScreen -> -> 4 `i `c ]
+[e $U 1443  ]
+"394
+[e :U 1442 ]
+[; ;DisplayProtocol.h: 394: else if(actualScreen == 9)
+[e $ ! == -> _actualScreen `i -> 9 `i 1444  ]
+[; ;DisplayProtocol.h: 395: actualScreen = 0;
+"395
+[e = _actualScreen -> -> 0 `i `c ]
+[e :U 1444 ]
+"396
+[e :U 1443 ]
+[e :U 1441 ]
+[e :U 1437 ]
+[e :U 1435 ]
+[e :U 1433 ]
+[e :U 1428 ]
+[e :U 1426 ]
+[e :U 1424 ]
+[e :U 1406 ]
+[; ;DisplayProtocol.h: 396: }
+[e :UE 1401 ]
+}
+"398
+[v _longPressENTER `(v ~T0 @X0 1 ef ]
+{
+[; ;DisplayProtocol.h: 398: void longPressENTER() {
+[e :U _longPressENTER ]
+[f ]
+[; ;DisplayProtocol.h: 399: if (!ENTERisLP) {
+"399
+[e $ ! ! != -> _ENTERisLP `i -> -> -> 0 `i `uc `i 1446  ]
+{
+[; ;DisplayProtocol.h: 400: ENTERisLP = 1;
+"400
+[e = _ENTERisLP -> -> 1 `i `uc ]
+[; ;DisplayProtocol.h: 401: if(actualScreen == 0 || actualScreen == 4) {
+"401
+[e $ ! || == -> _actualScreen `i -> 0 `i == -> _actualScreen `i -> 4 `i 1447  ]
+{
+[; ;DisplayProtocol.h: 402: if (holdUPcont > 5) {
+"402
+[e $ ! > -> _holdUPcont `i -> 5 `i 1448  ]
+{
+[; ;DisplayProtocol.h: 403: if (actualScreen == 0) {
+"403
+[e $ ! == -> _actualScreen `i -> 0 `i 1449  ]
+{
+[; ;DisplayProtocol.h: 404: actualScreen = 1;
+"404
+[e = _actualScreen -> -> 1 `i `c ]
+[; ;DisplayProtocol.h: 405: fd = 0;
+"405
+[e = _fd -> -> 0 `i `uc ]
+"406
+}
+[; ;DisplayProtocol.h: 406: } else if (actualScreen == 4)
+[e $U 1450  ]
+[e :U 1449 ]
+[e $ ! == -> _actualScreen `i -> 4 `i 1451  ]
+[; ;DisplayProtocol.h: 407: actualScreen = 9;
+"407
+[e = _actualScreen -> -> 9 `i `c ]
+[e :U 1451 ]
+"408
+[e :U 1450 ]
+}
+[; ;DisplayProtocol.h: 408: } else if(!ProcessStarted) {
+[e $U 1452  ]
+[e :U 1448 ]
+[e $ ! ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1453  ]
+{
+[; ;DisplayProtocol.h: 409: tempLastScreen = actualScreen;
+"409
+[e = _tempLastScreen -> _actualScreen `uc ]
+[; ;DisplayProtocol.h: 410: actualScreen = 2;
+"410
+[e = _actualScreen -> -> 2 `i `c ]
+[; ;DisplayProtocol.h: 411: selSN = 1;
+"411
+[e = _selSN -> -> 1 `i `uc ]
+"412
+}
+[e :U 1453 ]
+"413
+[e :U 1452 ]
+}
+[; ;DisplayProtocol.h: 412: }
+[; ;DisplayProtocol.h: 413: }else if(actualScreen == 5) {
+[e $U 1454  ]
+[e :U 1447 ]
+[e $ ! == -> _actualScreen `i -> 5 `i 1455  ]
+{
+[; ;DisplayProtocol.h: 414: if(menuSection != 3 && menuSection != 1)
+"414
+[e $ ! && != -> _menuSection `i -> 3 `i != -> _menuSection `i -> 1 `i 1456  ]
+[; ;DisplayProtocol.h: 415: integrator();
+"415
+[e ( _integrator ..  ]
+[e :U 1456 ]
+[; ;DisplayProtocol.h: 416: confirmEdition(!ProcessStarted);
+"416
+[e ( _confirmEdition (1 -> -> ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i `i `uc ]
+"417
+}
+[e :U 1455 ]
+"418
+[e :U 1454 ]
+}
+[e :U 1446 ]
+[; ;DisplayProtocol.h: 417: }
+[; ;DisplayProtocol.h: 418: }
+[; ;DisplayProtocol.h: 419: }
+"419
+[e :UE 1445 ]
+}
+"421
 [v _releaseENTER `(v ~T0 @X0 1 ef ]
 {
-[; ;DisplayProtocol.h: 334: void releaseENTER() {
+[; ;DisplayProtocol.h: 421: void releaseENTER() {
 [e :U _releaseENTER ]
 [f ]
-[; ;DisplayProtocol.h: 335: ENTERisLP = 0;
-"335
+[; ;DisplayProtocol.h: 422: ENTERisLP = 0;
+"422
 [e = _ENTERisLP -> -> 0 `i `uc ]
-[; ;DisplayProtocol.h: 336: ENTERsecurLock = 0;
-"336
+[; ;DisplayProtocol.h: 423: ENTERsecurLock = 0;
+"423
 [e = _ENTERsecurLock -> -> 0 `i `uc ]
-[; ;DisplayProtocol.h: 337: }
-"337
-[e :UE 1403 ]
+[; ;DisplayProtocol.h: 424: }
+"424
+[e :UE 1457 ]
 }
 "11 source/UARTConfig.h
 [v _putchUART `(v ~T0 @X0 1 ef1`uc ]
@@ -11583,17 +12210,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;UARTConfig.h: 12: while(!TXSTA1bits.TRMT);
 "12
-[e $U 1405  ]
-[e :U 1406 ]
-[e :U 1405 ]
-[e $ ! != -> . . _TXSTA1bits 0 1 `i -> -> -> 0 `i `Vuc `i 1406  ]
-[e :U 1407 ]
+[e $U 1459  ]
+[e :U 1460 ]
+[e :U 1459 ]
+[e $ ! != -> . . _TXSTA1bits 0 1 `i -> -> -> 0 `i `Vuc `i 1460  ]
+[e :U 1461 ]
 [; ;UARTConfig.h: 13: TXREG1 = val;
 "13
 [e = _TXREG1 _val ]
 [; ;UARTConfig.h: 14: }
 "14
-[e :UE 1404 ]
+[e :UE 1458 ]
 }
 "16
 [v _UARTint `(v ~T0 @X0 1 ef ]
@@ -11607,7 +12234,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _sas _RCREG1 ]
 [; ;UARTConfig.h: 18: if(sas == 'A') {
 "18
-[e $ ! == -> _sas `ui -> 65 `ui 1409  ]
+[e $ ! == -> _sas `ui -> 65 `ui 1463  ]
 {
 [; ;UARTConfig.h: 19: putchUART(actualScreen);
 "19
@@ -11621,9 +12248,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "22
 }
 [; ;UARTConfig.h: 22: }else if(sas == 'B') {
-[e $U 1410  ]
-[e :U 1409 ]
-[e $ ! == -> _sas `ui -> 66 `ui 1411  ]
+[e $U 1464  ]
+[e :U 1463 ]
+[e $ ! == -> _sas `ui -> 66 `ui 1465  ]
 {
 [; ;UARTConfig.h: 23: saveSysParams();
 "23
@@ -11631,101 +12258,135 @@ Version 3.2 HI-TECH Software Intermediate Code
 "24
 }
 [; ;UARTConfig.h: 24: }else if(sas == 'C') {
-[e $U 1412  ]
-[e :U 1411 ]
-[e $ ! == -> _sas `ui -> 67 `ui 1413  ]
+[e $U 1466  ]
+[e :U 1465 ]
+[e $ ! == -> _sas `ui -> 67 `ui 1467  ]
 {
 [; ;UARTConfig.h: 25: sysParamInit();
 "25
 [e ( _sysParamInit ..  ]
 "26
 }
-[e :U 1413 ]
-"58
-[e :U 1412 ]
-[e :U 1410 ]
-[; ;UARTConfig.h: 26: }
-[; ;UARTConfig.h: 58: }
-[e :UE 1408 ]
+[; ;UARTConfig.h: 26: }else if(sas == 'D') {
+[e $U 1468  ]
+[e :U 1467 ]
+[e $ ! == -> _sas `ui -> 68 `ui 1469  ]
+{
+[; ;UARTConfig.h: 27: putchUART(chanValdig[0]);
+"27
+[e ( _putchUART (1 -> *U + &U _chanValdig * -> -> -> 0 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `uc ]
+[; ;UARTConfig.h: 28: putchUART(chanValdig[1]);
+"28
+[e ( _putchUART (1 -> *U + &U _chanValdig * -> -> -> 1 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `uc ]
+[; ;UARTConfig.h: 29: putchUART(chanValdig[2]);
+"29
+[e ( _putchUART (1 -> *U + &U _chanValdig * -> -> -> 2 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `uc ]
+[; ;UARTConfig.h: 30: putchUART(chanValdig[3]);
+"30
+[e ( _putchUART (1 -> *U + &U _chanValdig * -> -> -> 3 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `uc ]
+[; ;UARTConfig.h: 31: putchUART(chanValdig[4]);
+"31
+[e ( _putchUART (1 -> *U + &U _chanValdig * -> -> -> 4 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `uc ]
+[; ;UARTConfig.h: 32: putchUART(chanValdig[5]);
+"32
+[e ( _putchUART (1 -> *U + &U _chanValdig * -> -> -> 5 `i `ui `ux -> -> # *U &U _chanValdig `ui `ux `uc ]
+"33
 }
-"60
+[; ;UARTConfig.h: 33: }else if(sas == 'E') {
+[e $U 1470  ]
+[e :U 1469 ]
+[e $ ! == -> _sas `ui -> 69 `ui 1471  ]
+{
+"35
+}
+[e :U 1471 ]
+"67
+[e :U 1470 ]
+[e :U 1468 ]
+[e :U 1466 ]
+[e :U 1464 ]
+[; ;UARTConfig.h: 35: }
+[; ;UARTConfig.h: 67: }
+[e :UE 1462 ]
+}
+"69
 [v _UARTConfig `(v ~T0 @X0 1 ef ]
 {
-[; ;UARTConfig.h: 60: void UARTConfig() {
+[; ;UARTConfig.h: 69: void UARTConfig() {
 [e :U _UARTConfig ]
 [f ]
-[; ;UARTConfig.h: 61: RCSTA1bits.SPEN = 0;
-"61
-[e = . . _RCSTA1bits 0 7 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 62: SPBRGH1 = 0;
-"62
-[e = _SPBRGH1 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 63: SPBRG1 = 34;
-"63
-[e = _SPBRG1 -> -> 34 `i `uc ]
-[; ;UARTConfig.h: 64: ANSELCbits.ANSC6 = 0;
-"64
-[e = . . _ANSELCbits 0 5 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 65: ANSELCbits.ANSC7 = 0;
-"65
-[e = . . _ANSELCbits 0 6 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 66: TRISCbits.TRISC6 = 1;
-"66
-[e = . . _TRISCbits 0 6 -> -> 1 `i `uc ]
-[; ;UARTConfig.h: 67: TRISCbits.TRISC7 = 1;
-"67
-[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
-[; ;UARTConfig.h: 68: TXSTA1bits.TX9 = 0;
-"68
-[e = . . _TXSTA1bits 0 6 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 69: TXSTA1bits.SYNC = 0;
-"69
-[e = . . _TXSTA1bits 0 4 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 70: TXSTA1bits.SENDB = 0;
+[; ;UARTConfig.h: 70: RCSTA1bits.SPEN = 0;
 "70
-[e = . . _TXSTA1bits 0 3 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 71: TXSTA1bits.BRGH = 1;
+[e = . . _RCSTA1bits 0 7 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 71: SPBRGH1 = 0;
 "71
-[e = . . _TXSTA1bits 0 2 -> -> 1 `i `uc ]
-[; ;UARTConfig.h: 72: RCSTA1bits.RX9 = 0;
+[e = _SPBRGH1 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 72: SPBRG1 = 34;
 "72
-[e = . . _RCSTA1bits 0 6 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 73: BAUDCON1bits.DTRXP = 0;
+[e = _SPBRG1 -> -> 34 `i `uc ]
+[; ;UARTConfig.h: 73: ANSELCbits.ANSC6 = 0;
 "73
-[e = . . _BAUDCON1bits 0 5 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 74: BAUDCON1bits.CKTXP = 0;
+[e = . . _ANSELCbits 0 5 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 74: ANSELCbits.ANSC7 = 0;
 "74
-[e = . . _BAUDCON1bits 0 4 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 75: BAUDCON1bits.BRG16 = 1;
+[e = . . _ANSELCbits 0 6 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 75: TRISCbits.TRISC6 = 1;
 "75
-[e = . . _BAUDCON1bits 0 3 -> -> 1 `i `uc ]
-[; ;UARTConfig.h: 76: BAUDCON1bits.WUE = 0;
+[e = . . _TRISCbits 0 6 -> -> 1 `i `uc ]
+[; ;UARTConfig.h: 76: TRISCbits.TRISC7 = 1;
 "76
-[e = . . _BAUDCON1bits 0 1 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 77: BAUDCON1bits.ABDEN = 0;
+[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
+[; ;UARTConfig.h: 77: TXSTA1bits.TX9 = 0;
 "77
-[e = . . _BAUDCON1bits 0 0 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 78: RCSTA1bits.CREN = 1;
+[e = . . _TXSTA1bits 0 6 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 78: TXSTA1bits.SYNC = 0;
 "78
-[e = . . _RCSTA1bits 0 4 -> -> 1 `i `uc ]
-[; ;UARTConfig.h: 79: TXSTA1bits.TXEN = 1;
+[e = . . _TXSTA1bits 0 4 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 79: TXSTA1bits.SENDB = 0;
 "79
-[e = . . _TXSTA1bits 0 5 -> -> 1 `i `uc ]
-[; ;UARTConfig.h: 80: IPR1bits.RC1IP = 0;
+[e = . . _TXSTA1bits 0 3 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 80: TXSTA1bits.BRGH = 1;
 "80
-[e = . . _IPR1bits 0 5 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 81: PIR1bits.RC1IF = 0;
+[e = . . _TXSTA1bits 0 2 -> -> 1 `i `uc ]
+[; ;UARTConfig.h: 81: RCSTA1bits.RX9 = 0;
 "81
-[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
-[; ;UARTConfig.h: 82: PIE1bits.RC1IE = 1;
+[e = . . _RCSTA1bits 0 6 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 82: BAUDCON1bits.DTRXP = 0;
 "82
-[e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
-[; ;UARTConfig.h: 83: RCSTA1bits.SPEN = 1;
+[e = . . _BAUDCON1bits 0 5 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 83: BAUDCON1bits.CKTXP = 0;
 "83
-[e = . . _RCSTA1bits 0 7 -> -> 1 `i `uc ]
-[; ;UARTConfig.h: 84: }
+[e = . . _BAUDCON1bits 0 4 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 84: BAUDCON1bits.BRG16 = 1;
 "84
-[e :UE 1414 ]
+[e = . . _BAUDCON1bits 0 3 -> -> 1 `i `uc ]
+[; ;UARTConfig.h: 85: BAUDCON1bits.WUE = 0;
+"85
+[e = . . _BAUDCON1bits 0 1 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 86: BAUDCON1bits.ABDEN = 0;
+"86
+[e = . . _BAUDCON1bits 0 0 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 87: RCSTA1bits.CREN = 1;
+"87
+[e = . . _RCSTA1bits 0 4 -> -> 1 `i `uc ]
+[; ;UARTConfig.h: 88: TXSTA1bits.TXEN = 1;
+"88
+[e = . . _TXSTA1bits 0 5 -> -> 1 `i `uc ]
+[; ;UARTConfig.h: 89: IPR1bits.RC1IP = 0;
+"89
+[e = . . _IPR1bits 0 5 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 90: PIR1bits.RC1IF = 0;
+"90
+[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
+[; ;UARTConfig.h: 91: PIE1bits.RC1IE = 1;
+"91
+[e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
+[; ;UARTConfig.h: 92: RCSTA1bits.SPEN = 1;
+"92
+[e = . . _RCSTA1bits 0 7 -> -> 1 `i `uc ]
+[; ;UARTConfig.h: 93: }
+"93
+[e :UE 1472 ]
 }
 "12 source/PWMConfig.h
 [v _t2config `(v ~T0 @X0 1 ef ]
@@ -11756,7 +12417,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _T2CONbits 0 1 -> -> 1 `i `uc ]
 [; ;PWMConfig.h: 21: }
 "21
-[e :UE 1415 ]
+[e :UE 1473 ]
 }
 "23
 [v _setPWM2duty `(v ~T0 @X0 1 ef1`s ]
@@ -11771,27 +12432,27 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _act -> -> 400 `i `s ]
 [; ;PWMConfig.h: 25: if(actuator > 400)
 "25
-[e $ ! > -> _actuator `i -> 400 `i 1417  ]
+[e $ ! > -> _actuator `i -> 400 `i 1475  ]
 [; ;PWMConfig.h: 26: act = 800;
 "26
 [e = _act -> -> 800 `i `s ]
-[e $U 1418  ]
+[e $U 1476  ]
 "27
-[e :U 1417 ]
+[e :U 1475 ]
 [; ;PWMConfig.h: 27: else if(actuator < -400)
-[e $ ! < -> _actuator `i -U -> 400 `i 1419  ]
+[e $ ! < -> _actuator `i -U -> 400 `i 1477  ]
 [; ;PWMConfig.h: 28: act = 0;
 "28
 [e = _act -> -> 0 `i `s ]
-[e $U 1420  ]
+[e $U 1478  ]
 "29
-[e :U 1419 ]
+[e :U 1477 ]
 [; ;PWMConfig.h: 29: else
 [; ;PWMConfig.h: 30: act = actuator + 400;
 "30
 [e = _act -> + -> _actuator `i -> 400 `i `s ]
-[e :U 1420 ]
-[e :U 1418 ]
+[e :U 1478 ]
+[e :U 1476 ]
 [; ;PWMConfig.h: 31: CCP2CONbits.DC2B = act;
 "31
 [e = . . _CCP2CONbits 0 1 -> _act `uc ]
@@ -11800,7 +12461,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _CCPR2L -> >> -> _act `i -> 2 `i `uc ]
 [; ;PWMConfig.h: 33: }
 "33
-[e :UE 1416 ]
+[e :UE 1474 ]
 }
 "35
 [v _T2int `(v ~T0 @X0 1 ef ]
@@ -11810,32 +12471,32 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;PWMConfig.h: 36: if(PORTAbits.RA7 || PORTAbits.RA6) {
 "36
-[e $ ! || != -> . . _PORTAbits 0 7 `i -> -> -> 0 `i `Vuc `i != -> . . _PORTAbits 0 6 `i -> -> -> 0 `i `Vuc `i 1422  ]
+[e $ ! || != -> . . _PORTAbits 0 7 `i -> -> -> 0 `i `Vuc `i != -> . . _PORTAbits 0 6 `i -> -> -> 0 `i `Vuc `i 1480  ]
 {
 [; ;PWMConfig.h: 37: setPWM2duty(0);
 "37
 [e ( _setPWM2duty (1 -> -> 0 `i `s ]
 [; ;PWMConfig.h: 38: if(PORTAbits.RA7)
 "38
-[e $ ! != -> . . _PORTAbits 0 7 `i -> -> -> 0 `i `Vuc `i 1423  ]
+[e $ ! != -> . . _PORTAbits 0 7 `i -> -> -> 0 `i `Vuc `i 1481  ]
 [; ;PWMConfig.h: 39: putchUART(101);
 "39
 [e ( _putchUART (1 -> -> 101 `i `uc ]
-[e :U 1423 ]
+[e :U 1481 ]
 [; ;PWMConfig.h: 40: if(PORTAbits.RA6)
 "40
-[e $ ! != -> . . _PORTAbits 0 6 `i -> -> -> 0 `i `Vuc `i 1424  ]
+[e $ ! != -> . . _PORTAbits 0 6 `i -> -> -> 0 `i `Vuc `i 1482  ]
 [; ;PWMConfig.h: 41: putchUART(102);
 "41
 [e ( _putchUART (1 -> -> 102 `i `uc ]
-[e :U 1424 ]
+[e :U 1482 ]
 "42
 }
-[e :U 1422 ]
+[e :U 1480 ]
 [; ;PWMConfig.h: 42: }
 [; ;PWMConfig.h: 43: }
 "43
-[e :UE 1421 ]
+[e :UE 1479 ]
 }
 "45
 [v _PWM2Config `(v ~T0 @X0 1 ef ]
@@ -11908,7 +12569,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _ECCP2ASbits 0 3 -> -> 0 `i `uc ]
 [; ;PWMConfig.h: 67: }
 "67
-[e :UE 1425 ]
+[e :UE 1483 ]
 }
 "69
 [v _setPWM2on `(v ~T0 @X0 1 ef1`uc ]
@@ -11919,7 +12580,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;PWMConfig.h: 70: if(on) {
 "70
-[e $ ! != -> _on `i -> -> -> 0 `i `uc `i 1427  ]
+[e $ ! != -> _on `i -> -> -> 0 `i `uc `i 1485  ]
 {
 [; ;PWMConfig.h: 71: TRISCbits.TRISC0 = 0;
 "71
@@ -11930,8 +12591,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 "73
 }
 [; ;PWMConfig.h: 73: }else {
-[e $U 1428  ]
-[e :U 1427 ]
+[e $U 1486  ]
+[e :U 1485 ]
 {
 [; ;PWMConfig.h: 74: TRISCbits.TRISC0 = 1;
 "74
@@ -11941,11 +12602,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _TRISCbits 0 1 -> -> 1 `i `uc ]
 "76
 }
-[e :U 1428 ]
+[e :U 1486 ]
 [; ;PWMConfig.h: 76: }
 [; ;PWMConfig.h: 77: }
 "77
-[e :UE 1426 ]
+[e :UE 1484 ]
 }
 "9 source/ButtonController.h
 [v _buttonChecking `(v ~T0 @X0 1 ef ]
@@ -11955,7 +12616,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;ButtonController.h: 10: if(!PORTAbits.RA2 && lastSttUP) {
 "10
-[e $ ! && ! != -> . . _PORTAbits 0 2 `i -> -> -> 0 `i `Vuc `i != -> _lastSttUP `i -> -> -> 0 `i `uc `i 1430  ]
+[e $ ! && ! != -> . . _PORTAbits 0 2 `i -> -> -> 0 `i `Vuc `i != -> _lastSttUP `i -> -> -> 0 `i `uc `i 1488  ]
 {
 [; ;ButtonController.h: 11: lastSttUP = 0;
 "11
@@ -11966,33 +12627,33 @@ Version 3.2 HI-TECH Software Intermediate Code
 "13
 }
 [; ;ButtonController.h: 13: }else if(PORTAbits.RA2 && !lastSttUP) {
-[e $U 1431  ]
-[e :U 1430 ]
-[e $ ! && != -> . . _PORTAbits 0 2 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttUP `i -> -> -> 0 `i `uc `i 1432  ]
+[e $U 1489  ]
+[e :U 1488 ]
+[e $ ! && != -> . . _PORTAbits 0 2 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttUP `i -> -> -> 0 `i `uc `i 1490  ]
 {
 [; ;ButtonController.h: 14: lastSttUP = 1;
 "14
 [e = _lastSttUP -> -> 1 `i `uc ]
 [; ;ButtonController.h: 15: if(holdUPcont < 10)
 "15
-[e $ ! < -> _holdUPcont `i -> 10 `i 1433  ]
+[e $ ! < -> _holdUPcont `i -> 10 `i 1491  ]
 [; ;ButtonController.h: 16: pressUP();
 "16
 [e ( _pressUP ..  ]
-[e :U 1433 ]
+[e :U 1491 ]
 [; ;ButtonController.h: 17: delay_ms(50);
 "17
 [e ( _delay_ms (1 -> 50 `i ]
 "18
 }
 [; ;ButtonController.h: 18: }else if(PORTAbits.RA2 == lastSttUP) {
-[e $U 1434  ]
-[e :U 1432 ]
-[e $ ! == -> . . _PORTAbits 0 2 `i -> _lastSttUP `i 1435  ]
+[e $U 1492  ]
+[e :U 1490 ]
+[e $ ! == -> . . _PORTAbits 0 2 `i -> _lastSttUP `i 1493  ]
 {
 [; ;ButtonController.h: 19: if(PORTAbits.RA2) {
 "19
-[e $ ! != -> . . _PORTAbits 0 2 `i -> -> -> 0 `i `Vuc `i 1436  ]
+[e $ ! != -> . . _PORTAbits 0 2 `i -> -> -> 0 `i `Vuc `i 1494  ]
 {
 [; ;ButtonController.h: 20: holdUPcont = 0;
 "20
@@ -12002,359 +12663,351 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _releaseUP ..  ]
 "22
 }
-[; ;ButtonController.h: 22: }
-[e $U 1437  ]
+[; ;ButtonController.h: 22: }else {
+[e $U 1495  ]
+[e :U 1494 ]
+{
+[; ;ButtonController.h: 23: if(!UPsecurLock)
 "23
-[e :U 1436 ]
-[; ;ButtonController.h: 23: else {
-{
-[; ;ButtonController.h: 24: if(!UPsecurLock)
+[e $ ! ! != -> _UPsecurLock `i -> -> -> 0 `i `uc `i 1496  ]
+[; ;ButtonController.h: 24: holdUPcont++;
 "24
-[e $ ! ! != -> _UPsecurLock `i -> -> -> 0 `i `uc `i 1438  ]
-[; ;ButtonController.h: 25: holdUPcont++;
-"25
 [e ++ _holdUPcont -> -> 1 `i `uc ]
-[e :U 1438 ]
-[; ;ButtonController.h: 26: if(holdUPcont > 9) {
-"26
-[e $ ! > -> _holdUPcont `i -> 9 `i 1439  ]
+[e :U 1496 ]
+[; ;ButtonController.h: 25: if(holdUPcont > 9) {
+"25
+[e $ ! > -> _holdUPcont `i -> 9 `i 1497  ]
 {
-[; ;ButtonController.h: 27: if(holdUPcont < 26)
+[; ;ButtonController.h: 26: if(holdUPcont < 26)
+"26
+[e $ ! < -> _holdUPcont `i -> 26 `i 1498  ]
+[; ;ButtonController.h: 27: longPressUP();
 "27
-[e $ ! < -> _holdUPcont `i -> 26 `i 1440  ]
-[; ;ButtonController.h: 28: longPressUP();
-"28
 [e ( _longPressUP ..  ]
-[e $U 1441  ]
+[e $U 1499  ]
+"28
+[e :U 1498 ]
+[; ;ButtonController.h: 28: else
+[; ;ButtonController.h: 29: UPsecurLock = 1;
 "29
-[e :U 1440 ]
-[; ;ButtonController.h: 29: else
-[; ;ButtonController.h: 30: UPsecurLock = 1;
-"30
 [e = _UPsecurLock -> -> 1 `i `uc ]
-[e :U 1441 ]
-"31
+[e :U 1499 ]
+"30
 }
-[e :U 1439 ]
-[; ;ButtonController.h: 31: }
-[; ;ButtonController.h: 32: delay_ms(200);
-"32
+[e :U 1497 ]
+[; ;ButtonController.h: 30: }
+[; ;ButtonController.h: 31: delay_ms(200);
+"31
 [e ( _delay_ms (1 -> 200 `i ]
+"32
+}
+[e :U 1495 ]
 "33
 }
-[e :U 1437 ]
+[e :U 1493 ]
 "34
-}
-[e :U 1435 ]
-"35
-[e :U 1434 ]
-[e :U 1431 ]
+[e :U 1492 ]
+[e :U 1489 ]
+[; ;ButtonController.h: 32: }
 [; ;ButtonController.h: 33: }
-[; ;ButtonController.h: 34: }
-[; ;ButtonController.h: 35: if(!PORTAbits.RA3 && lastSttDOWN) {
-[e $ ! && ! != -> . . _PORTAbits 0 3 `i -> -> -> 0 `i `Vuc `i != -> _lastSttDOWN `i -> -> -> 0 `i `uc `i 1442  ]
+[; ;ButtonController.h: 34: if(!PORTAbits.RA3 && lastSttDOWN) {
+[e $ ! && ! != -> . . _PORTAbits 0 3 `i -> -> -> 0 `i `Vuc `i != -> _lastSttDOWN `i -> -> -> 0 `i `uc `i 1500  ]
 {
-[; ;ButtonController.h: 36: lastSttDOWN = 0;
-"36
+[; ;ButtonController.h: 35: lastSttDOWN = 0;
+"35
 [e = _lastSttDOWN -> -> 0 `i `uc ]
-[; ;ButtonController.h: 37: delay_ms(200);
-"37
+[; ;ButtonController.h: 36: delay_ms(200);
+"36
 [e ( _delay_ms (1 -> 200 `i ]
+"37
+}
+[; ;ButtonController.h: 37: }else if(PORTAbits.RA3 && !lastSttDOWN) {
+[e $U 1501  ]
+[e :U 1500 ]
+[e $ ! && != -> . . _PORTAbits 0 3 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttDOWN `i -> -> -> 0 `i `uc `i 1502  ]
+{
+[; ;ButtonController.h: 38: lastSttDOWN = 1;
 "38
-}
-[; ;ButtonController.h: 38: }else if(PORTAbits.RA3 && !lastSttDOWN) {
-[e $U 1443  ]
-[e :U 1442 ]
-[e $ ! && != -> . . _PORTAbits 0 3 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttDOWN `i -> -> -> 0 `i `uc `i 1444  ]
-{
-[; ;ButtonController.h: 39: lastSttDOWN = 1;
-"39
 [e = _lastSttDOWN -> -> 1 `i `uc ]
-[; ;ButtonController.h: 40: if(holdDOWNcont < 10)
+[; ;ButtonController.h: 39: if(holdDOWNcont < 10)
+"39
+[e $ ! < -> _holdDOWNcont `i -> 10 `i 1503  ]
+[; ;ButtonController.h: 40: pressDOWN();
 "40
-[e $ ! < -> _holdDOWNcont `i -> 10 `i 1445  ]
-[; ;ButtonController.h: 41: pressDOWN();
-"41
 [e ( _pressDOWN ..  ]
-[e :U 1445 ]
-[; ;ButtonController.h: 42: delay_ms(50);
-"42
+[e :U 1503 ]
+[; ;ButtonController.h: 41: delay_ms(50);
+"41
 [e ( _delay_ms (1 -> 50 `i ]
+"42
+}
+[; ;ButtonController.h: 42: }else if(PORTAbits.RA3 == lastSttDOWN) {
+[e $U 1504  ]
+[e :U 1502 ]
+[e $ ! == -> . . _PORTAbits 0 3 `i -> _lastSttDOWN `i 1505  ]
+{
+[; ;ButtonController.h: 43: if(PORTAbits.RA3) {
 "43
-}
-[; ;ButtonController.h: 43: }else if(PORTAbits.RA3 == lastSttDOWN) {
-[e $U 1446  ]
-[e :U 1444 ]
-[e $ ! == -> . . _PORTAbits 0 3 `i -> _lastSttDOWN `i 1447  ]
+[e $ ! != -> . . _PORTAbits 0 3 `i -> -> -> 0 `i `Vuc `i 1506  ]
 {
-[; ;ButtonController.h: 44: if(PORTAbits.RA3) {
+[; ;ButtonController.h: 44: holdDOWNcont = 0;
 "44
-[e $ ! != -> . . _PORTAbits 0 3 `i -> -> -> 0 `i `Vuc `i 1448  ]
-{
-[; ;ButtonController.h: 45: holdDOWNcont = 0;
-"45
 [e = _holdDOWNcont -> -> 0 `i `uc ]
-[; ;ButtonController.h: 46: releaseDOWN();
-"46
+[; ;ButtonController.h: 45: releaseDOWN();
+"45
 [e ( _releaseDOWN ..  ]
-"47
+"46
 }
-[; ;ButtonController.h: 47: }
-[e $U 1449  ]
+[; ;ButtonController.h: 46: }else {
+[e $U 1507  ]
+[e :U 1506 ]
+{
+[; ;ButtonController.h: 47: if(!DOWNsecurLock)
+"47
+[e $ ! ! != -> _DOWNsecurLock `i -> -> -> 0 `i `uc `i 1508  ]
+[; ;ButtonController.h: 48: holdDOWNcont++;
 "48
-[e :U 1448 ]
-[; ;ButtonController.h: 48: else {
-{
-[; ;ButtonController.h: 49: if(!DOWNsecurLock)
-"49
-[e $ ! ! != -> _DOWNsecurLock `i -> -> -> 0 `i `uc `i 1450  ]
-[; ;ButtonController.h: 50: holdDOWNcont++;
-"50
 [e ++ _holdDOWNcont -> -> 1 `i `uc ]
-[e :U 1450 ]
-[; ;ButtonController.h: 51: if(holdDOWNcont > 9) {
-"51
-[e $ ! > -> _holdDOWNcont `i -> 9 `i 1451  ]
+[e :U 1508 ]
+[; ;ButtonController.h: 49: if(holdDOWNcont > 9) {
+"49
+[e $ ! > -> _holdDOWNcont `i -> 9 `i 1509  ]
 {
-[; ;ButtonController.h: 52: if(holdDOWNcont < 26)
-"52
-[e $ ! < -> _holdDOWNcont `i -> 26 `i 1452  ]
-[; ;ButtonController.h: 53: longPressDOWN();
-"53
+[; ;ButtonController.h: 50: if(holdDOWNcont < 26)
+"50
+[e $ ! < -> _holdDOWNcont `i -> 26 `i 1510  ]
+[; ;ButtonController.h: 51: longPressDOWN();
+"51
 [e ( _longPressDOWN ..  ]
-[e $U 1453  ]
-"54
-[e :U 1452 ]
-[; ;ButtonController.h: 54: else
-[; ;ButtonController.h: 55: DOWNsecurLock = 1;
-"55
+[e $U 1511  ]
+"52
+[e :U 1510 ]
+[; ;ButtonController.h: 52: else
+[; ;ButtonController.h: 53: DOWNsecurLock = 1;
+"53
 [e = _DOWNsecurLock -> -> 1 `i `uc ]
-[e :U 1453 ]
+[e :U 1511 ]
+"54
+}
+[e :U 1509 ]
+[; ;ButtonController.h: 54: }
+[; ;ButtonController.h: 55: delay_ms(200);
+"55
+[e ( _delay_ms (1 -> 200 `i ]
 "56
 }
-[e :U 1451 ]
-[; ;ButtonController.h: 56: }
-[; ;ButtonController.h: 57: delay_ms(200);
+[e :U 1507 ]
 "57
-[e ( _delay_ms (1 -> 200 `i ]
+}
+[e :U 1505 ]
 "58
-}
-[e :U 1449 ]
+[e :U 1504 ]
+[e :U 1501 ]
+[; ;ButtonController.h: 56: }
+[; ;ButtonController.h: 57: }
+[; ;ButtonController.h: 58: if(!PORTAbits.RA4 && lastSttRETRO) {
+[e $ ! && ! != -> . . _PORTAbits 0 4 `i -> -> -> 0 `i `Vuc `i != -> _lastSttRETRO `i -> -> -> 0 `i `uc `i 1512  ]
+{
+[; ;ButtonController.h: 59: lastSttRETRO = 0;
 "59
-}
-[e :U 1447 ]
-"60
-[e :U 1446 ]
-[e :U 1443 ]
-[; ;ButtonController.h: 58: }
-[; ;ButtonController.h: 59: }
-[; ;ButtonController.h: 60: if(!PORTAbits.RA4 && lastSttRETRO) {
-[e $ ! && ! != -> . . _PORTAbits 0 4 `i -> -> -> 0 `i `Vuc `i != -> _lastSttRETRO `i -> -> -> 0 `i `uc `i 1454  ]
-{
-[; ;ButtonController.h: 61: lastSttRETRO = 0;
-"61
 [e = _lastSttRETRO -> -> 0 `i `uc ]
-[; ;ButtonController.h: 62: delay_ms(200);
-"62
+[; ;ButtonController.h: 60: delay_ms(200);
+"60
 [e ( _delay_ms (1 -> 200 `i ]
-"63
+"61
 }
-[; ;ButtonController.h: 63: }else if(PORTAbits.RA4 && !lastSttRETRO) {
-[e $U 1455  ]
-[e :U 1454 ]
-[e $ ! && != -> . . _PORTAbits 0 4 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttRETRO `i -> -> -> 0 `i `uc `i 1456  ]
+[; ;ButtonController.h: 61: }else if(PORTAbits.RA4 && !lastSttRETRO) {
+[e $U 1513  ]
+[e :U 1512 ]
+[e $ ! && != -> . . _PORTAbits 0 4 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttRETRO `i -> -> -> 0 `i `uc `i 1514  ]
 {
-[; ;ButtonController.h: 64: lastSttRETRO = 1;
-"64
+[; ;ButtonController.h: 62: lastSttRETRO = 1;
+"62
 [e = _lastSttRETRO -> -> 1 `i `uc ]
-[; ;ButtonController.h: 65: if(holdRETROcont < 10)
-"65
-[e $ ! < -> _holdRETROcont `i -> 10 `i 1457  ]
-[; ;ButtonController.h: 66: pressRETRO();
-"66
+[; ;ButtonController.h: 63: if(holdRETROcont < 10)
+"63
+[e $ ! < -> _holdRETROcont `i -> 10 `i 1515  ]
+[; ;ButtonController.h: 64: pressRETRO();
+"64
 [e ( _pressRETRO ..  ]
-[e :U 1457 ]
-[; ;ButtonController.h: 67: delay_ms(50);
-"67
+[e :U 1515 ]
+[; ;ButtonController.h: 65: delay_ms(50);
+"65
 [e ( _delay_ms (1 -> 50 `i ]
+"66
+}
+[; ;ButtonController.h: 66: }else if(PORTAbits.RA4 == lastSttRETRO) {
+[e $U 1516  ]
+[e :U 1514 ]
+[e $ ! == -> . . _PORTAbits 0 4 `i -> _lastSttRETRO `i 1517  ]
+{
+[; ;ButtonController.h: 67: if(PORTAbits.RA4) {
+"67
+[e $ ! != -> . . _PORTAbits 0 4 `i -> -> -> 0 `i `Vuc `i 1518  ]
+{
+[; ;ButtonController.h: 68: holdRETROcont = 0;
 "68
-}
-[; ;ButtonController.h: 68: }else if(PORTAbits.RA4 == lastSttRETRO) {
-[e $U 1458  ]
-[e :U 1456 ]
-[e $ ! == -> . . _PORTAbits 0 4 `i -> _lastSttRETRO `i 1459  ]
-{
-[; ;ButtonController.h: 69: if(PORTAbits.RA4) {
-"69
-[e $ ! != -> . . _PORTAbits 0 4 `i -> -> -> 0 `i `Vuc `i 1460  ]
-{
-[; ;ButtonController.h: 70: holdRETROcont = 0;
-"70
 [e = _holdRETROcont -> -> 0 `i `uc ]
-[; ;ButtonController.h: 71: releaseRETRO();
-"71
+[; ;ButtonController.h: 69: releaseRETRO();
+"69
 [e ( _releaseRETRO ..  ]
-"72
+"70
 }
-[; ;ButtonController.h: 72: }
-[e $U 1461  ]
-"73
-[e :U 1460 ]
-[; ;ButtonController.h: 73: else {
+[; ;ButtonController.h: 70: }else {
+[e $U 1519  ]
+[e :U 1518 ]
 {
-[; ;ButtonController.h: 74: if(!RETROsecurLock)
-"74
-[e $ ! ! != -> _RETROsecurLock `i -> -> -> 0 `i `uc `i 1462  ]
-[; ;ButtonController.h: 75: holdRETROcont++;
-"75
+[; ;ButtonController.h: 71: if(!RETROsecurLock)
+"71
+[e $ ! ! != -> _RETROsecurLock `i -> -> -> 0 `i `uc `i 1520  ]
+[; ;ButtonController.h: 72: holdRETROcont++;
+"72
 [e ++ _holdRETROcont -> -> 1 `i `uc ]
-[e :U 1462 ]
-[; ;ButtonController.h: 76: if(holdRETROcont > 9) {
-"76
-[e $ ! > -> _holdRETROcont `i -> 9 `i 1463  ]
+[e :U 1520 ]
+[; ;ButtonController.h: 73: if(holdRETROcont > 9) {
+"73
+[e $ ! > -> _holdRETROcont `i -> 9 `i 1521  ]
 {
-[; ;ButtonController.h: 77: if(holdRETROcont < 26)
-"77
-[e $ ! < -> _holdRETROcont `i -> 26 `i 1464  ]
-[; ;ButtonController.h: 78: longPressRETRO();
-"78
+[; ;ButtonController.h: 74: if(holdRETROcont < 26)
+"74
+[e $ ! < -> _holdRETROcont `i -> 26 `i 1522  ]
+[; ;ButtonController.h: 75: longPressRETRO();
+"75
 [e ( _longPressRETRO ..  ]
-[e $U 1465  ]
-"79
-[e :U 1464 ]
-[; ;ButtonController.h: 79: else
-[; ;ButtonController.h: 80: RETROsecurLock = 1;
-"80
+[e $U 1523  ]
+"76
+[e :U 1522 ]
+[; ;ButtonController.h: 76: else
+[; ;ButtonController.h: 77: RETROsecurLock = 1;
+"77
 [e = _RETROsecurLock -> -> 1 `i `uc ]
-[e :U 1465 ]
+[e :U 1523 ]
+"78
+}
+[e :U 1521 ]
+[; ;ButtonController.h: 78: }
+[; ;ButtonController.h: 79: delay_ms(200);
+"79
+[e ( _delay_ms (1 -> 200 `i ]
+"80
+}
+[e :U 1519 ]
 "81
 }
-[e :U 1463 ]
-[; ;ButtonController.h: 81: }
-[; ;ButtonController.h: 82: delay_ms(200);
+[e :U 1517 ]
 "82
-[e ( _delay_ms (1 -> 200 `i ]
+[e :U 1516 ]
+[e :U 1513 ]
+[; ;ButtonController.h: 80: }
+[; ;ButtonController.h: 81: }
+[; ;ButtonController.h: 82: if(!PORTAbits.RA5 && lastSttENTER) {
+[e $ ! && ! != -> . . _PORTAbits 0 5 `i -> -> -> 0 `i `Vuc `i != -> _lastSttENTER `i -> -> -> 0 `i `uc `i 1524  ]
+{
+[; ;ButtonController.h: 83: lastSttENTER = 0;
 "83
-}
-[e :U 1461 ]
-"84
-}
-[e :U 1459 ]
-"85
-[e :U 1458 ]
-[e :U 1455 ]
-[; ;ButtonController.h: 83: }
-[; ;ButtonController.h: 84: }
-[; ;ButtonController.h: 85: if(!PORTAbits.RA5 && lastSttENTER) {
-[e $ ! && ! != -> . . _PORTAbits 0 5 `i -> -> -> 0 `i `Vuc `i != -> _lastSttENTER `i -> -> -> 0 `i `uc `i 1466  ]
-{
-[; ;ButtonController.h: 86: lastSttENTER = 0;
-"86
 [e = _lastSttENTER -> -> 0 `i `uc ]
-[; ;ButtonController.h: 87: delay_ms(200);
-"87
+[; ;ButtonController.h: 84: delay_ms(200);
+"84
 [e ( _delay_ms (1 -> 200 `i ]
-"88
+"85
 }
-[; ;ButtonController.h: 88: }else if(PORTAbits.RA5 && !lastSttENTER) {
-[e $U 1467  ]
-[e :U 1466 ]
-[e $ ! && != -> . . _PORTAbits 0 5 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttENTER `i -> -> -> 0 `i `uc `i 1468  ]
+[; ;ButtonController.h: 85: }else if(PORTAbits.RA5 && !lastSttENTER) {
+[e $U 1525  ]
+[e :U 1524 ]
+[e $ ! && != -> . . _PORTAbits 0 5 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttENTER `i -> -> -> 0 `i `uc `i 1526  ]
 {
-[; ;ButtonController.h: 89: lastSttENTER = 1;
-"89
+[; ;ButtonController.h: 86: lastSttENTER = 1;
+"86
 [e = _lastSttENTER -> -> 1 `i `uc ]
-[; ;ButtonController.h: 90: if(holdENTERcont < 10)
-"90
-[e $ ! < -> _holdENTERcont `i -> 10 `i 1469  ]
-[; ;ButtonController.h: 91: pressENTER();
-"91
+[; ;ButtonController.h: 87: if(holdENTERcont < 10)
+"87
+[e $ ! < -> _holdENTERcont `i -> 10 `i 1527  ]
+[; ;ButtonController.h: 88: pressENTER();
+"88
 [e ( _pressENTER ..  ]
-[e :U 1469 ]
-[; ;ButtonController.h: 92: delay_ms(50);
-"92
+[e :U 1527 ]
+[; ;ButtonController.h: 89: delay_ms(50);
+"89
 [e ( _delay_ms (1 -> 50 `i ]
-"93
+"90
 }
-[; ;ButtonController.h: 93: }else if(PORTAbits.RA5 == lastSttENTER) {
-[e $U 1470  ]
-[e :U 1468 ]
-[e $ ! == -> . . _PORTAbits 0 5 `i -> _lastSttENTER `i 1471  ]
+[; ;ButtonController.h: 90: }else if(PORTAbits.RA5 == lastSttENTER) {
+[e $U 1528  ]
+[e :U 1526 ]
+[e $ ! == -> . . _PORTAbits 0 5 `i -> _lastSttENTER `i 1529  ]
 {
-[; ;ButtonController.h: 94: if(PORTAbits.RA5) {
-"94
-[e $ ! != -> . . _PORTAbits 0 5 `i -> -> -> 0 `i `Vuc `i 1472  ]
+[; ;ButtonController.h: 91: if(PORTAbits.RA5) {
+"91
+[e $ ! != -> . . _PORTAbits 0 5 `i -> -> -> 0 `i `Vuc `i 1530  ]
 {
-[; ;ButtonController.h: 95: holdENTERcont = 0;
-"95
+[; ;ButtonController.h: 92: holdENTERcont = 0;
+"92
 [e = _holdENTERcont -> -> 0 `i `uc ]
-[; ;ButtonController.h: 96: releaseENTER();
-"96
+[; ;ButtonController.h: 93: releaseENTER();
+"93
 [e ( _releaseENTER ..  ]
-"97
+"94
 }
-[; ;ButtonController.h: 97: }
-[e $U 1473  ]
-"98
-[e :U 1472 ]
-[; ;ButtonController.h: 98: else {
+[; ;ButtonController.h: 94: }else {
+[e $U 1531  ]
+[e :U 1530 ]
 {
-[; ;ButtonController.h: 99: if(!ENTERsecurLock)
-"99
-[e $ ! ! != -> _ENTERsecurLock `i -> -> -> 0 `i `uc `i 1474  ]
-[; ;ButtonController.h: 100: holdENTERcont++;
-"100
+[; ;ButtonController.h: 95: if(!ENTERsecurLock)
+"95
+[e $ ! ! != -> _ENTERsecurLock `i -> -> -> 0 `i `uc `i 1532  ]
+[; ;ButtonController.h: 96: holdENTERcont++;
+"96
 [e ++ _holdENTERcont -> -> 1 `i `uc ]
-[e :U 1474 ]
-[; ;ButtonController.h: 101: if(holdENTERcont > 9) {
-"101
-[e $ ! > -> _holdENTERcont `i -> 9 `i 1475  ]
+[e :U 1532 ]
+[; ;ButtonController.h: 97: if(holdENTERcont > 9) {
+"97
+[e $ ! > -> _holdENTERcont `i -> 9 `i 1533  ]
 {
-[; ;ButtonController.h: 102: if(holdENTERcont < 26)
-"102
-[e $ ! < -> _holdENTERcont `i -> 26 `i 1476  ]
-[; ;ButtonController.h: 103: longPressENTER();
-"103
+[; ;ButtonController.h: 98: if(holdENTERcont < 26)
+"98
+[e $ ! < -> _holdENTERcont `i -> 26 `i 1534  ]
+[; ;ButtonController.h: 99: longPressENTER();
+"99
 [e ( _longPressENTER ..  ]
-[e $U 1477  ]
-"104
-[e :U 1476 ]
-[; ;ButtonController.h: 104: else
-[; ;ButtonController.h: 105: ENTERsecurLock = 1;
-"105
+[e $U 1535  ]
+"100
+[e :U 1534 ]
+[; ;ButtonController.h: 100: else
+[; ;ButtonController.h: 101: ENTERsecurLock = 1;
+"101
 [e = _ENTERsecurLock -> -> 1 `i `uc ]
-[e :U 1477 ]
-"106
+[e :U 1535 ]
+"102
 }
-[e :U 1475 ]
-[; ;ButtonController.h: 106: }
-[; ;ButtonController.h: 107: delay_ms(200);
-"107
+[e :U 1533 ]
+[; ;ButtonController.h: 102: }
+[; ;ButtonController.h: 103: delay_ms(200);
+"103
 [e ( _delay_ms (1 -> 200 `i ]
-"108
+"104
 }
-[e :U 1473 ]
-"109
+[e :U 1531 ]
+"105
 }
-[e :U 1471 ]
-"110
-[e :U 1470 ]
-[e :U 1467 ]
-[; ;ButtonController.h: 108: }
-[; ;ButtonController.h: 109: }
-[; ;ButtonController.h: 110: }
-[e :UE 1429 ]
+[e :U 1529 ]
+"106
+[e :U 1528 ]
+[e :U 1525 ]
+[; ;ButtonController.h: 104: }
+[; ;ButtonController.h: 105: }
+[; ;ButtonController.h: 106: }
+[e :UE 1487 ]
 }
-[v F7771 `(v ~T0 @X0 1 tf ]
+[v F7805 `(v ~T0 @X0 1 tf ]
 "13 source/main.c
-[v _hp_isr `IF7771 ~T0 @X0 1 e ]
+[v _hp_isr `IF7805 ~T0 @X0 1 e ]
 {
 [; ;main.c: 13: void interrupt hp_isr(void) {
 [e :U _hp_isr ]
 [f ]
 [; ;main.c: 14: if(PIE1bits.TMR2IE && PIR1bits.TMR2IF) {
 "14
-[e $ ! && != -> . . _PIE1bits 0 1 `i -> -> -> 0 `i `Vuc `i != -> . . _PIR1bits 0 1 `i -> -> -> 0 `i `Vuc `i 1479  ]
+[e $ ! && != -> . . _PIE1bits 0 1 `i -> -> -> 0 `i `Vuc `i != -> . . _PIR1bits 0 1 `i -> -> -> 0 `i `Vuc `i 1537  ]
 {
 [; ;main.c: 15: T2int();
 "15
@@ -12364,22 +13017,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _PIR1bits 0 1 -> -> 0 `i `uc ]
 "17
 }
-[e :U 1479 ]
+[e :U 1537 ]
 [; ;main.c: 17: }
 [; ;main.c: 18: }
 "18
-[e :UE 1478 ]
+[e :UE 1536 ]
 }
-[v F7774 `(v ~T0 @X0 1 tf ]
+[v F7808 `(v ~T0 @X0 1 tf ]
 "20
-[v _isr `ILF7774 ~T0 @X0 1 e ]
+[v _isr `ILF7808 ~T0 @X0 1 e ]
 {
 [; ;main.c: 20: void interrupt low_priority isr(void) {
 [e :U _isr ]
 [f ]
 [; ;main.c: 21: if(PIE1bits.RC1IE && PIR1bits.RC1IF) {
 "21
-[e $ ! && != -> . . _PIE1bits 0 5 `i -> -> -> 0 `i `Vuc `i != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 1481  ]
+[e $ ! && != -> . . _PIE1bits 0 5 `i -> -> -> 0 `i `Vuc `i != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 1539  ]
 {
 [; ;main.c: 22: UARTint();
 "22
@@ -12389,11 +13042,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
 "24
 }
-[e :U 1481 ]
+[e :U 1539 ]
 [; ;main.c: 24: }
 [; ;main.c: 25: }
 "25
-[e :UE 1480 ]
+[e :UE 1538 ]
 }
 "27
 [v _main `(v ~T0 @X0 1 ef ]
@@ -12427,7 +13080,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _interruptConfig ..  ]
 [; ;main.c: 40: while(1) {
 "40
-[e :U 1484 ]
+[e :U 1542 ]
 {
 [; ;main.c: 41: asm(" clrwdt");
 "41
@@ -12440,58 +13093,64 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _buttonChecking ..  ]
 "44
 }
-[e :U 1483 ]
+[e :U 1541 ]
 "40
-[e $U 1484  ]
-[e :U 1485 ]
+[e $U 1542  ]
+[e :U 1543 ]
 [; ;main.c: 44: }
 [; ;main.c: 45: }
 "45
-[e :UE 1482 ]
+[e :UE 1540 ]
 }
 [p f _printf 9020544 ]
-[a 21C 32 37 99 107 103 32 32 37 99 109 51 32 32 37 99 115 101 99 32 0 ]
-[a 17C 32 32 37 51 46 51 102 32 107 103 47 109 51 32 0 ]
-[a 31C 32 32 37 51 46 51 102 32 107 103 47 109 51 32 0 ]
-[a 19C 32 32 32 37 51 46 51 102 32 109 47 115 32 32 0 ]
-[a 33C 32 32 32 37 51 46 51 102 32 109 47 115 32 32 0 ]
-[a 11C 32 32 32 37 51 46 51 102 32 115 101 99 32 32 0 ]
-[a 25C 32 32 32 37 51 46 51 102 32 115 101 99 32 32 0 ]
-[a 41C 32 32 32 70 105 110 97 108 105 122 97 100 111 32 32 32 0 ]
-[a 15C 32 32 32 37 51 46 51 102 32 109 109 32 32 32 0 ]
-[a 29C 32 32 32 37 51 46 51 102 32 109 109 32 32 32 0 ]
-[a 9C 32 32 32 37 51 46 51 102 32 107 103 32 32 32 0 ]
-[a 23C 32 32 32 37 51 46 51 102 32 107 103 32 32 32 0 ]
-[a 45C 32 32 32 37 99 83 73 32 32 32 32 37 99 78 79 32 32 32 0 ]
-[a 10C 32 32 32 37 51 46 51 102 32 109 51 32 32 32 0 ]
-[a 24C 32 32 32 37 51 46 51 102 32 109 51 32 32 32 0 ]
-[a 35C 32 32 32 32 37 99 37 117 37 99 37 117 37 99 37 117 37 99 37 117 32 32 32 32 0 ]
-[a 3C 32 32 32 32 68 101 116 101 110 105 100 111 32 32 32 32 0 ]
-[a 39C 32 32 32 32 73 110 105 99 105 97 100 111 32 32 32 32 0 ]
-[a 2C 32 32 32 37 100 32 47 32 37 100 32 32 32 32 0 ]
-[a 37C 32 32 32 32 32 69 114 114 111 110 101 97 32 32 32 32 0 ]
-[a 13C 32 32 32 32 32 32 37 100 32 32 32 32 32 32 32 0 ]
-[a 27C 32 32 32 32 32 32 37 100 32 32 32 32 32 32 32 0 ]
-[a 7C 32 32 32 32 32 32 115 101 99 32 32 32 32 32 32 32 0 ]
-[a 6C 32 32 32 32 32 32 32 109 51 32 32 32 32 32 32 32 0 ]
-[a 5C 32 32 32 32 32 32 32 107 103 32 32 32 32 32 32 32 32 0 ]
-[a 43C 68 101 116 101 110 101 114 32 80 114 111 99 101 115 111 63 10 0 ]
-[a 42C 73 110 105 99 105 97 114 32 80 114 111 99 101 115 111 63 10 0 ]
-[a 12C 67 97 110 116 105 100 97 100 32 67 111 114 116 101 115 58 10 0 ]
-[a 26C 67 97 110 116 105 100 97 100 32 67 111 114 116 101 115 58 10 0 ]
-[a 38C 77 111 100 111 32 67 111 110 102 105 103 117 114 97 114 58 10 0 ]
-[a 40C 77 111 100 111 32 67 111 110 102 105 103 117 114 97 114 58 10 0 ]
-[a 8C 86 97 108 111 114 32 112 111 114 32 67 111 114 116 101 58 10 0 ]
-[a 22C 86 97 108 111 114 32 112 111 114 32 67 111 114 116 101 58 10 0 ]
-[a 44C 71 117 97 114 100 97 114 32 67 97 109 98 105 111 63 32 10 0 ]
-[a 1C 69 115 116 97 100 111 32 112 114 111 99 101 115 111 58 32 10 0 ]
-[a 18C 86 101 108 111 99 105 100 97 100 32 77 97 115 97 58 32 10 0 ]
-[a 32C 86 101 108 111 99 105 100 97 100 32 77 97 115 97 58 32 10 0 ]
-[a 14C 68 105 97 109 101 116 114 111 32 84 117 98 111 58 32 32 10 0 ]
-[a 28C 68 105 97 109 101 116 114 111 32 84 117 98 111 58 32 32 10 0 ]
-[a 16C 68 101 110 115 105 100 97 100 32 77 97 115 97 58 32 32 10 0 ]
-[a 30C 68 101 110 115 105 100 97 100 32 77 97 115 97 58 32 32 10 0 ]
-[a 4C 80 114 111 99 101 115 111 32 101 110 58 32 32 32 32 32 10 0 ]
-[a 20C 80 114 111 99 101 115 111 32 101 110 58 32 32 32 32 32 10 0 ]
-[a 34C 67 111 110 116 114 97 115 101 110 97 58 32 32 32 32 32 10 0 ]
-[a 36C 67 111 110 116 114 97 115 101 110 97 32 32 32 32 32 32 10 0 ]
+[a 49C 49 32 107 103 32 64 32 49 48 32 99 111 114 116 101 115 0 ]
+[a 1C 32 32 37 117 37 117 37 117 46 37 117 37 117 37 117 32 0 ]
+[a 22C 32 37 99 107 103 32 32 37 99 109 51 32 32 37 99 115 101 99 32 0 ]
+[a 18C 32 32 37 51 46 51 102 32 107 103 47 109 51 32 0 ]
+[a 32C 107 103 47 109 51 32 0 ]
+[a 20C 32 32 32 37 51 46 51 102 32 109 47 115 32 32 0 ]
+[a 12C 32 32 32 37 51 46 51 102 32 115 101 99 32 32 0 ]
+[a 34C 109 47 115 32 32 32 0 ]
+[a 42C 32 32 32 70 105 110 97 108 105 122 97 100 111 32 32 32 0 ]
+[a 16C 32 32 32 37 51 46 51 102 32 109 109 32 32 32 0 ]
+[a 10C 32 32 32 37 51 46 51 102 32 107 103 32 32 32 0 ]
+[a 26C 115 101 99 32 32 32 0 ]
+[a 47C 32 32 32 37 99 83 73 32 32 32 32 37 99 78 79 32 32 32 0 ]
+[a 11C 32 32 32 37 51 46 51 102 32 109 51 32 32 32 0 ]
+[a 36C 32 32 32 32 37 99 37 117 37 99 37 117 37 99 37 117 37 99 37 117 32 32 32 32 0 ]
+[a 4C 32 32 32 32 68 101 116 101 110 105 100 111 32 32 32 32 0 ]
+[a 40C 32 32 32 32 73 110 105 99 105 97 100 111 32 32 32 32 0 ]
+[a 30C 109 109 32 32 32 32 0 ]
+[a 24C 107 103 32 32 32 32 0 ]
+[a 51C 107 103 32 32 32 32 0 ]
+[a 3C 32 32 32 37 100 32 47 32 37 100 32 32 32 32 0 ]
+[a 38C 32 32 32 32 32 69 114 114 111 110 101 97 32 32 32 32 0 ]
+[a 25C 109 51 32 32 32 32 0 ]
+[a 14C 32 32 32 32 32 32 37 100 32 32 32 32 32 32 32 0 ]
+[a 28C 32 32 32 32 32 32 37 100 32 32 32 32 32 32 32 0 ]
+[a 8C 32 32 32 32 32 32 115 101 99 32 32 32 32 32 32 32 0 ]
+[a 7C 32 32 32 32 32 32 32 109 51 32 32 32 32 32 32 32 0 ]
+[a 6C 32 32 32 32 32 32 32 107 103 32 32 32 32 32 32 32 32 0 ]
+[a 48C 65 117 116 111 99 97 108 105 98 32 117 115 97 110 100 111 10 0 ]
+[a 44C 68 101 116 101 110 101 114 32 80 114 111 99 101 115 111 63 10 0 ]
+[a 43C 73 110 105 99 105 97 114 32 80 114 111 99 101 115 111 63 10 0 ]
+[a 13C 67 97 110 116 105 100 97 100 32 67 111 114 116 101 115 58 10 0 ]
+[a 27C 67 97 110 116 105 100 97 100 32 67 111 114 116 101 115 58 10 0 ]
+[a 39C 77 111 100 111 32 67 111 110 102 105 103 117 114 97 114 58 10 0 ]
+[a 41C 77 111 100 111 32 67 111 110 102 105 103 117 114 97 114 58 10 0 ]
+[a 9C 86 97 108 111 114 32 112 111 114 32 67 111 114 116 101 58 10 0 ]
+[a 23C 86 97 108 111 114 32 112 111 114 32 67 111 114 116 101 58 10 0 ]
+[a 45C 71 117 97 114 100 97 114 32 67 97 109 98 105 111 63 32 10 0 ]
+[a 46C 73 110 105 116 32 97 117 116 111 67 97 108 105 98 63 32 10 0 ]
+[a 2C 69 115 116 97 100 111 32 112 114 111 99 101 115 111 58 32 10 0 ]
+[a 19C 86 101 108 111 99 105 100 97 100 32 77 97 115 97 58 32 10 0 ]
+[a 33C 86 101 108 111 99 105 100 97 100 32 77 97 115 97 58 32 10 0 ]
+[a 15C 68 105 97 109 101 116 114 111 32 84 117 98 111 58 32 32 10 0 ]
+[a 29C 68 105 97 109 101 116 114 111 32 84 117 98 111 58 32 32 10 0 ]
+[a 17C 68 101 110 115 105 100 97 100 32 77 97 115 97 58 32 32 10 0 ]
+[a 31C 68 101 110 115 105 100 97 100 32 77 97 115 97 58 32 32 10 0 ]
+[a 5C 80 114 111 99 101 115 111 32 101 110 58 32 32 32 32 32 10 0 ]
+[a 21C 80 114 111 99 101 115 111 32 101 110 58 32 32 32 32 32 10 0 ]
+[a 50C 80 101 115 111 32 82 101 97 108 58 32 32 32 32 32 10 0 ]
+[a 35C 67 111 110 116 114 97 115 101 110 97 58 32 32 32 32 32 10 0 ]
+[a 37C 67 111 110 116 114 97 115 101 110 97 32 32 32 32 32 32 10 0 ]

@@ -1,12 +1,12 @@
 #ifndef UARTCONFIG_H
 #define	UARTCONFIG_H
 
-#include "sysParams.h"
-#include "DisplayProtocol.h"
-
 #ifdef	__cplusplus
 extern "C" {
 #endif
+    
+    #include "sysParams.h"
+    #include "DisplayProtocol.h"
     
     void putchUART(char val) {
         while(!TXSTA1bits.TRMT);
@@ -23,6 +23,15 @@ extern "C" {
             saveSysParams();
         }else if(sas == 'C') {
             sysParamInit();
+        }else if(sas == 'D') {
+            putchUART(chanValdig[0]);
+            putchUART(chanValdig[1]);
+            putchUART(chanValdig[2]);
+            putchUART(chanValdig[3]);
+            putchUART(chanValdig[4]);
+            putchUART(chanValdig[5]);
+        }else if(sas == 'E') {
+            
         }
 //            putchUART(readEEPROM(1));
 //            putchUART(readEEPROM(2));

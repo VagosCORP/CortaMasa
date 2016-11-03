@@ -69,6 +69,24 @@ char readEEPROM(char adr) {
         kgXcorte = (float)densidadMasa * m3Xcorte;
     }
     
+    void calcVars2ti() {
+        float temp = 0;
+        temp = (float)diamTubo / 2000.0f;
+        temp *= temp;
+        temp *= pi;
+        temp *= velocidadMasa;
+        if(tVarProceso == tvp_kg) {
+            m3Xcorte = (float)kgXcorte / densidadMasa;
+            tiXcorte = (float)m3Xcorte / temp;
+        }else if(tVarProceso == tvp_m3) {
+            tiXcorte = (float)m3Xcorte / temp;
+            kgXcorte = (float)densidadMasa * m3Xcorte;
+        }else if(tVarProceso == tvp_ti) {
+            m3Xcorte = (float)temp * tiXcorte;
+            kgXcorte = (float)densidadMasa * m3Xcorte; 
+        }  
+    }
+    
     void saveSysParams() {
         EECON1bits.WREN = 1;
         ie = INTCONbits.GIE;
@@ -99,7 +117,7 @@ char readEEPROM(char adr) {
         writeEEPROM(19, fData.floatLB);
         EECON1bits.WREN = 0;
         INTCONbits.GIE = ie;
-        calcSysVars();
+        calcVars2ti();
     }
     
     void preAutoCal() {
