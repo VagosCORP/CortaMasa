@@ -1,13 +1,23 @@
 #ifndef PWMCONFIG_H
 #define	PWMCONFIG_H
 
-#include "UARTConfig.h"
-
+#include "sysParams.h"
 
 #ifdef	__cplusplus
 extern "C" {
 #endif
     
+    
+    char lastSttFC1 = 0;
+    char holdFC1cont = 0;
+    char FC1securLock = 0;
+    char lastSttFC2 = 0;
+    char holdFC2cont = 0;
+    char FC2securLock = 0;
+    
+    char bladeIsUP = 0;
+    long processTimer = 0;
+    long timeDOWN = 1000;
     
     void t2config() {
         T2CONbits.TMR2ON = 0;
@@ -15,7 +25,7 @@ extern "C" {
         T2CONbits.T2OUTPS = 0b1111; //1:16 Post
 //        PR2 = 199; //50 us OF ~ 20kHz
         PIR1bits.TMR2IF = 0;
-        IPR1bits.TMR2IP = 1;
+        IPR1bits.TMR2IP = 0;
         PIE1bits.TMR2IE = 1;
         T2CONbits.TMR2ON = 1;
     }
@@ -33,13 +43,84 @@ extern "C" {
     }
     
     void T2int() {
-        if(FC1 || FC2) {
+        if(FC1 && !lastSttFC1) {//pressFC1();
+            lastSttFC1 = 0;
             setPWM2duty(0);
-            if(FC1)
-                putchUART(101);
-            if(FC2)
-                putchUART(102);
+            bladeIsUP = 1;
+            processTimer = 0;
+//            putchUART('F');
+//            putchUART('C');
+//            putchUART('1');
+//            putchUART(10);
+            if(processState >= numCortes) {
+                ProcessStarted = 0;
+                saveProcessState();
+            }
+            delay_ms(200);
+        }else if(!FC1 && lastSttFC1) {
+            lastSttFC1 = 1;
+//            if(holdFC1cont < 10) {
+//                
+//            }
+            delay_ms(50);
+        }else if(FC1 == lastSttFC1) {
+            if(!FC1) {
+                holdFC1cont = 0;
+                //releaseFC1();
+            }else {
+                if(!FC1securLock)
+                    holdFC1cont++;
+                if(holdFC1cont > 9) {
+                    if(holdFC1cont < 26) {
+                        //longPressFC1();
+                    }else
+                        FC1securLock = 1;//Alguien apoyado!
+                }
+                delay_ms(200);
+            }
         }
+        if(FC2 && !lastSttFC2) {//pressFC2();
+            lastSttFC2 = 0;
+            setPWM2duty(0);
+            bladeIsUP = 0;
+            processTimer = 0;
+//            putchUART('F');
+//            putchUART('C');
+//            putchUART('2');
+//            putchUART(10);
+            processState++;
+            saveProcessState();
+            if(processState >= numCortes) {
+                REL = 0;
+//                putchUART('R');
+//                putchUART('=');
+//                putchUART('0');
+//                putchUART(10);
+            }
+            delay_ms(200);
+        }else if(!FC2 && lastSttFC2) {
+            lastSttFC2 = 1;
+//            if(holdFC2cont < 10) {
+//                
+//            }
+            delay_ms(50);
+        }else if(FC2 == lastSttFC2) {
+            if(!FC2) {
+                holdFC2cont = 0;
+                //releaseFC2();
+            }else {
+                if(!FC2securLock)
+                    holdFC2cont++;
+                if(holdFC2cont > 9) {
+                    if(holdFC2cont < 26) {//longPressFC2();
+                        
+                    }else
+                        FC2securLock = 1;//Alguien apoyado!
+                }
+                delay_ms(200);
+            }
+        }
+        
     }
     
     void PWM2Config() {

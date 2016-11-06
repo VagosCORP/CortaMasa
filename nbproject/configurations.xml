@@ -18,10 +18,10 @@
       <itemPath>source/PWMConfig.h</itemPath>
       <itemPath>source/SYSConfig.h</itemPath>
       <itemPath>source/DisplayProtocol.h</itemPath>
-      <itemPath>source/T2Config.h</itemPath>
       <itemPath>source/sysParams.h</itemPath>
       <itemPath>source/ButtonController.h</itemPath>
       <itemPath>source/screenDrawers.h</itemPath>
+      <itemPath>source/T4Config.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

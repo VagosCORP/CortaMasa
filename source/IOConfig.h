@@ -60,6 +60,11 @@ extern "C" {
         lcd_putc(val);
     }
     
+    void putchUART(char val) {
+        while(!TXSTA1bits.TRMT);
+        TXREG1 = val;
+    }
+    
     void ioConfig() {
         TRISBbits.TRISB1 = 0;
         TRISBbits.TRISB2 = 0;

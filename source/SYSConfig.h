@@ -19,7 +19,7 @@ extern "C" {
 
     // CONFIG2H
     #pragma config WDTEN = SWON     // Watchdog Timer Enable bits (WDT is controlled by SWDTEN bit of the WDTCON register)
-    #pragma config WDTPS = 32768    // Watchdog Timer Postscale Select bits (1:32768)
+    #pragma config WDTPS = 32       // Watchdog Timer Postscale Select bits (1:32)
 
     // CONFIG3H
     #pragma config CCP2MX = PORTC1  // CCP2 MUX bit (CCP2 input/output is multiplexed with RC1)
@@ -84,7 +84,6 @@ extern "C" {
         OSCTUNEbits.TUN = 0b011111;
         OSCTUNEbits.PLLEN = 1;
 //        while(!OSCCON2bits.PLLRDY); //No se porque no da XD
-        WDTCONbits.SWDTEN = 1;
     }
     
     void interruptConfig() {

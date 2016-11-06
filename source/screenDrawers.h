@@ -15,20 +15,21 @@ extern "C" {
     #define SCREEN_OFF_PROCESS  3   
     #define SCREEN_MENU_ADV     4   
     #define SCREEN_CHAN_VAL     5   
-    #define SCREEN_CALIB_VEL    6
+    #define SCREEN_CALIB_PROCESS    6
     #define SCREEN_BAD_PASS     7   
     #define SCREEN_ADVMODE_ON   8
     #define SCREEN_ADVMODE_OFF  9
     #define SCREEN_SAVE_ALL    10
-    #define SCREEN_CALIB_RMAS  11
+    #define SCREEN_CALIB_INIT   11
+    #define SCREEN_CALIB_RMAS  12
 
     #define MENU_ESTADO         0
-    #define MENU_TIP_VAR        1
-    #define MENU_VALP_CUT       2
-    #define MENU_CANT_CUT       3   
-    #define MENU_DIAM_TUB       4   
-    #define MENU_DENS_MAS       5   
-    #define MENU_VEL_MAS        6
+    #define MENU_VALP_CUT       1
+    #define MENU_CANT_CUT       2   
+    #define MENU_DIAM_TUB       3   
+    #define MENU_VEL_MAS        4   
+//    #define MENU_DENS_MAS       5
+//    #define MENU_TIP_VAR        6
 
     #define SI                  0
     #define NO                  1
@@ -45,14 +46,39 @@ extern "C" {
     float chanValf = 000.000f;
     short chanVals = 0;
     signed char chanValdig[6] = {0,0,0,0,0,0};
+    char chanValChar[6] = {0, 0, 0, 0, 0, 0};
     long exp10[6] = {100000,10000,1000,100,10,1};
     char questSN[2] = {0, 0};
     char selSN = 0;
     char fd = 0;
     char tempLastScreen = 0;
     char screen_calibVelRes = 0;
+    char flech = 0b01111110;
     
     void drawValEditor() {
+        if(chanValSection == 5) {
+            printf(" %u%u%u.%u%u%c%u ", chanValdig[0], chanValdig[1],
+                chanValdig[2], chanValdig[3], chanValdig[4], flech, chanValdig[5]);
+        }else if(chanValSection == 4) {
+            printf(" %u%u%u.%u%c%u%u ", chanValdig[0], chanValdig[1],
+                chanValdig[2], chanValdig[3], flech, chanValdig[4], chanValdig[5]);
+        }else if(chanValSection == 3) {
+            printf(" %u%u%u.%c%u%u%u ", chanValdig[0], chanValdig[1],
+                chanValdig[2], flech, chanValdig[3], chanValdig[4], chanValdig[5]);
+        }else if(chanValSection == 2) {
+            printf(" %u%u%c%u.%u%u%u ", chanValdig[0], chanValdig[1], flech,
+                chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
+        }else if(chanValSection == 1) {
+            printf(" %u%c%u%u.%u%u%u ", chanValdig[0], flech, chanValdig[1],
+                chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
+        }else if(chanValSection == 0) {
+            printf(" %c%u%u%u.%u%u%u ", flech, chanValdig[0], chanValdig[1],
+                chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
+        }
+        lcd_gotoxy(11, 2);
+    }
+    
+    void drawValEditors() {
         printf("  %u%u%u.%u%u%u ", chanValdig[0], chanValdig[1],
                 chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
         lcd_gotoxy(11, 2);
@@ -69,24 +95,9 @@ extern "C" {
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
                 if (ProcessStarted)
-                    printf("   %d / %d    ", proceso, numCortes);
+                    printf("   %d / %d    ", processState, numCortes);
                 else
                     printf("    Detenido    ");
-                break;
-            }case (MENU_TIP_VAR): {
-                lcd_gotoxy(1, 1);
-                printf("Proceso en:     \n");
-                if (adv)
-                    lcd_putc('A');
-                else
-                    lcd_putc(' ');
-                lcd_gotoxy(2, 2);
-                if(tVarProceso == tvp_kg)
-                    printf("       kg        ");
-                else if(tVarProceso == tvp_m3)
-                    printf("       m3       ");
-                else if(tVarProceso == tvp_ti)
-                    printf("      sec       ");
                 break;
             }case (MENU_VALP_CUT): {
                 lcd_gotoxy(1, 1);
@@ -96,12 +107,7 @@ extern "C" {
                 else
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
-                if(tVarProceso == tvp_kg)
-                    printf("   %3.3f kg   ", kgXcorte);
-                else if(tVarProceso == tvp_m3)
-                    printf("   %3.3f m3   ", m3Xcorte);
-                else if(tVarProceso == tvp_ti)    
-                    printf("   %3.3f sec  ", tiXcorte);
+                printf("   %3.3f kg   ", kgXcorte);
                 break;
             }case (MENU_CANT_CUT): {
                 lcd_gotoxy(1, 1);
@@ -123,16 +129,6 @@ extern "C" {
                 lcd_gotoxy(2, 2);
                 printf("   %3.3f mm   ", diamTubo);
                 break;
-            }case (MENU_DENS_MAS): {
-                lcd_gotoxy(1, 1);
-                printf("Densidad Masa:  \n");
-                if (adv)
-                    lcd_putc('A');
-                else
-                    lcd_putc(' ');
-                lcd_gotoxy(2, 2);
-                printf("  %3.3f kg/m3 ", densidadMasa);
-                break;
             }case (MENU_VEL_MAS): {
                 lcd_gotoxy(1, 1);
                 printf("Velocidad Masa: \n");
@@ -141,7 +137,7 @@ extern "C" {
                 else
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
-                printf("   %3.3f m/s  ", velocidadMasa);
+                printf("  %3.3f kg/s  ", velocidadMasa);
                 break;
             }
         }
@@ -151,25 +147,11 @@ extern "C" {
         switch (menuSection) {
             case (MENU_ESTADO): {
                 break;
-            }case (MENU_TIP_VAR): {
-                int i;
-                for (i = 0; i < 4; i++)
-                    questKMT[i] = ' ';
-                questKMT[selKMT] = 0b01111110;
-                lcd_gotoxy(1, 1);
-                printf("Proceso en:     \n");
-                printf(" %ckg  %cm3  %csec ", questKMT[0], questKMT[1], questKMT[2]);
-                break;
             }case (MENU_VALP_CUT): {
                 lcd_gotoxy(1, 1);
                 printf("Valor por Corte:\n");
                 drawValEditor();
-                if(tVarProceso == tvp_kg)
-                    printf("kg    ");
-                else if(tVarProceso == tvp_m3)
-                    printf("m3    ");
-                else if(tVarProceso == tvp_ti)
-                    printf("sec   ");
+                printf("kg    ");
                 break;
             }case (MENU_CANT_CUT): {
                 lcd_gotoxy(1, 1);
@@ -182,17 +164,11 @@ extern "C" {
                 drawValEditor();
                 printf("mm    ");
                 break;
-            }case (MENU_DENS_MAS): {
-                lcd_gotoxy(1, 1);
-                printf("Densidad Masa:  \n");
-                drawValEditor();
-                printf("kg/m3 ");
-                break;
             }case (MENU_VEL_MAS): {
-                lcd_gotoxy(1, 1);
-                printf("Velocidad Masa: \n");
-                drawValEditor();
-                printf("m/s   ");
+//                lcd_gotoxy(1, 1);
+//                printf("Velocidad Masa: \n");
+//                drawValEditor();
+//                printf("kg/s   ");
                 break;
             }
         }
@@ -210,7 +186,7 @@ extern "C" {
         int i;
         for (i = 0; i < 4; i++)
             passChar[i] = ' ';
-        passChar[passSection] = 0b01111110;
+        passChar[passSection] = flech;
         lcd_gotoxy(1, 1);
         printf("Contrasena:     \n");
         printf("    %c%u%c%u%c%u%c%u    ", passChar[0], introducido[0], passChar[1], introducido[1],
@@ -297,11 +273,11 @@ extern "C" {
             }case (SCREEN_SAVE_ALL): {
                 drawSNquest(2);
                 break;
-            }case (SCREEN_CALIB_VEL): {
-                if(screen_calibVelRes)
-                    drawAutoCalibRes();
-                else
-                    drawSNquest(3);
+            }case (SCREEN_CALIB_INIT): {
+                drawSNquest(3);                
+                break;
+            }case (SCREEN_CALIB_PROCESS): {
+                
                 break;
             }case (SCREEN_CALIB_RMAS): {
                 drawAutoCalibRM();

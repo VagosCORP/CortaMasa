@@ -8,11 +8,6 @@ extern "C" {
     #include "sysParams.h"
     #include "DisplayProtocol.h"
     
-    void putchUART(char val) {
-        while(!TXSTA1bits.TRMT);
-        TXREG1 = val;
-    }
-    
     void UARTint() {
         char sas = RCREG1;
         if(sas == 'A') {

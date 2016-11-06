@@ -4,6 +4,7 @@
 #include "sysParams.h"
 #include "IOConfig.h"
 #include "screenDrawers.h"
+#include "PWMConfig.h"
 
 #ifdef	__cplusplus
 extern "C" {
@@ -72,31 +73,15 @@ extern "C" {
         switch (menuSection) {
             case (MENU_ESTADO): {
                 break;
-            }case (MENU_TIP_VAR): {
-                if(yes) {
-                    tVarProceso = selKMT;
-                    actualScreen = SCREEN_MENU_ADV;
-                    saveSysParams();
-                }else {
-                    tempLastScreen = actualScreen;
-                    actualScreen = SCREEN_SAVE_ALL;
-                    selSN = NO;
-                }
-                break;
             }case (MENU_VALP_CUT): {
                 if(yes) {
-                    if(tVarProceso == tvp_kg)
-                        kgXcorte = chanValf;
-                    else if(tVarProceso == tvp_m3)
-                        m3Xcorte = chanValf;
-                    else if(tVarProceso == tvp_ti)    
-                        tiXcorte = chanValf;
+                    kgXcorte = chanValf;
                     actualScreen = SCREEN_MENU_ADV;
                     saveSysParams();
                 }else {
                     tempLastScreen = actualScreen;
-                    actualScreen = SCREEN_SAVE_ALL;
                     selSN = NO;
+                    actualScreen = SCREEN_SAVE_ALL;
                 }
                 break;
             }case (MENU_CANT_CUT): {
@@ -106,8 +91,8 @@ extern "C" {
                     saveSysParams();
                 }else {
                     tempLastScreen = actualScreen;
-                    actualScreen = SCREEN_SAVE_ALL;
                     selSN = NO;
+                    actualScreen = SCREEN_SAVE_ALL;
                 }
                 break;
             }case (MENU_DIAM_TUB): {
@@ -117,19 +102,8 @@ extern "C" {
                     saveSysParams();
                 }else {
                     tempLastScreen = actualScreen;
-                    actualScreen = SCREEN_SAVE_ALL;
                     selSN = NO;
-                }
-                break;
-            }case (MENU_DENS_MAS): {
-                if(yes) {
-                    densidadMasa = chanValf;
-                    actualScreen = SCREEN_MENU_ADV;
-                    saveSysParams();
-                }else {
-                    tempLastScreen = actualScreen;
                     actualScreen = SCREEN_SAVE_ALL;
-                    selSN = NO;
                 }
                 break;
             }case (MENU_VEL_MAS): {
@@ -139,8 +113,8 @@ extern "C" {
                     saveSysParams();
                 }else {
                     tempLastScreen = actualScreen;
-                    actualScreen = SCREEN_SAVE_ALL;
                     selSN = NO;
+                    actualScreen = SCREEN_SAVE_ALL;
                 }
                 break;
             }
@@ -150,7 +124,7 @@ extern "C" {
     void pressUP() {
         if (actualScreen == SCREEN_MENU || actualScreen == SCREEN_MENU_ADV) {
             menuSection++;
-            if (menuSection > 6)
+            if (menuSection > 4)
                 menuSection = 0;
         } else if (actualScreen == SCREEN_PASSWORD) {
             introducido[passSection]++;
@@ -165,11 +139,6 @@ extern "C" {
             switch (menuSection) {
                 case (MENU_ESTADO): {
                     break;
-                }case (MENU_TIP_VAR): {
-                    selKMT++;
-                    if(selKMT > 2)
-                        selKMT = 0;
-                    break;
                 }case (MENU_VALP_CUT): {
                     chanValDigUP();
                     break;
@@ -177,9 +146,6 @@ extern "C" {
                     chanVals++;
                     break;
                 }case (MENU_DIAM_TUB): {
-                    chanValDigUP();
-                    break;
-                }case (MENU_DENS_MAS): {
                     chanValDigUP();
                     break;
                 }case (MENU_VEL_MAS): {
@@ -218,7 +184,7 @@ extern "C" {
         if (actualScreen == SCREEN_MENU || actualScreen == SCREEN_MENU_ADV) {
             menuSection--;
             if (menuSection < 0)
-                menuSection = 6;
+                menuSection = 4;
         } else if (actualScreen == SCREEN_PASSWORD) {
             introducido[passSection]--;
             if (introducido[passSection] < 0)
@@ -232,11 +198,6 @@ extern "C" {
             switch (menuSection) {
                 case (MENU_ESTADO): {
                     break;
-                }case (MENU_TIP_VAR): {
-                    selKMT--;
-                    if(selKMT < 0)
-                        selKMT = 2;
-                    break;
                 }case (MENU_VALP_CUT): {
                     chanValDigDOWN();
                     break;
@@ -244,9 +205,6 @@ extern "C" {
                     chanVals--;
                     break;
                 }case (MENU_DIAM_TUB): {
-                    chanValDigDOWN();
-                    break;
-                }case (MENU_DENS_MAS): {
                     chanValDigDOWN();
                     break;
                 }case (MENU_VEL_MAS): {
@@ -279,7 +237,7 @@ extern "C" {
                 || actualScreen == SCREEN_SAVE_ALL) {
             actualScreen = tempLastScreen;
         }else if(actualScreen == SCREEN_CHAN_VAL) {
-            if(menuSection != MENU_CANT_CUT && menuSection != MENU_TIP_VAR) {
+            if(menuSection != MENU_CANT_CUT/* && menuSection != MENU_TIP_VAR*/) {
                 chanValSection++;
                 if(chanValSection > 5)
                     chanValSection = 0;
@@ -330,23 +288,13 @@ extern "C" {
                         selSN = NO;
                     }
                     break;
-                }case (MENU_TIP_VAR): {
-                    tempLastScreen = actualScreen;
-                    selKMT = tVarProceso;
-                    actualScreen = SCREEN_CHAN_VAL;
-                    break;
                 }case (MENU_VALP_CUT): {
-                    if(tVarProceso == tvp_kg)
-                        chanValf = kgXcorte;
-                    else if(tVarProceso == tvp_m3)
-                        chanValf = m3Xcorte;
-                    else if(tVarProceso == tvp_ti)
-                        chanValf = tiXcorte;
-                    
+                    chanValf = kgXcorte;
                     desintegrator();
                     actualScreen = SCREEN_CHAN_VAL;
                     break;
                 }case (MENU_CANT_CUT): {
+                    tempLastScreen = actualScreen;
                     chanVals = numCortes;
                     actualScreen = SCREEN_CHAN_VAL;
                     break;
@@ -355,24 +303,19 @@ extern "C" {
                     desintegrator();
                     actualScreen = SCREEN_CHAN_VAL;
                     break;
-                }case (MENU_DENS_MAS): {
-                    chanValf = densidadMasa;
-                    desintegrator();
-                    actualScreen = SCREEN_CHAN_VAL;
-                    break;
                 }case (MENU_VEL_MAS): {
-                    chanValf = velocidadMasa;
-                    desintegrator();
-                    actualScreen = SCREEN_CHAN_VAL;
+                    tempLastScreen = actualScreen;
+                    selSN = NO;
+                    actualScreen = SCREEN_CALIB_INIT;
                     break;
                 }
             }
         }else if(actualScreen == SCREEN_BAD_PASS)
             actualScreen = SCREEN_PASSWORD;
-        else if(actualScreen == SCREEN_CALIB_VEL) {
+        else if(actualScreen == SCREEN_CALIB_PROCESS) {
             
         }else if(actualScreen == SCREEN_CHAN_VAL) {
-            if(menuSection != MENU_CANT_CUT && menuSection != MENU_TIP_VAR) {
+            if(menuSection != MENU_CANT_CUT/* && menuSection != MENU_TIP_VAR*/) {
                 chanValSection--;
                 if(chanValSection < 0)
                     chanValSection = 5;
@@ -380,6 +323,10 @@ extern "C" {
                 confirmEdition(!ProcessStarted);
         }else if(actualScreen == SCREEN_ON_PROCESS) {
             ProcessStarted = !selSN; //SI = 0
+            if(ProcessStarted && !bladeIsUP) {
+                processState = 0;
+                setPWM2duty(-400);
+            }
             actualScreen = tempLastScreen;
         }else if(actualScreen == SCREEN_OFF_PROCESS) {
             ProcessStarted = selSN; //SI = 0
@@ -393,6 +340,17 @@ extern "C" {
             actualScreen = SCREEN_MENU_ADV;
         else if(actualScreen == SCREEN_ADVMODE_OFF)
             actualScreen = SCREEN_MENU;
+        else if(actualScreen == SCREEN_CALIB_INIT) {
+            if(!selSN)
+                actualScreen = SCREEN_CALIB_PROCESS;
+            else
+                actualScreen = SCREEN_MENU_ADV;
+        }else if(actualScreen == SCREEN_CALIB_RMAS) {
+            chanValSection--;
+            if(chanValSection < 0)
+                chanValSection = 5;
+        }
+        
     }
 
     void longPressENTER() {
@@ -411,8 +369,11 @@ extern "C" {
                     selSN = NO;
                 }
             }else if(actualScreen == SCREEN_CHAN_VAL) {
-                if(menuSection != MENU_CANT_CUT && menuSection != MENU_TIP_VAR)
+                if(menuSection != MENU_CANT_CUT/* && menuSection != MENU_TIP_VAR*/)
                     integrator();
+                confirmEdition(!ProcessStarted);
+            }else if(actualScreen == SCREEN_CALIB_RMAS) {
+                integrator();
                 confirmEdition(!ProcessStarted);
             }
         }
@@ -422,42 +383,6 @@ extern "C" {
         ENTERisLP = 0;
         ENTERsecurLock = 0;
     }
-
-    /*
-     * Estado del proceso: X/Y Cortes / Detenido
-     * Proceso medido en: kg / m^3 / tiempo
-     * Número de cortes a realizar: medido en cortes
-     * Diámetro de tubo: medido en mm
-     * Densidad de la Masa: Medida en kg/m^3
-     * Velocidad de la masa: en m/s 
-     */
-
-    /*
-     * Por favor introduzca la contraseña
-     * contraseña de 4 dígitos visibles
-     */
-
-    /*
-     * Iniciar Proceso
-     * SI / NO (Por defecto en NO)
-     */
-
-    /*
-     * Cancelar Proceso
-     * X / Y, SI / NO (Por defecto en SI)
-     */
-
-    /*
-     * Label Variable
-     * Valor deseado cambieable con UP/DOWN, enter para aceptar
-     */
-
-    /*
-     * Autocalibrar velocidad de la Masa: SI / NO (Por defecto en SI)
-     * Diámetro de tubo: medido en mm
-     * Densidad Masa: Medida en kg/m^3
-     * 10 cortes x 100g
-     */
 
 
 #ifdef	__cplusplus
