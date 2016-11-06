@@ -9231,26 +9231,16 @@ LATBbits.LATB0 = 0;
 LATCbits.LATC5 = 0;
 }
 
-# 8 "source/../../Comunic.h"
+# 9 "source/sysParams.h"
 typedef union {
 float floatdat;
 struct {
 unsigned char floatLB;
 unsigned char floatHB;
 unsigned char floatUB;
-unsigned char floatMB;
-};
-}FLOATDATA;
 
-typedef union {
-long int32dat;
-struct {
-unsigned char int32LB;
-unsigned char int32HB;
-unsigned char int32UB;
-unsigned char int32MB;
 };
-}INT32DATA;
+}FLOATDATAX;
 
 typedef union {
 short int16dat;
@@ -9258,109 +9248,10 @@ struct {
 unsigned char int16LB;
 unsigned char int16HB;
 };
-}INT16DATA;
+}INT16DATAX;
 
-void putch(char val);
-
-short send_float(float valFloat){
-
-# 44
-FLOATDATA data;
-data.floatdat = valFloat;
-putch(data.floatMB);
-putch(data.floatUB);
-putch(data.floatHB);
-putch(data.floatLB);
-short res = 0;
-res += data.floatMB;
-res += data.floatUB;
-res += data.floatHB;
-res += data.floatLB;
-return res;
-}
-
-short send_int32(long valLong){
-
-# 64
-INT32DATA data;
-data.int32dat = valLong;
-putch(data.int32MB);
-putch(data.int32UB);
-putch(data.int32HB);
-putch(data.int32LB);
-short res = 0;
-res += data.int32MB;
-res += data.int32UB;
-res += data.int32HB;
-res += data.int32LB;
-return res;
-}
-
-short send_int16(int valShort){
-
-# 84
-INT16DATA data;
-data.int16dat = valShort;
-putch(data.int16HB);
-putch(data.int16LB);
-short res = 0;
-res += data.int16HB;
-res += data.int16LB;
-return res;
-}
-
-void send_float_vt(float valFloat) {
-putch(13);
-send_float(valFloat);
-putch(10);
-}
-
-void send_int32_vt(long valLong){
-putch(13);
-send_int32(valLong);
-putch(10);
-}
-
-void send_int16_vt(int valShort){
-putch(13);
-send_int16(valShort);
-putch(10);
-}
-
-float genFloat(char byteMS, char byteUS, char byteHS, char byteLS) {
-
-# 123
-FLOATDATA data;
-data.floatMB = byteMS;
-data.floatUB = byteUS;
-data.floatHB = byteHS;
-data.floatLB = byteLS;
-return data.floatdat;
-}
-
-long genLong(char byteMS, char byteUS, char byteHS, char byteLS) {
-
-# 142
-INT32DATA data;
-data.int32MB = byteMS;
-data.int32UB = byteUS;
-data.int32HB = byteHS;
-data.int32LB = byteLS;
-return data.int32dat;
-}
-
-short genShort(char byteMS, char byteLS) {
-
-# 157
-INT16DATA data;
-data.int16HB = byteMS;
-data.int16LB = byteLS;
-return data.int16dat;
-}
-
-# 11 "source/sysParams.h"
-FLOATDATA fData;
-INT16DATA i16Data;
+FLOATDATAX fData;
+INT16DATAX i16Data;
 
 char ProcessStarted = 0;
 
@@ -9370,10 +9261,14 @@ float kgXcorte = 1.0;
 float tempkgXcorte = 0.1;
 float tiXcorte = 10.0f;
 float timsXcorte = 10000.0f;
+float temptiXcorte = 10.0f;
 short numCortes = 5;
 short tempNumCortes = 1;
 float diamTubo = 20.000f;
 
+float tempVelocidadMasa1 = 0.2;
+float tempVelocidadMasa2 = 0.2;
+float tempVelocidadMasa3 = 0.2;
 float velocidadMasa = 0.2;
 float calFactor = 0;
 
@@ -9408,26 +9303,27 @@ void calcSysVars() {
 float temp = 0;
 timsXcorte = (float)tiXcorte * 1000;
 
-# 64
+# 84
 kgXcorte = (float)velocidadMasa * tiXcorte;
 }
 
 void calcVars2ti() {
 
-# 75
+# 95
 tiXcorte = (float)kgXcorte / velocidadMasa;
 timsXcorte = (float)tiXcorte * 1000;
 
-# 89
+# 109
 }
 
 void saveSysParams() {
+calcVars2ti();
 EECON1bits.WREN = 1;
 ie = INTCONbits.GIE;
 INTCONbits.GIE = 0;
 
 fData.floatdat = tiXcorte;
-writeEEPROM(2, fData.floatMB);
+
 writeEEPROM(3, fData.floatUB);
 writeEEPROM(4, fData.floatHB);
 writeEEPROM(5, fData.floatLB);
@@ -9435,20 +9331,28 @@ i16Data.int16dat = numCortes;
 writeEEPROM(6, i16Data.int16HB);
 writeEEPROM(7, i16Data.int16LB);
 fData.floatdat = diamTubo;
-writeEEPROM(8, fData.floatMB);
+
 writeEEPROM(9, fData.floatUB);
 writeEEPROM(10, fData.floatHB);
 writeEEPROM(11, fData.floatLB);
 
-# 114
+# 135
 fData.floatdat = velocidadMasa;
-writeEEPROM(16, fData.floatMB);
+
 writeEEPROM(17, fData.floatUB);
 writeEEPROM(18, fData.floatHB);
 writeEEPROM(19, fData.floatLB);
 EECON1bits.WREN = 0;
 INTCONbits.GIE = ie;
-calcVars2ti();
+}
+
+void loadSysParams() {
+tiXcorte = 10.0f;
+numCortes = 5;
+diamTubo = 20.000f;
+velocidadMasa = 0.2;
+calcSysVars();
+saveSysParams();
 }
 
 void saveProcessState() {
@@ -9461,10 +9365,9 @@ EECON1bits.WREN = 0;
 INTCONbits.GIE = ie;
 }
 
-# 166
 void sysParamInit() {
 
-fData.floatMB = readEEPROM(2);
+
 fData.floatUB = readEEPROM(3);
 fData.floatHB = readEEPROM(4);
 fData.floatLB = readEEPROM(5);
@@ -9472,14 +9375,13 @@ tiXcorte = fData.floatdat;
 i16Data.int16HB = readEEPROM(6);
 i16Data.int16LB = readEEPROM(7);
 numCortes = i16Data.int16dat;
-fData.floatMB = readEEPROM(8);
+
 fData.floatUB = readEEPROM(9);
 fData.floatHB = readEEPROM(10);
 fData.floatLB = readEEPROM(11);
 diamTubo = fData.floatdat;
 
-# 186
-fData.floatMB = readEEPROM(16);
+# 184
 fData.floatUB = readEEPROM(17);
 fData.floatHB = readEEPROM(18);
 fData.floatLB = readEEPROM(19);
@@ -9508,6 +9410,7 @@ char fd = 0;
 char tempLastScreen = 0;
 char screen_calibVelRes = 0;
 char flech = 0b01111110;
+char calibLevel = 0;
 
 void drawValEditor() {
 if(chanValSection == 5) {
@@ -9532,12 +9435,7 @@ chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
 lcd_gotoxy(11, 2);
 }
 
-void drawValEditors() {
-printf("  %u%u%u.%u%u%u ", chanValdig[0], chanValdig[1],
-chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
-lcd_gotoxy(11, 2);
-}
-
+# 88
 void drawMenu(char adv) {
 switch (menuSection) {
 case (0): {
@@ -9619,13 +9517,14 @@ drawValEditor();
 printf("mm    ");
 break;
 }case (4): {
-
-
-
-
 break;
 }
 }
+}
+
+void drawPass1Lin() {
+lcd_gotoxy(1, 1);
+printf("Contrasena:     \n");
 }
 
 void drawPassWord() {
@@ -9641,27 +9540,22 @@ int i;
 for (i = 0; i < 4; i++)
 passChar[i] = ' ';
 passChar[passSection] = flech;
-lcd_gotoxy(1, 1);
-printf("Contrasena:     \n");
+drawPass1Lin();
 printf("    %c%u%c%u%c%u%c%u    ", passChar[0], introducido[0], passChar[1], introducido[1],
 passChar[2], introducido[2], passChar[3], introducido[3]);
 }
 
 void drawBadPass() {
-lcd_gotoxy(1, 1);
-printf("Contrasena      \n");
+drawPass1Lin();
 printf("     Erronea    ");
 }
 
-void drawAdvON() {
+void drawAdvON(char on) {
 lcd_gotoxy(1, 1);
 printf("Modo Configurar:\n");
+if(on)
 printf("    Iniciado    ");
-}
-
-void drawAdvOFF() {
-lcd_gotoxy(1, 1);
-printf("Modo Configurar:\n");
+else
 printf("   Finalizado   ");
 }
 
@@ -9669,7 +9563,7 @@ void drawSNquest(char tq) {
 int i;
 for (i = 0; i < 2; i++)
 questSN[i] = ' ';
-questSN[selSN] = 0b01111110;
+questSN[selSN] = flech;
 lcd_gotoxy(1, 1);
 if (tq == 0)
 printf("Iniciar Proceso?\n");
@@ -9678,21 +9572,29 @@ printf("Detener Proceso?\n");
 else if(tq == 2)
 printf("Guardar Cambio? \n");
 else if(tq == 3)
-printf("Init autoCalib? \n");
+printf("Init AutoCalib? \n");
 printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
-}
-
-void drawAutoCalibRes() {
-lcd_gotoxy(1, 1);
-printf("Autocalib usando\n");
-printf("1 kg @ 10 cortes");
 }
 
 void drawAutoCalibRM() {
 lcd_gotoxy(1, 1);
-printf("Peso Real:     \n");
+printf("Peso Real:      \n");
 drawValEditor();
 printf("kg    ");
+}
+
+void drawCalibProc() {
+lcd_gotoxy(1, 1);
+if(calibLevel == 0) {
+printf("Autocalib usando\n");
+printf("       1 kg     ");
+}else if(calibLevel == 1) {
+printf("Autocalib usando\n");
+printf("     0.5 kg     ");
+}else if(calibLevel == 2) {
+printf("Autocalib usando\n");
+printf("    0.25 kg     ");
+}
 }
 
 void drawScreen() {
@@ -9710,10 +9612,10 @@ break;
 drawMenu(1);
 break;
 }case (8): {
-drawAdvON();
+drawAdvON(1);
 break;
 }case (9): {
-drawAdvOFF();
+drawAdvON(0);
 break;
 }case (5): {
 drawChanVal();
@@ -9731,7 +9633,7 @@ break;
 drawSNquest(3);
 break;
 }case (6): {
-
+drawCalibProc();
 break;
 }case (12): {
 drawAutoCalibRM();
@@ -9740,7 +9642,7 @@ break;
 }
 }
 
-# 11 "source/PWMConfig.h"
+# 12 "source/PWMConfig.h"
 char lastSttFC1 = 0;
 char holdFC1cont = 0;
 char FC1securLock = 0;
@@ -9781,13 +9683,11 @@ lastSttFC1 = 0;
 setPWM2duty(0);
 bladeIsUP = 1;
 processTimer = 0;
-
-
-
-
 if(processState >= numCortes) {
 ProcessStarted = 0;
 saveProcessState();
+if(actualScreen == 6)
+actualScreen = 12;
 }
 delay_ms(200);
 }else if(!PORTAbits.RA7 && lastSttFC1) {
@@ -9817,19 +9717,10 @@ lastSttFC2 = 0;
 setPWM2duty(0);
 bladeIsUP = 0;
 processTimer = 0;
-
-
-
-
 processState++;
 saveProcessState();
-if(processState >= numCortes) {
+if(processState >= numCortes)
 LATCbits.LATC4 = 0;
-
-
-
-
-}
 delay_ms(200);
 }else if(!PORTAbits.RA6 && lastSttFC2) {
 lastSttFC2 = 1;
@@ -10011,7 +9902,7 @@ introducido[passSection]++;
 if (introducido[passSection] > 9)
 introducido[passSection] = 0;
 } else if (actualScreen == 2 || actualScreen == 3
-|| actualScreen == 10) {
+|| actualScreen == 10 || actualScreen == 11) {
 selSN = !selSN;
 if(selSN > 1)
 selSN = 0;
@@ -10028,12 +9919,10 @@ break;
 }case (3): {
 chanValDigUP();
 break;
-}case (4): {
+}
+}
+}else if(actualScreen == 12)
 chanValDigUP();
-break;
-}
-}
-}
 }
 
 void longPressUP() {
@@ -10070,7 +9959,7 @@ introducido[passSection]--;
 if (introducido[passSection] < 0)
 introducido[passSection] = 9;
 } else if (actualScreen == 2 || actualScreen == 3
-|| actualScreen == 10) {
+|| actualScreen == 10 || actualScreen == 11) {
 selSN = !selSN;
 if(selSN > 1)
 selSN = 0;
@@ -10087,12 +9976,10 @@ break;
 }case (3): {
 chanValDigDOWN();
 break;
-}case (4): {
+}
+}
+}else if(actualScreen == 12)
 chanValDigDOWN();
-break;
-}
-}
-}
 }
 
 void longPressDOWN() {
@@ -10117,12 +10004,18 @@ actualScreen = 0;
 || actualScreen == 10) {
 actualScreen = tempLastScreen;
 }else if(actualScreen == 5) {
-if(menuSection != 2 ) {
+if(menuSection != 2) {
 chanValSection++;
 if(chanValSection > 5)
 chanValSection = 0;
 }else
 actualScreen = 4;
+}else if(actualScreen == 11)
+actualScreen = 4;
+else if(actualScreen == 12) {
+chanValSection++;
+if(chanValSection > 5)
+chanValSection = 0;
 }
 
 }
@@ -10137,6 +10030,8 @@ actualScreen = 3;
 selSN = 0;
 }
 }else if(actualScreen == 5)
+actualScreen = 4;
+else if(actualScreen == 12)
 actualScreen = 4;
 }
 }
@@ -10184,9 +10079,11 @@ desintegrator();
 actualScreen = 5;
 break;
 }case (4): {
+if(!ProcessStarted) {
 tempLastScreen = actualScreen;
 selSN = 1;
 actualScreen = 11;
+}
 break;
 }
 }
@@ -10195,7 +10092,7 @@ actualScreen = 1;
 else if(actualScreen == 6) {
 
 }else if(actualScreen == 5) {
-if(menuSection != 2 ) {
+if(menuSection != 2) {
 chanValSection--;
 if(chanValSection < 0)
 chanValSection = 5;
@@ -10203,7 +10100,8 @@ chanValSection = 5;
 confirmEdition(!ProcessStarted);
 }else if(actualScreen == 2) {
 ProcessStarted = !selSN;
-if(ProcessStarted && !bladeIsUP) {
+bladeIsUP = 2;
+if(ProcessStarted && bladeIsUP != 1) {
 processState = 0;
 setPWM2duty(-400);
 }
@@ -10221,9 +10119,25 @@ actualScreen = 4;
 else if(actualScreen == 9)
 actualScreen = 0;
 else if(actualScreen == 11) {
-if(!selSN)
+if(!selSN) {
+chanValf = 0;
+desintegrator();
+temptiXcorte = tiXcorte;
+tiXcorte = 5.0f;
+timsXcorte = 5000.0f;
+tempNumCortes = numCortes;
+numCortes = 1;
+processState = 0;
+processTimer = 0;
+bladeIsUP = 2;
+ProcessStarted = 1;
+if(ProcessStarted && bladeIsUP != 1) {
+processState = 0;
+setPWM2duty(-400);
+}
+calibLevel = 0;
 actualScreen = 6;
-else
+}else
 actualScreen = 4;
 }else if(actualScreen == 12) {
 chanValSection--;
@@ -10249,12 +10163,47 @@ actualScreen = 2;
 selSN = 1;
 }
 }else if(actualScreen == 5) {
-if(menuSection != 2 )
+if(menuSection != 2)
 integrator();
 confirmEdition(!ProcessStarted);
 }else if(actualScreen == 12) {
 integrator();
+if(calibLevel == 0) {
+tempVelocidadMasa1 = (float)chanValf / tiXcorte;
+tiXcorte = (float)0.5 / tempVelocidadMasa1;
+calibLevel = 1;
+numCortes = 1;
+processState = 0;
+processTimer = 0;
+bladeIsUP = 2;
+ProcessStarted = 1;
+if(ProcessStarted && bladeIsUP != 1) {
+processState = 0;
+setPWM2duty(-400);
+}
+actualScreen = 6;
+}else if(calibLevel == 1) {
+tempVelocidadMasa2 = (float)chanValf / tiXcorte;
+tiXcorte = (float)0.25 / tempVelocidadMasa2;
+calibLevel = 2;
+numCortes = 1;
+processState = 0;
+processTimer = 0;
+bladeIsUP = 2;
+ProcessStarted = 1;
+if(ProcessStarted && bladeIsUP != 1) {
+processState = 0;
+setPWM2duty(-400);
+}
+actualScreen = 6;
+}else if(calibLevel == 2) {
+tempVelocidadMasa3 = (float)chanValf / tiXcorte;
+float temp = (float)tempVelocidadMasa1 + tempVelocidadMasa2+ tempVelocidadMasa3;
+chanValf = (float)temp / 3.0f;
+numCortes = tempNumCortes;
+calcVars2ti();
 confirmEdition(!ProcessStarted);
+}
 }
 }
 }
@@ -10276,17 +10225,34 @@ saveSysParams();
 }else if(sas == 'C') {
 sysParamInit();
 }else if(sas == 'D') {
-putchUART(chanValdig[0]);
-putchUART(chanValdig[1]);
-putchUART(chanValdig[2]);
-putchUART(chanValdig[3]);
-putchUART(chanValdig[4]);
-putchUART(chanValdig[5]);
+loadSysParams();
 }else if(sas == 'E') {
 
 }
 
-# 62
+# 57
+else if(sas == 'R') {
+if(actualScreen == 0) {
+actualScreen = 1;
+fd = 0;
+}else if(actualScreen == 4)
+actualScreen = 9;
+}else if(sas == 'S')
+pressUP();
+else if(sas == 'T')
+pressDOWN();
+else if(sas == 'U')
+pressRETRO();
+else if(sas == 'V')
+pressENTER();
+else if(sas == 'W')
+longPressUP();
+else if(sas == 'X')
+longPressDOWN();
+else if(sas == 'Y')
+longPressRETRO();
+else if(sas == 'Z')
+longPressENTER();
 }
 
 void UARTConfig() {
@@ -10315,20 +10281,143 @@ PIE1bits.RC1IE = 1;
 RCSTA1bits.SPEN = 1;
 }
 
+# 8 "source/../../Comunic.h"
+typedef union {
+float floatdat;
+struct {
+unsigned char floatLB;
+unsigned char floatHB;
+unsigned char floatUB;
+unsigned char floatMB;
+};
+}FLOATDATA;
+
+typedef union {
+long int32dat;
+struct {
+unsigned char int32LB;
+unsigned char int32HB;
+unsigned char int32UB;
+unsigned char int32MB;
+};
+}INT32DATA;
+
+typedef union {
+short int16dat;
+struct {
+unsigned char int16LB;
+unsigned char int16HB;
+};
+}INT16DATA;
+
+void putch(char val);
+
+short send_float(float valFloat){
+
+# 44
+FLOATDATA data;
+data.floatdat = valFloat;
+putch(data.floatMB);
+putch(data.floatUB);
+putch(data.floatHB);
+putch(data.floatLB);
+short res = 0;
+res += data.floatMB;
+res += data.floatUB;
+res += data.floatHB;
+res += data.floatLB;
+return res;
+}
+
+short send_int32(long valLong){
+
+# 64
+INT32DATA data;
+data.int32dat = valLong;
+putch(data.int32MB);
+putch(data.int32UB);
+putch(data.int32HB);
+putch(data.int32LB);
+short res = 0;
+res += data.int32MB;
+res += data.int32UB;
+res += data.int32HB;
+res += data.int32LB;
+return res;
+}
+
+short send_int16(int valShort){
+
+# 84
+INT16DATA data;
+data.int16dat = valShort;
+putch(data.int16HB);
+putch(data.int16LB);
+short res = 0;
+res += data.int16HB;
+res += data.int16LB;
+return res;
+}
+
+void send_float_vt(float valFloat) {
+putch(13);
+send_float(valFloat);
+putch(10);
+}
+
+void send_int32_vt(long valLong){
+putch(13);
+send_int32(valLong);
+putch(10);
+}
+
+void send_int16_vt(int valShort){
+putch(13);
+send_int16(valShort);
+putch(10);
+}
+
+float genFloat(char byteMS, char byteUS, char byteHS, char byteLS) {
+
+# 123
+FLOATDATA data;
+data.floatMB = byteMS;
+data.floatUB = byteUS;
+data.floatHB = byteHS;
+data.floatLB = byteLS;
+return data.floatdat;
+}
+
+long genLong(char byteMS, char byteUS, char byteHS, char byteLS) {
+
+# 142
+INT32DATA data;
+data.int32MB = byteMS;
+data.int32UB = byteUS;
+data.int32HB = byteHS;
+data.int32LB = byteLS;
+return data.int32dat;
+}
+
+short genShort(char byteMS, char byteLS) {
+
+# 157
+INT16DATA data;
+data.int16HB = byteMS;
+data.int16LB = byteLS;
+return data.int16dat;
+}
+
 # 13 "source/T4Config.h"
 void T4int() {
 asm(" clrwdt");
 processTimer++;
-if(bladeIsUP) {
+if(bladeIsUP == 1) {
 if(processTimer >= timsXcorte && ProcessStarted && processState < numCortes) {
 setPWM2duty(400);
 LATCbits.LATC4 = 1;
-
-
-
-
 }
-}else {
+}else if(bladeIsUP == 0){
 if(processTimer >= timeDOWN && ProcessStarted) {
 setPWM2duty(-400);
 }
@@ -10471,8 +10560,8 @@ clockConfig();
 t4config();
 ioInitStt();
 EEPROMConfig();
-saveSysParams();
 
+sysParamInit();
 ioConfig();
 lcd_init();
 PWM2Config();

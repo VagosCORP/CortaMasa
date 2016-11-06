@@ -2,6 +2,7 @@
 #define	PWMCONFIG_H
 
 #include "sysParams.h"
+#include "screenDrawers.h"
 
 #ifdef	__cplusplus
 extern "C" {
@@ -48,13 +49,11 @@ extern "C" {
             setPWM2duty(0);
             bladeIsUP = 1;
             processTimer = 0;
-//            putchUART('F');
-//            putchUART('C');
-//            putchUART('1');
-//            putchUART(10);
             if(processState >= numCortes) {
                 ProcessStarted = 0;
                 saveProcessState();
+                if(actualScreen == SCREEN_CALIB_PROCESS)
+                    actualScreen = SCREEN_CALIB_RMAS;
             }
             delay_ms(200);
         }else if(!FC1 && lastSttFC1) {
@@ -84,19 +83,10 @@ extern "C" {
             setPWM2duty(0);
             bladeIsUP = 0;
             processTimer = 0;
-//            putchUART('F');
-//            putchUART('C');
-//            putchUART('2');
-//            putchUART(10);
             processState++;
             saveProcessState();
-            if(processState >= numCortes) {
+            if(processState >= numCortes)
                 REL = 0;
-//                putchUART('R');
-//                putchUART('=');
-//                putchUART('0');
-//                putchUART(10);
-            }
             delay_ms(200);
         }else if(!FC2 && lastSttFC2) {
             lastSttFC2 = 1;

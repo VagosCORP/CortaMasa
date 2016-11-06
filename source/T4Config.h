@@ -13,16 +13,12 @@ extern "C" {
     void T4int() {
         CLRWDT();//si no se llama, en 128ms reset!
         processTimer++;
-        if(bladeIsUP) {
+        if(bladeIsUP == 1) {
             if(processTimer >= timsXcorte && ProcessStarted && processState < numCortes) {
                 setPWM2duty(400);
                 REL = 1;
-//                putchUART('R');
-//                putchUART('=');
-//                putchUART('1');
-//                putchUART(10);
             }
-        }else {
+        }else if(bladeIsUP == 0){
             if(processTimer >= timeDOWN && ProcessStarted) {
                 setPWM2duty(-400);
             }

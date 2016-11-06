@@ -19,12 +19,7 @@ extern "C" {
         }else if(sas == 'C') {
             sysParamInit();
         }else if(sas == 'D') {
-            putchUART(chanValdig[0]);
-            putchUART(chanValdig[1]);
-            putchUART(chanValdig[2]);
-            putchUART(chanValdig[3]);
-            putchUART(chanValdig[4]);
-            putchUART(chanValdig[5]);
+            loadSysParams();
         }else if(sas == 'E') {
             
         }
@@ -59,6 +54,28 @@ extern "C" {
 //        putchUART(readEEPROM(2));
 //        EECON1bits.WREN = 0;
 //        INTCONbits.GIE = ie;
+        else if(sas == 'R') {
+            if(actualScreen == SCREEN_MENU) {
+                actualScreen = SCREEN_PASSWORD;
+                fd = 0;   
+            }else if(actualScreen == SCREEN_MENU_ADV)
+                actualScreen = SCREEN_ADVMODE_OFF;       
+        }else if(sas == 'S')
+            pressUP();
+        else if(sas == 'T')
+            pressDOWN();
+        else if(sas == 'U')
+            pressRETRO();
+        else if(sas == 'V')
+            pressENTER();
+        else if(sas == 'W')
+            longPressUP();
+        else if(sas == 'X')
+            longPressDOWN();
+        else if(sas == 'Y')
+            longPressRETRO();
+        else if(sas == 'Z')
+            longPressENTER();
     }
     
     void UARTConfig() {

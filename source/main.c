@@ -35,8 +35,8 @@ void main(void) {
     t4config();
     ioInitStt();
     EEPROMConfig();
-    saveSysParams();
-//    sysParamInit();
+//    saveSysParams();
+    sysParamInit();
     ioConfig();
     lcd_init();
     PWM2Config();

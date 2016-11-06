@@ -54,6 +54,7 @@ extern "C" {
     char tempLastScreen = 0;
     char screen_calibVelRes = 0;
     char flech = 0b01111110;
+    char calibLevel = 0;
     
     void drawValEditor() {
         if(chanValSection == 5) {
@@ -78,11 +79,11 @@ extern "C" {
         lcd_gotoxy(11, 2);
     }
     
-    void drawValEditors() {
-        printf("  %u%u%u.%u%u%u ", chanValdig[0], chanValdig[1],
-                chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
-        lcd_gotoxy(11, 2);
-    }
+//    void drawValEditors() {
+//        printf("  %u%u%u.%u%u%u ", chanValdig[0], chanValdig[1],
+//                chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
+//        lcd_gotoxy(11, 2);
+//    }
     
     void drawMenu(char adv) {
         switch (menuSection) {
@@ -165,13 +166,14 @@ extern "C" {
                 printf("mm    ");
                 break;
             }case (MENU_VEL_MAS): {
-//                lcd_gotoxy(1, 1);
-//                printf("Velocidad Masa: \n");
-//                drawValEditor();
-//                printf("kg/s   ");
                 break;
             }
         }
+    }
+    
+    void drawPass1Lin() {
+        lcd_gotoxy(1, 1);
+        printf("Contrasena:     \n");
     }
 
     void drawPassWord() {
@@ -187,35 +189,30 @@ extern "C" {
         for (i = 0; i < 4; i++)
             passChar[i] = ' ';
         passChar[passSection] = flech;
-        lcd_gotoxy(1, 1);
-        printf("Contrasena:     \n");
+        drawPass1Lin();
         printf("    %c%u%c%u%c%u%c%u    ", passChar[0], introducido[0], passChar[1], introducido[1],
                 passChar[2], introducido[2], passChar[3], introducido[3]);
     }
 
     void drawBadPass() {
-        lcd_gotoxy(1, 1);
-        printf("Contrasena      \n");
+        drawPass1Lin();
         printf("     Erronea    ");
     }
 
-    void drawAdvON() {
+    void drawAdvON(char on) {
         lcd_gotoxy(1, 1);
         printf("Modo Configurar:\n");
-        printf("    Iniciado    ");
-    }
-
-    void drawAdvOFF() {
-        lcd_gotoxy(1, 1);
-        printf("Modo Configurar:\n");
-        printf("   Finalizado   ");
+        if(on)
+            printf("    Iniciado    ");
+        else
+            printf("   Finalizado   ");
     }
 
     void drawSNquest(char tq) {
         int i;
         for (i = 0; i < 2; i++)
             questSN[i] = ' ';
-        questSN[selSN] = 0b01111110;
+        questSN[selSN] = flech;
         lcd_gotoxy(1, 1);
         if (tq == 0)
             printf("Iniciar Proceso?\n");
@@ -224,21 +221,29 @@ extern "C" {
         else if(tq == 2)
             printf("Guardar Cambio? \n");
         else if(tq == 3)
-            printf("Init autoCalib? \n");
+            printf("Init AutoCalib? \n");
         printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
-    }
-    
-    void drawAutoCalibRes() {
-        lcd_gotoxy(1, 1);
-        printf("Autocalib usando\n");
-        printf("1 kg @ 10 cortes");
     }
     
     void drawAutoCalibRM() {
         lcd_gotoxy(1, 1);
-        printf("Peso Real:     \n");
+        printf("Peso Real:      \n");
         drawValEditor();
         printf("kg    ");
+    }
+    
+    void drawCalibProc() {
+        lcd_gotoxy(1, 1);    
+        if(calibLevel == 0) {
+            printf("Autocalib usando\n");
+            printf("       1 kg     ");
+        }else if(calibLevel == 1) {
+            printf("Autocalib usando\n");
+            printf("     0.5 kg     ");
+        }else if(calibLevel == 2) {
+            printf("Autocalib usando\n");
+            printf("    0.25 kg     ");
+        }
     }
 
     void drawScreen() {
@@ -256,10 +261,10 @@ extern "C" {
                 drawMenu(1);
                 break;
             }case (SCREEN_ADVMODE_ON):  {
-                drawAdvON();
+                drawAdvON(1);
                 break;
             }case (SCREEN_ADVMODE_OFF): {
-                drawAdvOFF();
+                drawAdvON(0);
                 break;
             }case (SCREEN_CHAN_VAL): {
                 drawChanVal();
@@ -277,7 +282,7 @@ extern "C" {
                 drawSNquest(3);                
                 break;
             }case (SCREEN_CALIB_PROCESS): {
-                
+                drawCalibProc();
                 break;
             }case (SCREEN_CALIB_RMAS): {
                 drawAutoCalibRM();

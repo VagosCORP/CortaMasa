@@ -5,11 +5,27 @@
 extern "C" {
 #endif
 
-    
-    #include "../../Comunic.h"
 
-    FLOATDATA fData;
-    INT16DATA i16Data;
+    typedef union { //struct floatData
+        float floatdat;
+        struct {
+            unsigned char floatLB;//m
+            unsigned char floatHB;
+            unsigned char floatUB;
+//            unsigned char floatMB;//M
+        };
+    }FLOATDATAX;
+    
+    typedef union {
+        short int16dat;
+        struct {
+            unsigned char int16LB;//m
+            unsigned char int16HB;//M
+        };
+    }INT16DATAX;
+
+    FLOATDATAX fData;
+    INT16DATAX i16Data;
     
     char ProcessStarted = 0;
     
@@ -19,10 +35,14 @@ extern "C" {
     float tempkgXcorte = 0.1;
     float tiXcorte = 10.0f; //2-5
     float timsXcorte = 10000.0f; //2-5
+    float temptiXcorte = 10.0f;
     short numCortes = 5; //6-7
     short tempNumCortes = 1;
     float diamTubo = 20.000f; //8-11
 //    float densidadMasa = 1.5; //12-15
+    float tempVelocidadMasa1 = 0.2; //16-19
+    float tempVelocidadMasa2 = 0.2; //16-19
+    float tempVelocidadMasa3 = 0.2; //16-19
     float velocidadMasa = 0.2; //16-19
     float calFactor = 0;
     
@@ -89,12 +109,13 @@ char readEEPROM(char adr) {
     }
     
     void saveSysParams() {
+        calcVars2ti();
         EECON1bits.WREN = 1;
         ie = INTCONbits.GIE;
         INTCONbits.GIE = 0;
 //        writeEEPROM(1, tVarProceso); //1
         fData.floatdat = tiXcorte; //2-5
-        writeEEPROM(2, fData.floatMB);
+//        writeEEPROM(2, fData.floatMB);
         writeEEPROM(3, fData.floatUB);
         writeEEPROM(4, fData.floatHB);
         writeEEPROM(5, fData.floatLB);
@@ -102,7 +123,7 @@ char readEEPROM(char adr) {
         writeEEPROM(6, i16Data.int16HB);
         writeEEPROM(7, i16Data.int16LB);
         fData.floatdat = diamTubo; //8-11
-        writeEEPROM(8, fData.floatMB);
+//        writeEEPROM(8, fData.floatMB);
         writeEEPROM(9, fData.floatUB);
         writeEEPROM(10, fData.floatHB);
         writeEEPROM(11, fData.floatLB);
@@ -112,13 +133,21 @@ char readEEPROM(char adr) {
 //        writeEEPROM(14, fData.floatHB);
 //        writeEEPROM(15, fData.floatLB);
         fData.floatdat = velocidadMasa; //16-19
-        writeEEPROM(16, fData.floatMB);
+//        writeEEPROM(16, fData.floatMB);
         writeEEPROM(17, fData.floatUB);
         writeEEPROM(18, fData.floatHB);
         writeEEPROM(19, fData.floatLB);
         EECON1bits.WREN = 0;
         INTCONbits.GIE = ie;
-        calcVars2ti();
+    }
+    
+    void loadSysParams() {
+        tiXcorte = 10.0f; //2-5
+        numCortes = 5; //6-7
+        diamTubo = 20.000f; //8-11
+        velocidadMasa = 0.2; //16-19
+        calcSysVars();
+        saveSysParams();
     }
     
     void saveProcessState() {
@@ -131,41 +160,9 @@ char readEEPROM(char adr) {
         INTCONbits.GIE = ie;
     }
     
-//    void preAutoCal() {
-//        float temp = 0;
-//        float temp2 = 2000.0f * 2000.0f;
-//        tempNumCortes = numCortes;
-//        numCortes = 10;
-//        tempkgXcorte = kgXcorte;
-//        kgXcorte = 1.0f;
-//        temp = (float)pi*densidadMasa*numCortes*diamTubo*diamTubo*tiXcorte;
-//        calFactor = (float)temp2/temp;
-//        velocidadMasa = (float)kgXcorte * calFactor;
-//    }
-//    
-//    void autoCal(float pesoReal) {
-//        float temp = 0;
-//        velocidadMasa = (float)calFactor * pesoReal;
-//        numCortes = tempNumCortes;
-//        kgXcorte = tempkgXcorte;
-//        temp = (float)diamTubo / 2000.0f;
-//        temp *= temp;
-//        temp *= pi;
-//        temp *= velocidadMasa;
-//        if(tVarProceso == tvp_kg) {
-//            temp *= densidadMasa;
-//            tiXcorte = (float)kgXcorte / temp;
-//        }else if(tVarProceso == tvp_m)
-//            tiXcorte = (float)m3Xcorte / temp;
-//        timsXcorte = (float)tiXcorte * 1000;
-//        saveSysParams();
-//    }
-    
-    
-    
     void sysParamInit() {
 //        tVarProceso = readEEPROM(1);
-        fData.floatMB = readEEPROM(2);
+//        fData.floatMB = readEEPROM(2);
         fData.floatUB = readEEPROM(3);
         fData.floatHB = readEEPROM(4);
         fData.floatLB = readEEPROM(5);
@@ -173,7 +170,7 @@ char readEEPROM(char adr) {
         i16Data.int16HB = readEEPROM(6);
         i16Data.int16LB = readEEPROM(7);
         numCortes = i16Data.int16dat; //6-7
-        fData.floatMB = readEEPROM(8);
+//        fData.floatMB = readEEPROM(8);
         fData.floatUB = readEEPROM(9);
         fData.floatHB = readEEPROM(10);
         fData.floatLB = readEEPROM(11);
@@ -183,7 +180,7 @@ char readEEPROM(char adr) {
 //        fData.floatHB = readEEPROM(14);
 //        fData.floatLB = readEEPROM(15);
 //        densidadMasa = fData.floatdat; //12-15
-        fData.floatMB = readEEPROM(16);
+//        fData.floatMB = readEEPROM(16);
         fData.floatUB = readEEPROM(17);
         fData.floatHB = readEEPROM(18);
         fData.floatLB = readEEPROM(19);
