@@ -95,7 +95,7 @@ extern "C" {
                 else
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
-                if (ProcessStarted)
+                if(ProcessStarted)
                     printf("   %d / %d    ", processState, numCortes);
                 else
                     printf("    Detenido    ");

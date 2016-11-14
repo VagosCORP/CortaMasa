@@ -9254,7 +9254,6 @@ FLOATDATAX fData;
 INT16DATAX i16Data;
 
 char ProcessStarted = 0;
-
 float pi = 3.14159265358979323846;
 short processState = 0;
 float kgXcorte = 1.0;
@@ -9271,7 +9270,7 @@ float tempVelocidadMasa2 = 0.2;
 float tempVelocidadMasa3 = 0.2;
 float velocidadMasa = 0.2;
 float calFactor = 0;
-
+char bladeIsUP = 2;
 char ie = 0;
 
 void writeEEPROM(char adr, char data) {
@@ -9303,17 +9302,17 @@ void calcSysVars() {
 float temp = 0;
 timsXcorte = (float)tiXcorte * 1000;
 
-# 84
+# 83
 kgXcorte = (float)velocidadMasa * tiXcorte;
 }
 
 void calcVars2ti() {
 
-# 95
+# 94
 tiXcorte = (float)kgXcorte / velocidadMasa;
 timsXcorte = (float)tiXcorte * 1000;
 
-# 109
+# 108
 }
 
 void saveSysParams() {
@@ -9336,7 +9335,7 @@ writeEEPROM(9, fData.floatUB);
 writeEEPROM(10, fData.floatHB);
 writeEEPROM(11, fData.floatLB);
 
-# 135
+# 134
 fData.floatdat = velocidadMasa;
 
 writeEEPROM(17, fData.floatUB);
@@ -9351,6 +9350,8 @@ tiXcorte = 10.0f;
 numCortes = 5;
 diamTubo = 20.000f;
 velocidadMasa = 0.2;
+processState = 0;
+ProcessStarted = 0;
 calcSysVars();
 saveSysParams();
 }
@@ -9361,6 +9362,7 @@ ie = INTCONbits.GIE;
 INTCONbits.GIE = 0;
 writeEEPROM(30, ProcessStarted);
 writeEEPROM(31, processState);
+writeEEPROM(32, bladeIsUP);
 EECON1bits.WREN = 0;
 INTCONbits.GIE = ie;
 }
@@ -9381,12 +9383,15 @@ fData.floatHB = readEEPROM(10);
 fData.floatLB = readEEPROM(11);
 diamTubo = fData.floatdat;
 
-# 184
+# 186
 fData.floatUB = readEEPROM(17);
 fData.floatHB = readEEPROM(18);
 fData.floatLB = readEEPROM(19);
 velocidadMasa = fData.floatdat;
 calcSysVars();
+processState = readEEPROM(31);
+bladeIsUP = readEEPROM(32);
+ProcessStarted = readEEPROM(30);
 }
 
 # 37 "source/screenDrawers.h"
@@ -9446,7 +9451,7 @@ lcd_putc('A');
 else
 lcd_putc(' ');
 lcd_gotoxy(2, 2);
-if (ProcessStarted)
+if(ProcessStarted)
 printf("   %d / %d    ", processState, numCortes);
 else
 printf("    Detenido    ");
@@ -9650,7 +9655,6 @@ char lastSttFC2 = 0;
 char holdFC2cont = 0;
 char FC2securLock = 0;
 
-char bladeIsUP = 0;
 long processTimer = 0;
 long timeDOWN = 1000;
 

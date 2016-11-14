@@ -8692,416 +8692,440 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ]
 [; ;sysParams.h: 30: char ProcessStarted = 0;
-"32
+"31
 [v _pi `f ~T0 @X0 1 e ]
 [i _pi
 -> .3.14159265358979323846 `f
 ]
-[; ;sysParams.h: 32: float pi = 3.14159265358979323846;
-"33
+[; ;sysParams.h: 31: float pi = 3.14159265358979323846;
+"32
 [v _processState `s ~T0 @X0 1 e ]
 [i _processState
 -> -> 0 `i `s
 ]
-[; ;sysParams.h: 33: short processState = 0;
-"34
+[; ;sysParams.h: 32: short processState = 0;
+"33
 [v _kgXcorte `f ~T0 @X0 1 e ]
 [i _kgXcorte
 -> .1.0 `f
 ]
-[; ;sysParams.h: 34: float kgXcorte = 1.0;
-"35
+[; ;sysParams.h: 33: float kgXcorte = 1.0;
+"34
 [v _tempkgXcorte `f ~T0 @X0 1 e ]
 [i _tempkgXcorte
 -> .0.1 `f
 ]
-[; ;sysParams.h: 35: float tempkgXcorte = 0.1;
-"36
+[; ;sysParams.h: 34: float tempkgXcorte = 0.1;
+"35
 [v _tiXcorte `f ~T0 @X0 1 e ]
 [i _tiXcorte
 -> .10.0 `f
 ]
-[; ;sysParams.h: 36: float tiXcorte = 10.0f;
-"37
+[; ;sysParams.h: 35: float tiXcorte = 10.0f;
+"36
 [v _timsXcorte `f ~T0 @X0 1 e ]
 [i _timsXcorte
 -> .10000.0 `f
 ]
-[; ;sysParams.h: 37: float timsXcorte = 10000.0f;
-"38
+[; ;sysParams.h: 36: float timsXcorte = 10000.0f;
+"37
 [v _temptiXcorte `f ~T0 @X0 1 e ]
 [i _temptiXcorte
 -> .10.0 `f
 ]
-[; ;sysParams.h: 38: float temptiXcorte = 10.0f;
-"39
+[; ;sysParams.h: 37: float temptiXcorte = 10.0f;
+"38
 [v _numCortes `s ~T0 @X0 1 e ]
 [i _numCortes
 -> -> 5 `i `s
 ]
-[; ;sysParams.h: 39: short numCortes = 5;
-"40
+[; ;sysParams.h: 38: short numCortes = 5;
+"39
 [v _tempNumCortes `s ~T0 @X0 1 e ]
 [i _tempNumCortes
 -> -> 1 `i `s
 ]
-[; ;sysParams.h: 40: short tempNumCortes = 1;
-"41
+[; ;sysParams.h: 39: short tempNumCortes = 1;
+"40
 [v _diamTubo `f ~T0 @X0 1 e ]
 [i _diamTubo
 -> .20.000 `f
 ]
-[; ;sysParams.h: 41: float diamTubo = 20.000f;
-"43
+[; ;sysParams.h: 40: float diamTubo = 20.000f;
+"42
 [v _tempVelocidadMasa1 `f ~T0 @X0 1 e ]
 [i _tempVelocidadMasa1
 -> .0.2 `f
 ]
-[; ;sysParams.h: 43: float tempVelocidadMasa1 = 0.2;
-"44
+[; ;sysParams.h: 42: float tempVelocidadMasa1 = 0.2;
+"43
 [v _tempVelocidadMasa2 `f ~T0 @X0 1 e ]
 [i _tempVelocidadMasa2
 -> .0.2 `f
 ]
-[; ;sysParams.h: 44: float tempVelocidadMasa2 = 0.2;
-"45
+[; ;sysParams.h: 43: float tempVelocidadMasa2 = 0.2;
+"44
 [v _tempVelocidadMasa3 `f ~T0 @X0 1 e ]
 [i _tempVelocidadMasa3
 -> .0.2 `f
 ]
-[; ;sysParams.h: 45: float tempVelocidadMasa3 = 0.2;
-"46
+[; ;sysParams.h: 44: float tempVelocidadMasa3 = 0.2;
+"45
 [v _velocidadMasa `f ~T0 @X0 1 e ]
 [i _velocidadMasa
 -> .0.2 `f
 ]
-[; ;sysParams.h: 46: float velocidadMasa = 0.2;
-"47
+[; ;sysParams.h: 45: float velocidadMasa = 0.2;
+"46
 [v _calFactor `f ~T0 @X0 1 e ]
 [i _calFactor
 -> -> 0 `i `f
 ]
-[; ;sysParams.h: 47: float calFactor = 0;
-"49
+[; ;sysParams.h: 46: float calFactor = 0;
+"47
+[v _bladeIsUP `uc ~T0 @X0 1 e ]
+[i _bladeIsUP
+-> -> 2 `i `uc
+]
+[; ;sysParams.h: 47: char bladeIsUP = 2;
+"48
 [v _ie `uc ~T0 @X0 1 e ]
 [i _ie
 -> -> 0 `i `uc
 ]
-[; ;sysParams.h: 49: char ie = 0;
-"51
+[; ;sysParams.h: 48: char ie = 0;
+"50
 [v _writeEEPROM `(v ~T0 @X0 1 ef2`uc`uc ]
 {
-[; ;sysParams.h: 51: void writeEEPROM(char adr, char data) {
+[; ;sysParams.h: 50: void writeEEPROM(char adr, char data) {
 [e :U _writeEEPROM ]
 [v _adr `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;sysParams.h: 52: EEADR = adr;
-"52
+[; ;sysParams.h: 51: EEADR = adr;
+"51
 [e = _EEADR _adr ]
-[; ;sysParams.h: 53: EEDATA = data;
-"53
+[; ;sysParams.h: 52: EEDATA = data;
+"52
 [e = _EEDATA _data ]
-[; ;sysParams.h: 54: EECON1bits.EEPGD = 0;
-"54
+[; ;sysParams.h: 53: EECON1bits.EEPGD = 0;
+"53
 [e = . . _EECON1bits 0 7 -> -> 0 `i `uc ]
-[; ;sysParams.h: 55: EECON1bits.CFGS = 0;
-"55
+[; ;sysParams.h: 54: EECON1bits.CFGS = 0;
+"54
 [e = . . _EECON1bits 0 6 -> -> 0 `i `uc ]
-[; ;sysParams.h: 56: EECON2 = 0x55;
-"56
+[; ;sysParams.h: 55: EECON2 = 0x55;
+"55
 [e = _EECON2 -> -> 85 `i `uc ]
-[; ;sysParams.h: 57: EECON2 = 0xAA;
-"57
+[; ;sysParams.h: 56: EECON2 = 0xAA;
+"56
 [e = _EECON2 -> -> 170 `i `uc ]
-[; ;sysParams.h: 58: EECON1bits.WR = 1;
-"58
+[; ;sysParams.h: 57: EECON1bits.WR = 1;
+"57
 [e = . . _EECON1bits 0 1 -> -> 1 `i `uc ]
-[; ;sysParams.h: 59: while(EECON1bits.WR);
-"59
+[; ;sysParams.h: 58: while(EECON1bits.WR);
+"58
 [e $U 1157  ]
 [e :U 1158 ]
 [e :U 1157 ]
 [e $ != -> . . _EECON1bits 0 1 `i -> -> -> 0 `i `Vuc `i 1158  ]
 [e :U 1159 ]
-[; ;sysParams.h: 60: }
-"60
+[; ;sysParams.h: 59: }
+"59
 [e :UE 1156 ]
 }
-"62
+"61
 [v _readEEPROM `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;sysParams.h: 62: char readEEPROM(char adr) {
+[; ;sysParams.h: 61: char readEEPROM(char adr) {
 [e :U _readEEPROM ]
 [v _adr `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;sysParams.h: 63: EEADR = adr;
-"63
+[; ;sysParams.h: 62: EEADR = adr;
+"62
 [e = _EEADR _adr ]
-[; ;sysParams.h: 64: EECON1bits.EEPGD = 0;
-"64
+[; ;sysParams.h: 63: EECON1bits.EEPGD = 0;
+"63
 [e = . . _EECON1bits 0 7 -> -> 0 `i `uc ]
-[; ;sysParams.h: 65: EECON1bits.CFGS = 0;
-"65
+[; ;sysParams.h: 64: EECON1bits.CFGS = 0;
+"64
 [e = . . _EECON1bits 0 6 -> -> 0 `i `uc ]
-[; ;sysParams.h: 66: EECON1bits.RD = 1;
-"66
+[; ;sysParams.h: 65: EECON1bits.RD = 1;
+"65
 [e = . . _EECON1bits 0 0 -> -> 1 `i `uc ]
-[; ;sysParams.h: 67: while(EECON1bits.RD);
-"67
+[; ;sysParams.h: 66: while(EECON1bits.RD);
+"66
 [e $U 1161  ]
 [e :U 1162 ]
 [e :U 1161 ]
 [e $ != -> . . _EECON1bits 0 0 `i -> -> -> 0 `i `Vuc `i 1162  ]
 [e :U 1163 ]
-[; ;sysParams.h: 68: return EEDATA;
-"68
+[; ;sysParams.h: 67: return EEDATA;
+"67
 [e ) _EEDATA ]
 [e $UE 1160  ]
-[; ;sysParams.h: 69: }
-"69
+[; ;sysParams.h: 68: }
+"68
 [e :UE 1160 ]
 }
-"71
+"70
 [v _EEPROMConfig `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 71: void EEPROMConfig() {
+[; ;sysParams.h: 70: void EEPROMConfig() {
 [e :U _EEPROMConfig ]
 [f ]
-[; ;sysParams.h: 72: EECON1bits.WREN = 0;
-"72
+[; ;sysParams.h: 71: EECON1bits.WREN = 0;
+"71
 [e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
-[; ;sysParams.h: 73: EECON1bits.FREE = 0;
-"73
+[; ;sysParams.h: 72: EECON1bits.FREE = 0;
+"72
 [e = . . _EECON1bits 0 4 -> -> 0 `i `uc ]
-[; ;sysParams.h: 74: }
-"74
+[; ;sysParams.h: 73: }
+"73
 [e :UE 1164 ]
 }
-"76
+"75
 [v _calcSysVars `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 76: void calcSysVars() {
+[; ;sysParams.h: 75: void calcSysVars() {
 [e :U _calcSysVars ]
 [f ]
-"77
+"76
 [v _temp `f ~T0 @X0 1 a ]
-[; ;sysParams.h: 77: float temp = 0;
+[; ;sysParams.h: 76: float temp = 0;
 [e = _temp -> -> 0 `i `f ]
-[; ;sysParams.h: 78: timsXcorte = (float)tiXcorte * 1000;
-"78
+[; ;sysParams.h: 77: timsXcorte = (float)tiXcorte * 1000;
+"77
 [e = _timsXcorte * _tiXcorte -> -> 1000 `i `f ]
-[; ;sysParams.h: 84: kgXcorte = (float)velocidadMasa * tiXcorte;
-"84
+[; ;sysParams.h: 83: kgXcorte = (float)velocidadMasa * tiXcorte;
+"83
 [e = _kgXcorte * _velocidadMasa _tiXcorte ]
-[; ;sysParams.h: 85: }
-"85
+[; ;sysParams.h: 84: }
+"84
 [e :UE 1165 ]
 }
-"87
+"86
 [v _calcVars2ti `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 87: void calcVars2ti() {
+[; ;sysParams.h: 86: void calcVars2ti() {
 [e :U _calcVars2ti ]
 [f ]
-[; ;sysParams.h: 95: tiXcorte = (float)kgXcorte / velocidadMasa;
-"95
+[; ;sysParams.h: 94: tiXcorte = (float)kgXcorte / velocidadMasa;
+"94
 [e = _tiXcorte / _kgXcorte _velocidadMasa ]
-[; ;sysParams.h: 96: timsXcorte = (float)tiXcorte * 1000;
-"96
+[; ;sysParams.h: 95: timsXcorte = (float)tiXcorte * 1000;
+"95
 [e = _timsXcorte * _tiXcorte -> -> 1000 `i `f ]
-[; ;sysParams.h: 109: }
-"109
+[; ;sysParams.h: 108: }
+"108
 [e :UE 1166 ]
 }
-"111
+"110
 [v _saveSysParams `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 111: void saveSysParams() {
+[; ;sysParams.h: 110: void saveSysParams() {
 [e :U _saveSysParams ]
 [f ]
-[; ;sysParams.h: 112: calcVars2ti();
-"112
+[; ;sysParams.h: 111: calcVars2ti();
+"111
 [e ( _calcVars2ti ..  ]
-[; ;sysParams.h: 113: EECON1bits.WREN = 1;
-"113
+[; ;sysParams.h: 112: EECON1bits.WREN = 1;
+"112
 [e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
-[; ;sysParams.h: 114: ie = INTCONbits.GIE;
-"114
+[; ;sysParams.h: 113: ie = INTCONbits.GIE;
+"113
 [e = _ie . . _INTCONbits 1 7 ]
-[; ;sysParams.h: 115: INTCONbits.GIE = 0;
-"115
+[; ;sysParams.h: 114: INTCONbits.GIE = 0;
+"114
 [e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-[; ;sysParams.h: 117: fData.floatdat = tiXcorte;
-"117
+[; ;sysParams.h: 116: fData.floatdat = tiXcorte;
+"116
 [e = . _fData 0 _tiXcorte ]
-[; ;sysParams.h: 119: writeEEPROM(3, fData.floatUB);
-"119
+[; ;sysParams.h: 118: writeEEPROM(3, fData.floatUB);
+"118
 [e ( _writeEEPROM (2 , -> -> 3 `i `uc . . _fData 1 2 ]
-[; ;sysParams.h: 120: writeEEPROM(4, fData.floatHB);
-"120
+[; ;sysParams.h: 119: writeEEPROM(4, fData.floatHB);
+"119
 [e ( _writeEEPROM (2 , -> -> 4 `i `uc . . _fData 1 1 ]
-[; ;sysParams.h: 121: writeEEPROM(5, fData.floatLB);
-"121
+[; ;sysParams.h: 120: writeEEPROM(5, fData.floatLB);
+"120
 [e ( _writeEEPROM (2 , -> -> 5 `i `uc . . _fData 1 0 ]
-[; ;sysParams.h: 122: i16Data.int16dat = numCortes;
-"122
+[; ;sysParams.h: 121: i16Data.int16dat = numCortes;
+"121
 [e = . _i16Data 0 _numCortes ]
-[; ;sysParams.h: 123: writeEEPROM(6, i16Data.int16HB);
-"123
+[; ;sysParams.h: 122: writeEEPROM(6, i16Data.int16HB);
+"122
 [e ( _writeEEPROM (2 , -> -> 6 `i `uc . . _i16Data 1 1 ]
-[; ;sysParams.h: 124: writeEEPROM(7, i16Data.int16LB);
-"124
+[; ;sysParams.h: 123: writeEEPROM(7, i16Data.int16LB);
+"123
 [e ( _writeEEPROM (2 , -> -> 7 `i `uc . . _i16Data 1 0 ]
-[; ;sysParams.h: 125: fData.floatdat = diamTubo;
-"125
+[; ;sysParams.h: 124: fData.floatdat = diamTubo;
+"124
 [e = . _fData 0 _diamTubo ]
-[; ;sysParams.h: 127: writeEEPROM(9, fData.floatUB);
-"127
+[; ;sysParams.h: 126: writeEEPROM(9, fData.floatUB);
+"126
 [e ( _writeEEPROM (2 , -> -> 9 `i `uc . . _fData 1 2 ]
-[; ;sysParams.h: 128: writeEEPROM(10, fData.floatHB);
-"128
+[; ;sysParams.h: 127: writeEEPROM(10, fData.floatHB);
+"127
 [e ( _writeEEPROM (2 , -> -> 10 `i `uc . . _fData 1 1 ]
-[; ;sysParams.h: 129: writeEEPROM(11, fData.floatLB);
-"129
+[; ;sysParams.h: 128: writeEEPROM(11, fData.floatLB);
+"128
 [e ( _writeEEPROM (2 , -> -> 11 `i `uc . . _fData 1 0 ]
-[; ;sysParams.h: 135: fData.floatdat = velocidadMasa;
-"135
+[; ;sysParams.h: 134: fData.floatdat = velocidadMasa;
+"134
 [e = . _fData 0 _velocidadMasa ]
-[; ;sysParams.h: 137: writeEEPROM(17, fData.floatUB);
-"137
+[; ;sysParams.h: 136: writeEEPROM(17, fData.floatUB);
+"136
 [e ( _writeEEPROM (2 , -> -> 17 `i `uc . . _fData 1 2 ]
-[; ;sysParams.h: 138: writeEEPROM(18, fData.floatHB);
-"138
+[; ;sysParams.h: 137: writeEEPROM(18, fData.floatHB);
+"137
 [e ( _writeEEPROM (2 , -> -> 18 `i `uc . . _fData 1 1 ]
-[; ;sysParams.h: 139: writeEEPROM(19, fData.floatLB);
-"139
+[; ;sysParams.h: 138: writeEEPROM(19, fData.floatLB);
+"138
 [e ( _writeEEPROM (2 , -> -> 19 `i `uc . . _fData 1 0 ]
-[; ;sysParams.h: 140: EECON1bits.WREN = 0;
-"140
+[; ;sysParams.h: 139: EECON1bits.WREN = 0;
+"139
 [e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
-[; ;sysParams.h: 141: INTCONbits.GIE = ie;
-"141
+[; ;sysParams.h: 140: INTCONbits.GIE = ie;
+"140
 [e = . . _INTCONbits 1 7 _ie ]
-[; ;sysParams.h: 142: }
-"142
+[; ;sysParams.h: 141: }
+"141
 [e :UE 1167 ]
 }
-"144
+"143
 [v _loadSysParams `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 144: void loadSysParams() {
+[; ;sysParams.h: 143: void loadSysParams() {
 [e :U _loadSysParams ]
 [f ]
-[; ;sysParams.h: 145: tiXcorte = 10.0f;
-"145
+[; ;sysParams.h: 144: tiXcorte = 10.0f;
+"144
 [e = _tiXcorte -> .10.0 `f ]
-[; ;sysParams.h: 146: numCortes = 5;
-"146
+[; ;sysParams.h: 145: numCortes = 5;
+"145
 [e = _numCortes -> -> 5 `i `s ]
-[; ;sysParams.h: 147: diamTubo = 20.000f;
-"147
+[; ;sysParams.h: 146: diamTubo = 20.000f;
+"146
 [e = _diamTubo -> .20.000 `f ]
-[; ;sysParams.h: 148: velocidadMasa = 0.2;
-"148
+[; ;sysParams.h: 147: velocidadMasa = 0.2;
+"147
 [e = _velocidadMasa -> .0.2 `f ]
-[; ;sysParams.h: 149: calcSysVars();
+[; ;sysParams.h: 148: processState = 0;
+"148
+[e = _processState -> -> 0 `i `s ]
+[; ;sysParams.h: 149: ProcessStarted = 0;
 "149
-[e ( _calcSysVars ..  ]
-[; ;sysParams.h: 150: saveSysParams();
+[e = _ProcessStarted -> -> 0 `i `uc ]
+[; ;sysParams.h: 150: calcSysVars();
 "150
-[e ( _saveSysParams ..  ]
-[; ;sysParams.h: 151: }
+[e ( _calcSysVars ..  ]
+[; ;sysParams.h: 151: saveSysParams();
 "151
+[e ( _saveSysParams ..  ]
+[; ;sysParams.h: 152: }
+"152
 [e :UE 1168 ]
 }
-"153
+"154
 [v _saveProcessState `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 153: void saveProcessState() {
+[; ;sysParams.h: 154: void saveProcessState() {
 [e :U _saveProcessState ]
 [f ]
-[; ;sysParams.h: 154: EECON1bits.WREN = 1;
-"154
-[e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
-[; ;sysParams.h: 155: ie = INTCONbits.GIE;
+[; ;sysParams.h: 155: EECON1bits.WREN = 1;
 "155
-[e = _ie . . _INTCONbits 1 7 ]
-[; ;sysParams.h: 156: INTCONbits.GIE = 0;
+[e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
+[; ;sysParams.h: 156: ie = INTCONbits.GIE;
 "156
-[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-[; ;sysParams.h: 157: writeEEPROM(30, ProcessStarted);
+[e = _ie . . _INTCONbits 1 7 ]
+[; ;sysParams.h: 157: INTCONbits.GIE = 0;
 "157
-[e ( _writeEEPROM (2 , -> -> 30 `i `uc _ProcessStarted ]
-[; ;sysParams.h: 158: writeEEPROM(31, processState);
+[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
+[; ;sysParams.h: 158: writeEEPROM(30, ProcessStarted);
 "158
-[e ( _writeEEPROM (2 , -> -> 31 `i `uc -> _processState `uc ]
-[; ;sysParams.h: 159: EECON1bits.WREN = 0;
+[e ( _writeEEPROM (2 , -> -> 30 `i `uc _ProcessStarted ]
+[; ;sysParams.h: 159: writeEEPROM(31, processState);
 "159
-[e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
-[; ;sysParams.h: 160: INTCONbits.GIE = ie;
+[e ( _writeEEPROM (2 , -> -> 31 `i `uc -> _processState `uc ]
+[; ;sysParams.h: 160: writeEEPROM(32, bladeIsUP);
 "160
-[e = . . _INTCONbits 1 7 _ie ]
-[; ;sysParams.h: 161: }
+[e ( _writeEEPROM (2 , -> -> 32 `i `uc _bladeIsUP ]
+[; ;sysParams.h: 161: EECON1bits.WREN = 0;
 "161
+[e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
+[; ;sysParams.h: 162: INTCONbits.GIE = ie;
+"162
+[e = . . _INTCONbits 1 7 _ie ]
+[; ;sysParams.h: 163: }
+"163
 [e :UE 1169 ]
 }
-"163
+"165
 [v _sysParamInit `(v ~T0 @X0 1 ef ]
 {
-[; ;sysParams.h: 163: void sysParamInit() {
+[; ;sysParams.h: 165: void sysParamInit() {
 [e :U _sysParamInit ]
 [f ]
-[; ;sysParams.h: 166: fData.floatUB = readEEPROM(3);
-"166
-[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 3 `i `uc ]
-[; ;sysParams.h: 167: fData.floatHB = readEEPROM(4);
-"167
-[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 4 `i `uc ]
-[; ;sysParams.h: 168: fData.floatLB = readEEPROM(5);
+[; ;sysParams.h: 168: fData.floatUB = readEEPROM(3);
 "168
-[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 5 `i `uc ]
-[; ;sysParams.h: 169: tiXcorte = fData.floatdat;
+[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 3 `i `uc ]
+[; ;sysParams.h: 169: fData.floatHB = readEEPROM(4);
 "169
-[e = _tiXcorte . _fData 0 ]
-[; ;sysParams.h: 170: i16Data.int16HB = readEEPROM(6);
+[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 4 `i `uc ]
+[; ;sysParams.h: 170: fData.floatLB = readEEPROM(5);
 "170
-[e = . . _i16Data 1 1 ( _readEEPROM (1 -> -> 6 `i `uc ]
-[; ;sysParams.h: 171: i16Data.int16LB = readEEPROM(7);
+[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 5 `i `uc ]
+[; ;sysParams.h: 171: tiXcorte = fData.floatdat;
 "171
-[e = . . _i16Data 1 0 ( _readEEPROM (1 -> -> 7 `i `uc ]
-[; ;sysParams.h: 172: numCortes = i16Data.int16dat;
+[e = _tiXcorte . _fData 0 ]
+[; ;sysParams.h: 172: i16Data.int16HB = readEEPROM(6);
 "172
-[e = _numCortes . _i16Data 0 ]
-[; ;sysParams.h: 174: fData.floatUB = readEEPROM(9);
+[e = . . _i16Data 1 1 ( _readEEPROM (1 -> -> 6 `i `uc ]
+[; ;sysParams.h: 173: i16Data.int16LB = readEEPROM(7);
+"173
+[e = . . _i16Data 1 0 ( _readEEPROM (1 -> -> 7 `i `uc ]
+[; ;sysParams.h: 174: numCortes = i16Data.int16dat;
 "174
-[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 9 `i `uc ]
-[; ;sysParams.h: 175: fData.floatHB = readEEPROM(10);
-"175
-[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 10 `i `uc ]
-[; ;sysParams.h: 176: fData.floatLB = readEEPROM(11);
+[e = _numCortes . _i16Data 0 ]
+[; ;sysParams.h: 176: fData.floatUB = readEEPROM(9);
 "176
-[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 11 `i `uc ]
-[; ;sysParams.h: 177: diamTubo = fData.floatdat;
+[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 9 `i `uc ]
+[; ;sysParams.h: 177: fData.floatHB = readEEPROM(10);
 "177
+[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 10 `i `uc ]
+[; ;sysParams.h: 178: fData.floatLB = readEEPROM(11);
+"178
+[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 11 `i `uc ]
+[; ;sysParams.h: 179: diamTubo = fData.floatdat;
+"179
 [e = _diamTubo . _fData 0 ]
-[; ;sysParams.h: 184: fData.floatUB = readEEPROM(17);
-"184
-[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 17 `i `uc ]
-[; ;sysParams.h: 185: fData.floatHB = readEEPROM(18);
-"185
-[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 18 `i `uc ]
-[; ;sysParams.h: 186: fData.floatLB = readEEPROM(19);
+[; ;sysParams.h: 186: fData.floatUB = readEEPROM(17);
 "186
-[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 19 `i `uc ]
-[; ;sysParams.h: 187: velocidadMasa = fData.floatdat;
+[e = . . _fData 1 2 ( _readEEPROM (1 -> -> 17 `i `uc ]
+[; ;sysParams.h: 187: fData.floatHB = readEEPROM(18);
 "187
-[e = _velocidadMasa . _fData 0 ]
-[; ;sysParams.h: 188: calcSysVars();
+[e = . . _fData 1 1 ( _readEEPROM (1 -> -> 18 `i `uc ]
+[; ;sysParams.h: 188: fData.floatLB = readEEPROM(19);
 "188
-[e ( _calcSysVars ..  ]
-[; ;sysParams.h: 189: }
+[e = . . _fData 1 0 ( _readEEPROM (1 -> -> 19 `i `uc ]
+[; ;sysParams.h: 189: velocidadMasa = fData.floatdat;
 "189
+[e = _velocidadMasa . _fData 0 ]
+[; ;sysParams.h: 190: calcSysVars();
+"190
+[e ( _calcSysVars ..  ]
+[; ;sysParams.h: 191: processState = readEEPROM(31);
+"191
+[e = _processState -> ( _readEEPROM (1 -> -> 31 `i `uc `s ]
+[; ;sysParams.h: 192: bladeIsUP = readEEPROM(32);
+"192
+[e = _bladeIsUP ( _readEEPROM (1 -> -> 32 `i `uc ]
+[; ;sysParams.h: 193: ProcessStarted = readEEPROM(30);
+"193
+[e = _ProcessStarted ( _readEEPROM (1 -> -> 30 `i `uc ]
+[; ;sysParams.h: 194: }
+"194
 [e :UE 1170 ]
 }
 "37 source/screenDrawers.h
@@ -9396,7 +9420,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;screenDrawers.h: 97: lcd_gotoxy(2, 2);
 "97
 [e ( _lcd_gotoxy (2 , -> -> 2 `i `uc -> -> 2 `i `uc ]
-[; ;screenDrawers.h: 98: if (ProcessStarted)
+[; ;screenDrawers.h: 98: if(ProcessStarted)
 "98
 [e $ ! != -> _ProcessStarted `i -> -> -> 0 `i `uc `i 1189  ]
 [; ;screenDrawers.h: 99: printf("   %d / %d    ", processState, numCortes);
@@ -10169,436 +10193,430 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;PWMConfig.h: 17: char FC2securLock = 0;
 "19
-[v _bladeIsUP `uc ~T0 @X0 1 e ]
-[i _bladeIsUP
--> -> 0 `i `uc
-]
-[; ;PWMConfig.h: 19: char bladeIsUP = 0;
-"20
 [v _processTimer `l ~T0 @X0 1 e ]
 [i _processTimer
 -> -> 0 `i `l
 ]
-[; ;PWMConfig.h: 20: long processTimer = 0;
-"21
+[; ;PWMConfig.h: 19: long processTimer = 0;
+"20
 [v _timeDOWN `l ~T0 @X0 1 e ]
 [i _timeDOWN
 -> -> 1000 `i `l
 ]
-[; ;PWMConfig.h: 21: long timeDOWN = 1000;
-"23
+[; ;PWMConfig.h: 20: long timeDOWN = 1000;
+"22
 [v _t2config `(v ~T0 @X0 1 ef ]
 {
-[; ;PWMConfig.h: 23: void t2config() {
+[; ;PWMConfig.h: 22: void t2config() {
 [e :U _t2config ]
 [f ]
-[; ;PWMConfig.h: 24: T2CONbits.TMR2ON = 0;
-"24
+[; ;PWMConfig.h: 23: T2CONbits.TMR2ON = 0;
+"23
 [e = . . _T2CONbits 0 1 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 25: T2CONbits.T2CKPS = 0b00;
-"25
+[; ;PWMConfig.h: 24: T2CONbits.T2CKPS = 0b00;
+"24
 [e = . . _T2CONbits 0 0 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 26: T2CONbits.T2OUTPS = 0b1111;
-"26
+[; ;PWMConfig.h: 25: T2CONbits.T2OUTPS = 0b1111;
+"25
 [e = . . _T2CONbits 0 2 -> -> 15 `i `uc ]
-[; ;PWMConfig.h: 28: PIR1bits.TMR2IF = 0;
-"28
+[; ;PWMConfig.h: 27: PIR1bits.TMR2IF = 0;
+"27
 [e = . . _PIR1bits 0 1 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 29: IPR1bits.TMR2IP = 0;
-"29
+[; ;PWMConfig.h: 28: IPR1bits.TMR2IP = 0;
+"28
 [e = . . _IPR1bits 0 1 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 30: PIE1bits.TMR2IE = 1;
-"30
+[; ;PWMConfig.h: 29: PIE1bits.TMR2IE = 1;
+"29
 [e = . . _PIE1bits 0 1 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 31: T2CONbits.TMR2ON = 1;
-"31
+[; ;PWMConfig.h: 30: T2CONbits.TMR2ON = 1;
+"30
 [e = . . _T2CONbits 0 1 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 32: }
-"32
+[; ;PWMConfig.h: 31: }
+"31
 [e :UE 1255 ]
 }
-"34
+"33
 [v _setPWM2duty `(v ~T0 @X0 1 ef1`s ]
 {
-[; ;PWMConfig.h: 34: void setPWM2duty(signed short actuator) {
+[; ;PWMConfig.h: 33: void setPWM2duty(signed short actuator) {
 [e :U _setPWM2duty ]
 [v _actuator `s ~T0 @X0 1 r1 ]
 [f ]
-"35
+"34
 [v _act `s ~T0 @X0 1 a ]
-[; ;PWMConfig.h: 35: short act = 400;
+[; ;PWMConfig.h: 34: short act = 400;
 [e = _act -> -> 400 `i `s ]
-[; ;PWMConfig.h: 36: if(actuator > 400)
-"36
+[; ;PWMConfig.h: 35: if(actuator > 400)
+"35
 [e $ ! > -> _actuator `i -> 400 `i 1257  ]
-[; ;PWMConfig.h: 37: act = 800;
-"37
+[; ;PWMConfig.h: 36: act = 800;
+"36
 [e = _act -> -> 800 `i `s ]
 [e $U 1258  ]
-"38
+"37
 [e :U 1257 ]
-[; ;PWMConfig.h: 38: else if(actuator < -400)
+[; ;PWMConfig.h: 37: else if(actuator < -400)
 [e $ ! < -> _actuator `i -U -> 400 `i 1259  ]
-[; ;PWMConfig.h: 39: act = 0;
-"39
+[; ;PWMConfig.h: 38: act = 0;
+"38
 [e = _act -> -> 0 `i `s ]
 [e $U 1260  ]
-"40
+"39
 [e :U 1259 ]
-[; ;PWMConfig.h: 40: else
-[; ;PWMConfig.h: 41: act = actuator + 400;
-"41
+[; ;PWMConfig.h: 39: else
+[; ;PWMConfig.h: 40: act = actuator + 400;
+"40
 [e = _act -> + -> _actuator `i -> 400 `i `s ]
 [e :U 1260 ]
 [e :U 1258 ]
-[; ;PWMConfig.h: 42: CCP2CONbits.DC2B = act;
-"42
+[; ;PWMConfig.h: 41: CCP2CONbits.DC2B = act;
+"41
 [e = . . _CCP2CONbits 0 1 -> _act `uc ]
-[; ;PWMConfig.h: 43: CCPR2L = act>>2;
-"43
+[; ;PWMConfig.h: 42: CCPR2L = act>>2;
+"42
 [e = _CCPR2L -> >> -> _act `i -> 2 `i `uc ]
-[; ;PWMConfig.h: 44: }
-"44
+[; ;PWMConfig.h: 43: }
+"43
 [e :UE 1256 ]
 }
-"46
+"45
 [v _T2int `(v ~T0 @X0 1 ef ]
 {
-[; ;PWMConfig.h: 46: void T2int() {
+[; ;PWMConfig.h: 45: void T2int() {
 [e :U _T2int ]
 [f ]
-[; ;PWMConfig.h: 47: if(PORTAbits.RA7 && !lastSttFC1) {
-"47
+[; ;PWMConfig.h: 46: if(PORTAbits.RA7 && !lastSttFC1) {
+"46
 [e $ ! && != -> . . _PORTAbits 0 7 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttFC1 `i -> -> -> 0 `i `uc `i 1262  ]
 {
-[; ;PWMConfig.h: 48: lastSttFC1 = 0;
-"48
+[; ;PWMConfig.h: 47: lastSttFC1 = 0;
+"47
 [e = _lastSttFC1 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 49: setPWM2duty(0);
-"49
+[; ;PWMConfig.h: 48: setPWM2duty(0);
+"48
 [e ( _setPWM2duty (1 -> -> 0 `i `s ]
-[; ;PWMConfig.h: 50: bladeIsUP = 1;
-"50
+[; ;PWMConfig.h: 49: bladeIsUP = 1;
+"49
 [e = _bladeIsUP -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 51: processTimer = 0;
-"51
+[; ;PWMConfig.h: 50: processTimer = 0;
+"50
 [e = _processTimer -> -> 0 `i `l ]
-[; ;PWMConfig.h: 52: if(processState >= numCortes) {
-"52
+[; ;PWMConfig.h: 51: if(processState >= numCortes) {
+"51
 [e $ ! >= -> _processState `i -> _numCortes `i 1263  ]
 {
-[; ;PWMConfig.h: 53: ProcessStarted = 0;
-"53
+[; ;PWMConfig.h: 52: ProcessStarted = 0;
+"52
 [e = _ProcessStarted -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 54: saveProcessState();
-"54
+[; ;PWMConfig.h: 53: saveProcessState();
+"53
 [e ( _saveProcessState ..  ]
-[; ;PWMConfig.h: 55: if(actualScreen == 6)
-"55
+[; ;PWMConfig.h: 54: if(actualScreen == 6)
+"54
 [e $ ! == -> _actualScreen `i -> 6 `i 1264  ]
-[; ;PWMConfig.h: 56: actualScreen = 12;
-"56
+[; ;PWMConfig.h: 55: actualScreen = 12;
+"55
 [e = _actualScreen -> -> 12 `i `c ]
 [e :U 1264 ]
-"57
+"56
 }
 [e :U 1263 ]
-[; ;PWMConfig.h: 57: }
-[; ;PWMConfig.h: 58: delay_ms(200);
-"58
+[; ;PWMConfig.h: 56: }
+[; ;PWMConfig.h: 57: delay_ms(200);
+"57
 [e ( _delay_ms (1 -> 200 `i ]
-"59
+"58
 }
-[; ;PWMConfig.h: 59: }else if(!PORTAbits.RA7 && lastSttFC1) {
+[; ;PWMConfig.h: 58: }else if(!PORTAbits.RA7 && lastSttFC1) {
 [e $U 1265  ]
 [e :U 1262 ]
 [e $ ! && ! != -> . . _PORTAbits 0 7 `i -> -> -> 0 `i `Vuc `i != -> _lastSttFC1 `i -> -> -> 0 `i `uc `i 1266  ]
 {
-[; ;PWMConfig.h: 60: lastSttFC1 = 1;
-"60
+[; ;PWMConfig.h: 59: lastSttFC1 = 1;
+"59
 [e = _lastSttFC1 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 64: delay_ms(50);
-"64
+[; ;PWMConfig.h: 63: delay_ms(50);
+"63
 [e ( _delay_ms (1 -> 50 `i ]
-"65
+"64
 }
-[; ;PWMConfig.h: 65: }else if(PORTAbits.RA7 == lastSttFC1) {
+[; ;PWMConfig.h: 64: }else if(PORTAbits.RA7 == lastSttFC1) {
 [e $U 1267  ]
 [e :U 1266 ]
 [e $ ! == -> . . _PORTAbits 0 7 `i -> _lastSttFC1 `i 1268  ]
 {
-[; ;PWMConfig.h: 66: if(!PORTAbits.RA7) {
-"66
+[; ;PWMConfig.h: 65: if(!PORTAbits.RA7) {
+"65
 [e $ ! ! != -> . . _PORTAbits 0 7 `i -> -> -> 0 `i `Vuc `i 1269  ]
 {
-[; ;PWMConfig.h: 67: holdFC1cont = 0;
-"67
+[; ;PWMConfig.h: 66: holdFC1cont = 0;
+"66
 [e = _holdFC1cont -> -> 0 `i `uc ]
-"69
+"68
 }
-[; ;PWMConfig.h: 69: }else {
+[; ;PWMConfig.h: 68: }else {
 [e $U 1270  ]
 [e :U 1269 ]
 {
-[; ;PWMConfig.h: 70: if(!FC1securLock)
-"70
+[; ;PWMConfig.h: 69: if(!FC1securLock)
+"69
 [e $ ! ! != -> _FC1securLock `i -> -> -> 0 `i `uc `i 1271  ]
-[; ;PWMConfig.h: 71: holdFC1cont++;
-"71
+[; ;PWMConfig.h: 70: holdFC1cont++;
+"70
 [e ++ _holdFC1cont -> -> 1 `i `uc ]
 [e :U 1271 ]
-[; ;PWMConfig.h: 72: if(holdFC1cont > 9) {
-"72
+[; ;PWMConfig.h: 71: if(holdFC1cont > 9) {
+"71
 [e $ ! > -> _holdFC1cont `i -> 9 `i 1272  ]
 {
-[; ;PWMConfig.h: 73: if(holdFC1cont < 26) {
-"73
+[; ;PWMConfig.h: 72: if(holdFC1cont < 26) {
+"72
 [e $ ! < -> _holdFC1cont `i -> 26 `i 1273  ]
 {
-"75
+"74
 }
-[; ;PWMConfig.h: 75: }else
+[; ;PWMConfig.h: 74: }else
 [e $U 1274  ]
 [e :U 1273 ]
-[; ;PWMConfig.h: 76: FC1securLock = 1;
-"76
+[; ;PWMConfig.h: 75: FC1securLock = 1;
+"75
 [e = _FC1securLock -> -> 1 `i `uc ]
 [e :U 1274 ]
-"77
+"76
 }
 [e :U 1272 ]
-[; ;PWMConfig.h: 77: }
-[; ;PWMConfig.h: 78: delay_ms(200);
-"78
+[; ;PWMConfig.h: 76: }
+[; ;PWMConfig.h: 77: delay_ms(200);
+"77
 [e ( _delay_ms (1 -> 200 `i ]
-"79
+"78
 }
 [e :U 1270 ]
-"80
+"79
 }
 [e :U 1268 ]
-"81
+"80
 [e :U 1267 ]
 [e :U 1265 ]
+[; ;PWMConfig.h: 78: }
 [; ;PWMConfig.h: 79: }
-[; ;PWMConfig.h: 80: }
-[; ;PWMConfig.h: 81: if(PORTAbits.RA6 && !lastSttFC2) {
+[; ;PWMConfig.h: 80: if(PORTAbits.RA6 && !lastSttFC2) {
 [e $ ! && != -> . . _PORTAbits 0 6 `i -> -> -> 0 `i `Vuc `i ! != -> _lastSttFC2 `i -> -> -> 0 `i `uc `i 1275  ]
 {
-[; ;PWMConfig.h: 82: lastSttFC2 = 0;
-"82
+[; ;PWMConfig.h: 81: lastSttFC2 = 0;
+"81
 [e = _lastSttFC2 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 83: setPWM2duty(0);
-"83
+[; ;PWMConfig.h: 82: setPWM2duty(0);
+"82
 [e ( _setPWM2duty (1 -> -> 0 `i `s ]
-[; ;PWMConfig.h: 84: bladeIsUP = 0;
-"84
+[; ;PWMConfig.h: 83: bladeIsUP = 0;
+"83
 [e = _bladeIsUP -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 85: processTimer = 0;
-"85
+[; ;PWMConfig.h: 84: processTimer = 0;
+"84
 [e = _processTimer -> -> 0 `i `l ]
-[; ;PWMConfig.h: 86: processState++;
-"86
+[; ;PWMConfig.h: 85: processState++;
+"85
 [e ++ _processState -> -> 1 `i `s ]
-[; ;PWMConfig.h: 87: saveProcessState();
-"87
+[; ;PWMConfig.h: 86: saveProcessState();
+"86
 [e ( _saveProcessState ..  ]
-[; ;PWMConfig.h: 88: if(processState >= numCortes)
-"88
+[; ;PWMConfig.h: 87: if(processState >= numCortes)
+"87
 [e $ ! >= -> _processState `i -> _numCortes `i 1276  ]
-[; ;PWMConfig.h: 89: LATCbits.LATC4 = 0;
-"89
+[; ;PWMConfig.h: 88: LATCbits.LATC4 = 0;
+"88
 [e = . . _LATCbits 0 4 -> -> 0 `i `uc ]
 [e :U 1276 ]
-[; ;PWMConfig.h: 90: delay_ms(200);
-"90
+[; ;PWMConfig.h: 89: delay_ms(200);
+"89
 [e ( _delay_ms (1 -> 200 `i ]
-"91
+"90
 }
-[; ;PWMConfig.h: 91: }else if(!PORTAbits.RA6 && lastSttFC2) {
+[; ;PWMConfig.h: 90: }else if(!PORTAbits.RA6 && lastSttFC2) {
 [e $U 1277  ]
 [e :U 1275 ]
 [e $ ! && ! != -> . . _PORTAbits 0 6 `i -> -> -> 0 `i `Vuc `i != -> _lastSttFC2 `i -> -> -> 0 `i `uc `i 1278  ]
 {
-[; ;PWMConfig.h: 92: lastSttFC2 = 1;
-"92
+[; ;PWMConfig.h: 91: lastSttFC2 = 1;
+"91
 [e = _lastSttFC2 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 96: delay_ms(50);
-"96
+[; ;PWMConfig.h: 95: delay_ms(50);
+"95
 [e ( _delay_ms (1 -> 50 `i ]
-"97
+"96
 }
-[; ;PWMConfig.h: 97: }else if(PORTAbits.RA6 == lastSttFC2) {
+[; ;PWMConfig.h: 96: }else if(PORTAbits.RA6 == lastSttFC2) {
 [e $U 1279  ]
 [e :U 1278 ]
 [e $ ! == -> . . _PORTAbits 0 6 `i -> _lastSttFC2 `i 1280  ]
 {
-[; ;PWMConfig.h: 98: if(!PORTAbits.RA6) {
-"98
+[; ;PWMConfig.h: 97: if(!PORTAbits.RA6) {
+"97
 [e $ ! ! != -> . . _PORTAbits 0 6 `i -> -> -> 0 `i `Vuc `i 1281  ]
 {
-[; ;PWMConfig.h: 99: holdFC2cont = 0;
-"99
+[; ;PWMConfig.h: 98: holdFC2cont = 0;
+"98
 [e = _holdFC2cont -> -> 0 `i `uc ]
-"101
+"100
 }
-[; ;PWMConfig.h: 101: }else {
+[; ;PWMConfig.h: 100: }else {
 [e $U 1282  ]
 [e :U 1281 ]
 {
-[; ;PWMConfig.h: 102: if(!FC2securLock)
-"102
+[; ;PWMConfig.h: 101: if(!FC2securLock)
+"101
 [e $ ! ! != -> _FC2securLock `i -> -> -> 0 `i `uc `i 1283  ]
-[; ;PWMConfig.h: 103: holdFC2cont++;
-"103
+[; ;PWMConfig.h: 102: holdFC2cont++;
+"102
 [e ++ _holdFC2cont -> -> 1 `i `uc ]
 [e :U 1283 ]
-[; ;PWMConfig.h: 104: if(holdFC2cont > 9) {
-"104
+[; ;PWMConfig.h: 103: if(holdFC2cont > 9) {
+"103
 [e $ ! > -> _holdFC2cont `i -> 9 `i 1284  ]
 {
-[; ;PWMConfig.h: 105: if(holdFC2cont < 26) {
-"105
+[; ;PWMConfig.h: 104: if(holdFC2cont < 26) {
+"104
 [e $ ! < -> _holdFC2cont `i -> 26 `i 1285  ]
 {
-"107
+"106
 }
-[; ;PWMConfig.h: 107: }else
+[; ;PWMConfig.h: 106: }else
 [e $U 1286  ]
 [e :U 1285 ]
-[; ;PWMConfig.h: 108: FC2securLock = 1;
-"108
+[; ;PWMConfig.h: 107: FC2securLock = 1;
+"107
 [e = _FC2securLock -> -> 1 `i `uc ]
 [e :U 1286 ]
-"109
+"108
 }
 [e :U 1284 ]
-[; ;PWMConfig.h: 109: }
-[; ;PWMConfig.h: 110: delay_ms(200);
-"110
+[; ;PWMConfig.h: 108: }
+[; ;PWMConfig.h: 109: delay_ms(200);
+"109
 [e ( _delay_ms (1 -> 200 `i ]
-"111
+"110
 }
 [e :U 1282 ]
-"112
+"111
 }
 [e :U 1280 ]
-"114
+"113
 [e :U 1279 ]
 [e :U 1277 ]
+[; ;PWMConfig.h: 110: }
 [; ;PWMConfig.h: 111: }
-[; ;PWMConfig.h: 112: }
-[; ;PWMConfig.h: 114: }
+[; ;PWMConfig.h: 113: }
 [e :UE 1261 ]
 }
-"116
+"115
 [v _PWM2Config `(v ~T0 @X0 1 ef ]
 {
-[; ;PWMConfig.h: 116: void PWM2Config() {
+[; ;PWMConfig.h: 115: void PWM2Config() {
 [e :U _PWM2Config ]
 [f ]
-[; ;PWMConfig.h: 117: TRISCbits.TRISC0 = 1;
-"117
+[; ;PWMConfig.h: 116: TRISCbits.TRISC0 = 1;
+"116
 [e = . . _TRISCbits 0 0 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 118: TRISCbits.TRISC1 = 1;
-"118
+[; ;PWMConfig.h: 117: TRISCbits.TRISC1 = 1;
+"117
 [e = . . _TRISCbits 0 1 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 119: PSTR2CONbits.STR2A = 1;
-"119
+[; ;PWMConfig.h: 118: PSTR2CONbits.STR2A = 1;
+"118
 [e = . . _PSTR2CONbits 0 0 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 120: PSTR2CONbits.STR2B = 1;
-"120
+[; ;PWMConfig.h: 119: PSTR2CONbits.STR2B = 1;
+"119
 [e = . . _PSTR2CONbits 0 1 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 121: PSTR2CONbits.STR2C = 0;
-"121
+[; ;PWMConfig.h: 120: PSTR2CONbits.STR2C = 0;
+"120
 [e = . . _PSTR2CONbits 0 2 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 122: PSTR2CONbits.STR2D = 0;
-"122
+[; ;PWMConfig.h: 121: PSTR2CONbits.STR2D = 0;
+"121
 [e = . . _PSTR2CONbits 0 3 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 123: CCPTMRS0bits.C2TSEL = 0b00;
-"123
+[; ;PWMConfig.h: 122: CCPTMRS0bits.C2TSEL = 0b00;
+"122
 [e = . . _CCPTMRS0bits 0 2 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 124: PR2 = 199;
-"124
+[; ;PWMConfig.h: 123: PR2 = 199;
+"123
 [e = _PR2 -> -> 199 `i `uc ]
-[; ;PWMConfig.h: 125: ECCP2ASbits.CCP2AS = 0b000;
-"125
+[; ;PWMConfig.h: 124: ECCP2ASbits.CCP2AS = 0b000;
+"124
 [e = . . _ECCP2ASbits 0 2 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 126: ECCP2ASbits.PSS2AC = 0b00;
-"126
+[; ;PWMConfig.h: 125: ECCP2ASbits.PSS2AC = 0b00;
+"125
 [e = . . _ECCP2ASbits 2 1 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 127: ECCP2ASbits.PSS2BD = 0b00;
-"127
+[; ;PWMConfig.h: 126: ECCP2ASbits.PSS2BD = 0b00;
+"126
 [e = . . _ECCP2ASbits 2 0 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 128: PWM2CONbits.P2RSEN = 0;
-"128
+[; ;PWMConfig.h: 127: PWM2CONbits.P2RSEN = 0;
+"127
 [e = . . _PWM2CONbits 0 1 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 129: ECCP2ASbits.CCP2AS = 1;
-"129
+[; ;PWMConfig.h: 128: ECCP2ASbits.CCP2AS = 1;
+"128
 [e = . . _ECCP2ASbits 0 2 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 130: CCP2CONbits.P2M = 0b10;
-"130
+[; ;PWMConfig.h: 129: CCP2CONbits.P2M = 0b10;
+"129
 [e = . . _CCP2CONbits 0 2 -> -> 2 `i `uc ]
-[; ;PWMConfig.h: 131: CCP2CONbits.CCP2M = 0b1100;
-"131
+[; ;PWMConfig.h: 130: CCP2CONbits.CCP2M = 0b1100;
+"130
 [e = . . _CCP2CONbits 0 0 -> -> 12 `i `uc ]
-[; ;PWMConfig.h: 132: setPWM2duty(0);
-"132
+[; ;PWMConfig.h: 131: setPWM2duty(0);
+"131
 [e ( _setPWM2duty (1 -> -> 0 `i `s ]
-[; ;PWMConfig.h: 133: PWM2CONbits.P2DC = 16;
-"133
+[; ;PWMConfig.h: 132: PWM2CONbits.P2DC = 16;
+"132
 [e = . . _PWM2CONbits 0 0 -> -> 16 `i `uc ]
-[; ;PWMConfig.h: 134: t2config();
-"134
+[; ;PWMConfig.h: 133: t2config();
+"133
 [e ( _t2config ..  ]
-[; ;PWMConfig.h: 135: TRISCbits.TRISC0 = 0;
-"135
+[; ;PWMConfig.h: 134: TRISCbits.TRISC0 = 0;
+"134
 [e = . . _TRISCbits 0 0 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 136: TRISCbits.TRISC1 = 0;
-"136
+[; ;PWMConfig.h: 135: TRISCbits.TRISC1 = 0;
+"135
 [e = . . _TRISCbits 0 1 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 137: ECCP2ASbits.CCP2ASE = 0;
-"137
+[; ;PWMConfig.h: 136: ECCP2ASbits.CCP2ASE = 0;
+"136
 [e = . . _ECCP2ASbits 0 3 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 138: }
-"138
+[; ;PWMConfig.h: 137: }
+"137
 [e :UE 1287 ]
 }
-"140
+"139
 [v _setPWM2on `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;PWMConfig.h: 140: void setPWM2on(char on) {
+[; ;PWMConfig.h: 139: void setPWM2on(char on) {
 [e :U _setPWM2on ]
 [v _on `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;PWMConfig.h: 141: if(on) {
-"141
+[; ;PWMConfig.h: 140: if(on) {
+"140
 [e $ ! != -> _on `i -> -> -> 0 `i `uc `i 1289  ]
 {
-[; ;PWMConfig.h: 142: TRISCbits.TRISC0 = 0;
-"142
+[; ;PWMConfig.h: 141: TRISCbits.TRISC0 = 0;
+"141
 [e = . . _TRISCbits 0 0 -> -> 0 `i `uc ]
-[; ;PWMConfig.h: 143: TRISCbits.TRISC1 = 0;
-"143
+[; ;PWMConfig.h: 142: TRISCbits.TRISC1 = 0;
+"142
 [e = . . _TRISCbits 0 1 -> -> 0 `i `uc ]
-"144
+"143
 }
-[; ;PWMConfig.h: 144: }else {
+[; ;PWMConfig.h: 143: }else {
 [e $U 1290  ]
 [e :U 1289 ]
 {
-[; ;PWMConfig.h: 145: TRISCbits.TRISC0 = 1;
-"145
+[; ;PWMConfig.h: 144: TRISCbits.TRISC0 = 1;
+"144
 [e = . . _TRISCbits 0 0 -> -> 1 `i `uc ]
-[; ;PWMConfig.h: 146: TRISCbits.TRISC1 = 1;
-"146
+[; ;PWMConfig.h: 145: TRISCbits.TRISC1 = 1;
+"145
 [e = . . _TRISCbits 0 1 -> -> 1 `i `uc ]
-"147
+"146
 }
 [e :U 1290 ]
+[; ;PWMConfig.h: 146: }
 [; ;PWMConfig.h: 147: }
-[; ;PWMConfig.h: 148: }
-"148
+"147
 [e :UE 1288 ]
 }
 "14 source/DisplayProtocol.h

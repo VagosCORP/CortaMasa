@@ -28,7 +28,6 @@ extern "C" {
     INT16DATAX i16Data;
     
     char ProcessStarted = 0;
-    
     float pi = 3.14159265358979323846;
     short processState = 0;
     float kgXcorte = 1.0;
@@ -45,7 +44,7 @@ extern "C" {
     float tempVelocidadMasa3 = 0.2; //16-19
     float velocidadMasa = 0.2; //16-19
     float calFactor = 0;
-    
+    char bladeIsUP = 2;
     char ie = 0;
     
     void writeEEPROM(char adr, char data) {
@@ -142,10 +141,12 @@ char readEEPROM(char adr) {
     }
     
     void loadSysParams() {
-        tiXcorte = 10.0f; //2-5
-        numCortes = 5; //6-7
+        tiXcorte = 0.5f; //2-5
+        numCortes = 20; //6-7
         diamTubo = 20.000f; //8-11
-        velocidadMasa = 0.2; //16-19
+        velocidadMasa = 1.0f; //16-19
+        processState = 0;
+        ProcessStarted = 0;
         calcSysVars();
         saveSysParams();
     }
@@ -156,6 +157,7 @@ char readEEPROM(char adr) {
         INTCONbits.GIE = 0;
         writeEEPROM(30, ProcessStarted); //30
         writeEEPROM(31, processState); //31
+        writeEEPROM(32, bladeIsUP); //32
         EECON1bits.WREN = 0;
         INTCONbits.GIE = ie;
     }
@@ -186,6 +188,9 @@ char readEEPROM(char adr) {
         fData.floatLB = readEEPROM(19);
         velocidadMasa = fData.floatdat; //16-19
         calcSysVars();
+        processState = readEEPROM(31); //31
+        bladeIsUP = readEEPROM(32); //32
+        ProcessStarted = readEEPROM(30); //30
     }
     
 

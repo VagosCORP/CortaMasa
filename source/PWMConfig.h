@@ -1,13 +1,16 @@
 #ifndef PWMCONFIG_H
 #define	PWMCONFIG_H
 
-#include "sysParams.h"
-#include "screenDrawers.h"
-
 #ifdef	__cplusplus
 extern "C" {
 #endif
     
+    
+    #include "sysParams.h"
+    #include "screenDrawers.h"
+
+    char t2Cont1 = 0;
+    char t2Cont2 = 0;
     
     char lastSttFC1 = 0;
     char holdFC1cont = 0;
@@ -16,9 +19,8 @@ extern "C" {
     char holdFC2cont = 0;
     char FC2securLock = 0;
     
-    char bladeIsUP = 0;
     long processTimer = 0;
-    long timeDOWN = 1000;
+    long timeDOWN = 500;
     
     void t2config() {
         T2CONbits.TMR2ON = 0;
@@ -44,8 +46,11 @@ extern "C" {
     }
     
     void T2int() {
+        if(!ProcessStarted)
+            REL = 0;
+        t2Cont1++;
         if(FC1 && !lastSttFC1) {//pressFC1();
-            lastSttFC1 = 0;
+            lastSttFC1 = 1;
             setPWM2duty(0);
             bladeIsUP = 1;
             processTimer = 0;
@@ -55,31 +60,35 @@ extern "C" {
                 if(actualScreen == SCREEN_CALIB_PROCESS)
                     actualScreen = SCREEN_CALIB_RMAS;
             }
-            delay_ms(200);
+//            delay_ms(100);
+            t2Cont1 = 0;
         }else if(!FC1 && lastSttFC1) {
-            lastSttFC1 = 1;
+            if(t2Cont1 > 124)
+                lastSttFC1 = 0;
 //            if(holdFC1cont < 10) {
 //                
 //            }
-            delay_ms(50);
+//            delay_ms(50);
         }else if(FC1 == lastSttFC1) {
             if(!FC1) {
                 holdFC1cont = 0;
-                //releaseFC1();
+//                releaseFC1();
             }else {
-                if(!FC1securLock)
-                    holdFC1cont++;
-                if(holdFC1cont > 9) {
-                    if(holdFC1cont < 26) {
-                        //longPressFC1();
-                    }else
-                        FC1securLock = 1;//Alguien apoyado!
-                }
-                delay_ms(200);
+                
+//                if(!FC1securLock)
+//                    holdFC1cont++;
+//                if(holdFC1cont > 9) {
+//                    if(holdFC1cont < 26) {
+//                        longPressFC1();
+//                    }else
+//                        FC1securLock = 1;//Alguien apoyado!
+//                }
+//                delay_ms(200);
             }
         }
+        t2Cont2++;
         if(FC2 && !lastSttFC2) {//pressFC2();
-            lastSttFC2 = 0;
+            lastSttFC2 = 1;
             setPWM2duty(0);
             bladeIsUP = 0;
             processTimer = 0;
@@ -87,27 +96,29 @@ extern "C" {
             saveProcessState();
             if(processState >= numCortes)
                 REL = 0;
-            delay_ms(200);
+//            delay_ms(100);
+            t2Cont2 = 0;
         }else if(!FC2 && lastSttFC2) {
-            lastSttFC2 = 1;
+            if(t2Cont2 > 124)
+                lastSttFC2 = 0;
 //            if(holdFC2cont < 10) {
 //                
 //            }
-            delay_ms(50);
+//            delay_ms(50);
         }else if(FC2 == lastSttFC2) {
             if(!FC2) {
                 holdFC2cont = 0;
-                //releaseFC2();
+//                releaseFC2();
             }else {
-                if(!FC2securLock)
-                    holdFC2cont++;
-                if(holdFC2cont > 9) {
-                    if(holdFC2cont < 26) {//longPressFC2();
-                        
-                    }else
-                        FC2securLock = 1;//Alguien apoyado!
-                }
-                delay_ms(200);
+//                if(!FC2securLock)
+//                    holdFC2cont++;
+//                if(holdFC2cont > 9) {
+//                    if(holdFC2cont < 26) {//longPressFC2();
+//                        
+//                    }else
+//                        FC2securLock = 1;//Alguien apoyado!
+//                }
+//                delay_ms(200);
             }
         }
         

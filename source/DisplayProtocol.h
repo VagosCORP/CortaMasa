@@ -329,15 +329,20 @@ extern "C" {
                 confirmEdition(!ProcessStarted);
         }else if(actualScreen == SCREEN_ON_PROCESS) {
             ProcessStarted = !selSN; //SI = 0
-            bladeIsUP = 2;
-            if(ProcessStarted &&  bladeIsUP != 1) {
+            if(!FC1)
+                bladeIsUP = 2;
+            if(ProcessStarted) {
                 processState = 0;
-                setPWM2duty(-400);
+                if(bladeIsUP != 1)
+                    setPWM2duty(-400);
             }
             actualScreen = tempLastScreen;
         }else if(actualScreen == SCREEN_OFF_PROCESS) {
             ProcessStarted = selSN; //SI = 0
             actualScreen = tempLastScreen;
+            REL = 0;
+            if(bladeIsUP != 1)
+                setPWM2duty(-400);
         }else if(actualScreen == SCREEN_SAVE_ALL) {
             if(!selSN)
                 confirmEdition(1);
@@ -358,7 +363,8 @@ extern "C" {
                 numCortes = 1;
                 processState = 0;
                 processTimer = 0;
-                bladeIsUP = 2;
+                if(!FC1)
+                    bladeIsUP = 2;
                 ProcessStarted = 1;
                 if(ProcessStarted && bladeIsUP != 1) {
                     processState = 0;
@@ -404,7 +410,8 @@ extern "C" {
                     numCortes = 1;
                     processState = 0;
                     processTimer = 0;
-                    bladeIsUP = 2;
+                    if(!FC1)
+                        bladeIsUP = 2;
                     ProcessStarted = 1;
                     if(ProcessStarted && bladeIsUP != 1) {
                         processState = 0;
@@ -418,7 +425,8 @@ extern "C" {
                     numCortes = 1;
                     processState = 0;
                     processTimer = 0;
-                    bladeIsUP = 2;
+                    if(!FC1)
+                        bladeIsUP = 2;
                     ProcessStarted = 1;
                     if(ProcessStarted && bladeIsUP != 1) {
                         processState = 0;
