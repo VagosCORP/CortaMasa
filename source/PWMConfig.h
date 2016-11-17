@@ -20,6 +20,7 @@ extern "C" {
     char FC2securLock = 0;
     
     long processTimer = 0;
+    long securTimer = 0;
     long timeDOWN = 500;
     
     void t2config() {
@@ -46,7 +47,7 @@ extern "C" {
     }
     
     void T2int() {
-        if(!ProcessStarted)
+        if(!processStarted)
             REL = 0;
         t2Cont1++;
         if(FC1 && !lastSttFC1) {//pressFC1();
@@ -54,8 +55,9 @@ extern "C" {
             setPWM2duty(0);
             bladeIsUP = 1;
             processTimer = 0;
+            securTimer = 0;
             if(processState >= numCortes) {
-                ProcessStarted = 0;
+                processStarted = 0;
                 saveProcessState();
                 if(actualScreen == SCREEN_CALIB_PROCESS)
                     actualScreen = SCREEN_CALIB_RMAS;
@@ -92,6 +94,7 @@ extern "C" {
             setPWM2duty(0);
             bladeIsUP = 0;
             processTimer = 0;
+            securTimer = 0;
             processState++;
             saveProcessState();
             if(processState >= numCortes)

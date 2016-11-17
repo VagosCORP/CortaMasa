@@ -27,7 +27,7 @@ extern "C" {
     FLOATDATAX fData;
     INT16DATAX i16Data;
     
-    char ProcessStarted = 0;
+    char processStarted = 0;
     float pi = 3.14159265358979323846;
     short processState = 0;
     float kgXcorte = 1.0;
@@ -37,7 +37,7 @@ extern "C" {
     float temptiXcorte = 10.0f;
     short numCortes = 5; //6-7
     short tempNumCortes = 1;
-    float diamTubo = 20.000f; //8-11
+//    float diamTubo = 20.000f; //8-11
 //    float densidadMasa = 1.5; //12-15
     float tempVelocidadMasa1 = 0.2; //16-19
     float tempVelocidadMasa2 = 0.2; //16-19
@@ -46,6 +46,7 @@ extern "C" {
     float calFactor = 0;
     char bladeIsUP = 2;
     char ie = 0;
+    long maxTimePerCut = 5000;
     
     void writeEEPROM(char adr, char data) {
     EEADR = adr;
@@ -121,11 +122,11 @@ char readEEPROM(char adr) {
         i16Data.int16dat = numCortes; //6-7
         writeEEPROM(6, i16Data.int16HB);
         writeEEPROM(7, i16Data.int16LB);
-        fData.floatdat = diamTubo; //8-11
+//        fData.floatdat = diamTubo; //8-11
 //        writeEEPROM(8, fData.floatMB);
-        writeEEPROM(9, fData.floatUB);
-        writeEEPROM(10, fData.floatHB);
-        writeEEPROM(11, fData.floatLB);
+//        writeEEPROM(9, fData.floatUB);
+//        writeEEPROM(10, fData.floatHB);
+//        writeEEPROM(11, fData.floatLB);
 //        fData.floatdat = densidadMasa; //12-15
 //        writeEEPROM(12, fData.floatMB);
 //        writeEEPROM(13, fData.floatUB);
@@ -143,10 +144,10 @@ char readEEPROM(char adr) {
     void loadSysParams() {
         tiXcorte = 0.5f; //2-5
         numCortes = 20; //6-7
-        diamTubo = 20.000f; //8-11
+//        diamTubo = 20.000f; //8-11
         velocidadMasa = 1.0f; //16-19
         processState = 0;
-        ProcessStarted = 0;
+        processStarted = 0;
         calcSysVars();
         saveSysParams();
     }
@@ -155,7 +156,7 @@ char readEEPROM(char adr) {
         EECON1bits.WREN = 1;
         ie = INTCONbits.GIE;
         INTCONbits.GIE = 0;
-        writeEEPROM(30, ProcessStarted); //30
+        writeEEPROM(30, processStarted); //30
         writeEEPROM(31, processState); //31
         writeEEPROM(32, bladeIsUP); //32
         EECON1bits.WREN = 0;
@@ -173,10 +174,10 @@ char readEEPROM(char adr) {
         i16Data.int16LB = readEEPROM(7);
         numCortes = i16Data.int16dat; //6-7
 //        fData.floatMB = readEEPROM(8);
-        fData.floatUB = readEEPROM(9);
-        fData.floatHB = readEEPROM(10);
-        fData.floatLB = readEEPROM(11);
-        diamTubo = fData.floatdat; //8-11
+//        fData.floatUB = readEEPROM(9);
+//        fData.floatHB = readEEPROM(10);
+//        fData.floatLB = readEEPROM(11);
+//        diamTubo = fData.floatdat; //8-11
 //        fData.floatMB = readEEPROM(12);
 //        fData.floatUB = readEEPROM(13);
 //        fData.floatHB = readEEPROM(14);
@@ -190,7 +191,7 @@ char readEEPROM(char adr) {
         calcSysVars();
         processState = readEEPROM(31); //31
         bladeIsUP = readEEPROM(32); //32
-        ProcessStarted = readEEPROM(30); //30
+        processStarted = readEEPROM(30); //30
     }
     
 

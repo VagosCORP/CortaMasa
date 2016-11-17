@@ -19,15 +19,16 @@ extern "C" {
     #define SCREEN_BAD_PASS     7   
     #define SCREEN_ADVMODE_ON   8
     #define SCREEN_ADVMODE_OFF  9
-    #define SCREEN_SAVE_ALL    10
+    #define SCREEN_SAVE_ALL     10
     #define SCREEN_CALIB_INIT   11
-    #define SCREEN_CALIB_RMAS  12
+    #define SCREEN_CALIB_RMAS   12
+    #define SCREEN_CUT_ERROR    13
 
     #define MENU_ESTADO         0
     #define MENU_VALP_CUT       1
     #define MENU_CANT_CUT       2   
-    #define MENU_DIAM_TUB       3   
-    #define MENU_VEL_MAS        4   
+    #define MENU_VEL_MAS        3    
+//    #define MENU_DIAM_TUB       4  
 //    #define MENU_DENS_MAS       5
 //    #define MENU_TIP_VAR        6
 
@@ -95,7 +96,7 @@ extern "C" {
                 else
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
-                if(ProcessStarted)
+                if(processStarted)
                     printf("   %d / %d    ", processState, numCortes);
                 else
                     printf("    Detenido    ");
@@ -119,16 +120,6 @@ extern "C" {
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
                 printf("      %d       ", numCortes);
-                break;
-            }case (MENU_DIAM_TUB): {
-                lcd_gotoxy(1, 1);
-                printf("Diametro Tubo:  \n");
-                if (adv)
-                    lcd_putc('A');
-                else
-                    lcd_putc(' ');
-                lcd_gotoxy(2, 2);
-                printf("   %3.3f mm   ", diamTubo);
                 break;
             }case (MENU_VEL_MAS): {
                 lcd_gotoxy(1, 1);
@@ -158,12 +149,6 @@ extern "C" {
                 lcd_gotoxy(1, 1);
                 printf("Cantidad Cortes:\n");
                 printf("      %d       ", chanVals);
-                break;
-            }case (MENU_DIAM_TUB): {
-                lcd_gotoxy(1, 1);
-                printf("Diametro Tubo:  \n");
-                drawValEditor();
-                printf("mm    ");
                 break;
             }case (MENU_VEL_MAS): {
                 break;
@@ -232,6 +217,12 @@ extern "C" {
         printf("kg    ");
     }
     
+    void drawCutError() {
+        lcd_gotoxy(1, 1);
+        printf("Guillotina      \n");
+        printf("      Trancada  ");
+    }
+    
     void drawCalibProc() {
         lcd_gotoxy(1, 1);    
         if(calibLevel == 0) {
@@ -286,6 +277,9 @@ extern "C" {
                 break;
             }case (SCREEN_CALIB_RMAS): {
                 drawAutoCalibRM();
+                break;
+            }case (SCREEN_CUT_ERROR): {
+                drawCutError();
                 break;
             }
         }

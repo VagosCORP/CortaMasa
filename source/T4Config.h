@@ -9,17 +9,38 @@
 extern "C" {
 #endif
 
+    void cutError() {
+        processStarted = 0;
+        processState = 0;
+        securTimer = 0;
+        tempLastScreen = actualScreen;
+        actualScreen = SCREEN_CUT_ERROR;
+        LED_ERR = 1;
+    }
     
     void T4int() {
+        LED_STT = processStarted;
         CLRWDT();//si no se llama, en 128ms reset!
+        if(M1F || M2F)
+            cutError();
         processTimer++;
+        if(processStarted) {
+            securTimer++;
+            if(bladeIsUP == 1) {
+                if(securTimer > timsXcorte + maxTimePerCut)
+                    cutError();
+            }else {
+                if(securTimer > maxTimePerCut)
+                    cutError();
+            }
+        }
         if(bladeIsUP == 1) {
-            if(processTimer >= timsXcorte && ProcessStarted && processState < numCortes) {
+            if(processTimer >= timsXcorte && processStarted && processState < numCortes) {
                 setPWM2duty(400);
                 REL = 1;
             }
         }else if(bladeIsUP == 0){
-            if(processTimer >= timeDOWN && ProcessStarted) {
+            if(processTimer >= timeDOWN && processStarted) {
                 setPWM2duty(-400);
             }
         }
