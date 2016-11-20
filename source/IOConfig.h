@@ -56,13 +56,14 @@ extern "C" {
     char RETROsecurLock = 0;
     char ENTERsecurLock = 0;
     
-    void putch(char val) {
-        lcd_putc(val);
-    }
-    
     void putchUART(char val) {
         while(!TXSTA1bits.TRMT);
         TXREG1 = val;
+    }
+    
+    void putch(char val) {
+        lcd_putc(val);
+        putchUART(val);
     }
     
     void ioConfig() {

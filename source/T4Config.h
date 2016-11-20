@@ -21,8 +21,8 @@ extern "C" {
     void T4int() {
         LED_STT = processStarted;
         CLRWDT();//si no se llama, en 128ms reset!
-        if(M1F || M2F)
-            cutError();
+        //if(M1F || M2F)
+            //cutError();
         processTimer++;
         if(processStarted) {
             securTimer++;
@@ -30,7 +30,7 @@ extern "C" {
                 if(securTimer > timsXcorte + maxTimePerCut)
                     cutError();
             }else {
-                if(securTimer > maxTimePerCut)
+                if(securTimer > timsXcorte + maxTimePerCut)
                     cutError();
             }
         }
@@ -40,7 +40,7 @@ extern "C" {
                 REL = 1;
             }
         }else if(bladeIsUP == 0){
-            if(processTimer >= timeDOWN && processStarted) {
+            if(processTimer >= timsXcorte && processStarted) {
                 setPWM2duty(-400);
             }
         }

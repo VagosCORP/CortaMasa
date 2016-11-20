@@ -69,26 +69,17 @@ extern "C" {
         chanValf = (float)acum / 1000;
     }
     
-    void initProtocoll(char init) {
-        if(!FC1)
-            bladeIsUP = 2;
-        if(init) {
-            LED_ERR = 0;
-            processState = 0;
-            if(bladeIsUP != 1)
-                setPWM2duty(-400);
-        }
-        actualScreen = tempLastScreen;
-    }
+    
     
     void initCalib() {
         if(!FC1)
             bladeIsUP = 2;
+        processTimer = 0;
         processState = 0;
-        processStarted = 1;
+        //processStarted = 1;
         if(bladeIsUP != 1)
             setPWM2duty(-400);
-        actualScreen = SCREEN_CALIB_PROCESS;
+        //actualScreen = SCREEN_CALIB_PROCESS;
     }
     
     void confirmEdition(char yes) {
@@ -142,7 +133,8 @@ extern "C" {
             if (introducido[passSection] > 9)
                 introducido[passSection] = 0;
         } else if (actualScreen == SCREEN_ON_PROCESS || actualScreen == SCREEN_OFF_PROCESS
-                || actualScreen == SCREEN_SAVE_ALL || actualScreen == SCREEN_CALIB_INIT) {
+                || actualScreen == SCREEN_SAVE_ALL || actualScreen == SCREEN_CALIB_INIT
+                || actualScreen == SCREEN_STOP_CALIB) {
             selSN = !selSN;
             if(selSN > 1)
                 selSN = 0;
@@ -196,7 +188,8 @@ extern "C" {
             if (introducido[passSection] < 0)
                 introducido[passSection] = 9;
         } else if (actualScreen == SCREEN_ON_PROCESS || actualScreen == SCREEN_OFF_PROCESS
-                || actualScreen == SCREEN_SAVE_ALL || actualScreen == SCREEN_CALIB_INIT) {
+                || actualScreen == SCREEN_SAVE_ALL || actualScreen == SCREEN_CALIB_INIT
+                || actualScreen == SCREEN_STOP_CALIB) {
             selSN = !selSN;
             if(selSN > 1)
                 selSN = 0;
@@ -235,7 +228,8 @@ extern "C" {
         if (actualScreen == SCREEN_PASSWORD) {
             actualScreen = SCREEN_MENU;
         }else if (actualScreen == SCREEN_ON_PROCESS || actualScreen == SCREEN_OFF_PROCESS
-                || actualScreen == SCREEN_SAVE_ALL) {
+                || actualScreen == SCREEN_SAVE_ALL || actualScreen == SCREEN_CALIB_INIT
+                || actualScreen == SCREEN_STOP_CALIB) {
             actualScreen = tempLastScreen;
         }else if(actualScreen == SCREEN_CHAN_VAL) {
             if(menuSection != MENU_CANT_CUT) {
@@ -259,16 +253,33 @@ extern "C" {
     void longPressRETRO() {
         if (!RETROisLP) {
             RETROisLP = 1;
-            if(actualScreen == SCREEN_MENU || actualScreen == SCREEN_MENU_ADV) {
-                if(processStarted) {
+            if(actualScreen == SCREEN_MENU || actualScreen == SCREEN_MENU_ADV
+                    || actualScreen == SCREEN_READY_2CUT) {
+                if(processStarted || actualScreen == SCREEN_READY_2CUT) {
                     tempLastScreen = actualScreen;
                     actualScreen = SCREEN_OFF_PROCESS;
                     selSN = SI;
                 }
             }else if(actualScreen == SCREEN_CHAN_VAL)
                 actualScreen = SCREEN_MENU_ADV;
-            else if(actualScreen == SCREEN_CALIB_RMAS)
-                actualScreen = SCREEN_MENU_ADV;
+            else if(actualScreen == SCREEN_CALIB_RMAS || actualScreen == SCREEN_CALIB_PROCESS) {
+                tempLastScreen = actualScreen;
+                actualScreen = SCREEN_STOP_CALIB;
+                selSN = NO;
+            }else if(actualScreen == SCREEN_READY_2CUT) {
+                processStarted = 0;
+                processState = 0;
+                REL = 0;
+                actualScreen = SCREEN_MENU;
+                if(calibMode) {
+                    numCortes = tempNumCortes;
+                    tiXcorte = temptiXcorte;
+                    timsXcorte = (float)tiXcorte * 1000;
+                    calibMode = 0;
+                    actualScreen = SCREEN_MENU_ADV;
+                }
+                initProtocoll(1);
+            }
         }
     }
 
@@ -331,13 +342,34 @@ extern "C" {
                 confirmEdition(!processStarted);
         }else if(actualScreen == SCREEN_ON_PROCESS) {
             initProtocoll(!selSN);
-            processStarted = !selSN; //SI = 0
-        }else if(actualScreen == SCREEN_OFF_PROCESS) {
-            processStarted = selSN; //SI = 0
+            if(!selSN) {
+                actualScreen = SCREEN_READY_2CUT;
+                REL = 1;
+                ready2Cut = 1;
+                //processStarted = !selSN; //SI = 0
+            }else
+                actualScreen = tempLastScreen;
+        }else if(actualScreen == SCREEN_READY_2CUT) {
+            //processStarted = 1;
+            setPWM2duty(400);
             actualScreen = tempLastScreen;
-            REL = 0;
-            if(bladeIsUP != 1)
-                setPWM2duty(-400);
+        }else if(actualScreen == SCREEN_OFF_PROCESS) {
+            actualScreen = tempLastScreen;
+            if(!selSN) {
+                processStarted = 0;
+                processState = 0;
+                REL = 0;
+                if(tempLastScreen == SCREEN_READY_2CUT)
+                    actualScreen = SCREEN_MENU;
+                if(calibMode) {
+                    numCortes = tempNumCortes;
+                    tiXcorte = temptiXcorte;
+                    timsXcorte = (float)tiXcorte * 1000;
+                    calibMode = 0;
+                    actualScreen = SCREEN_MENU_ADV;
+                }
+                initProtocoll(1);
+            }
         }else if(actualScreen == SCREEN_SAVE_ALL) {
             if(!selSN)
                 confirmEdition(1);
@@ -348,7 +380,10 @@ extern "C" {
         else if(actualScreen == SCREEN_ADVMODE_OFF)
             actualScreen = SCREEN_MENU;
         else if(actualScreen == SCREEN_CALIB_INIT) {
+            initProtocoll(!selSN);
             if(!selSN) {
+                actualScreen = SCREEN_CALIB_PROCESS;
+                tempLastScreen = actualScreen;
                 chanValf = 0;
                 desintegrator();
                 temptiXcorte = tiXcorte;
@@ -359,15 +394,35 @@ extern "C" {
                 processState = 0;
                 processTimer = 0;
                 calibLevel = 0;
-                initCalib();
+                initProtocoll(1);
+                REL = 1;
+                ready2Cut = 1;
+                actualScreen = SCREEN_READY_2CUT;
+                calibMode = 1;
             }else
                 actualScreen = SCREEN_MENU_ADV;
         }else if(actualScreen == SCREEN_CALIB_RMAS) {
             chanValSection--;
             if(chanValSection < 0)
                 chanValSection = 5;
-        }else if(actualScreen == SCREEN_CUT_ERROR)
+        }else if(actualScreen == SCREEN_STOP_CALIB) {
+            if(!selSN) {
+                processStarted = 0;
+                processState = 0;
+                REL = 0;
+                numCortes = tempNumCortes;
+                tiXcorte = temptiXcorte;
+                timsXcorte = (float)tiXcorte * 1000;
+                calibMode = 0;
+                actualScreen = SCREEN_MENU_ADV;
+            }else {
+                actualScreen = tempLastScreen;
+                tempLastScreen = SCREEN_CALIB_PROCESS;
+            }
+        }else if(actualScreen == SCREEN_CUT_ERROR) {
             initProtocoll(1);
+            actualScreen = tempLastScreen;
+        }
     }
 
     void longPressENTER() {
@@ -390,29 +445,43 @@ extern "C" {
                     integrator();
                 confirmEdition(!processStarted);
             }else if(actualScreen == SCREEN_CALIB_RMAS) {
+                tempLastScreen = SCREEN_CALIB_PROCESS;
                 integrator();
                 if(calibLevel == 0) {
                     tempVelocidadMasa1 = (float)chanValf / tiXcorte;
-                    tiXcorte = (float)0.5 / tempVelocidadMasa1;
+                    tiXcorte = (float)0.5f / tempVelocidadMasa1;
+                    timsXcorte = (float)tiXcorte * 1000;
                     calibLevel = 1;
                     numCortes = 1;
                     processState = 0;
                     processTimer = 0;
-                    initCalib();
+                    //initProtocoll(1);
+                    actualScreen = tempLastScreen;
+                    chanValf = (float)0.50f;;
+                    desintegrator();
+                    REL = 1;
+                    processStarted = 1;
                 }else if(calibLevel == 1) {
                     tempVelocidadMasa2 = (float)chanValf / tiXcorte;
-                    tiXcorte = (float)0.25 / tempVelocidadMasa2;
+                    tiXcorte = (float)0.25f / tempVelocidadMasa2;
+                    timsXcorte = (float)tiXcorte * 1000;
                     calibLevel = 2;
                     numCortes = 1;
                     processState = 0;
                     processTimer = 0;
-                    initCalib();
+                    //initProtocoll(1);
+                    actualScreen = tempLastScreen;
+                    chanValf = (float)0.25f;
+                    desintegrator();
+                    REL = 1;
+                    processStarted = 1;
                 }else if(calibLevel == 2) {
                     tempVelocidadMasa3 = (float)chanValf / tiXcorte;
                     float temp = (float)tempVelocidadMasa1 + tempVelocidadMasa2+ tempVelocidadMasa3;
                     chanValf = (float)temp / 3.0f;
                     numCortes = tempNumCortes;
                     calcVars2ti();
+                    calibMode = 0;
                     confirmEdition(!processStarted);
                 }
             }

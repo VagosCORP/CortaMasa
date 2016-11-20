@@ -108,60 +108,55 @@
 "61
 [v _integrator integrator `(v  1 e 1 0 ]
 [v i1_integrator integrator `(v  1 e 1 0 ]
-"72
-[v _initProtocoll initProtocoll `(v  1 e 1 0 ]
-[v i1_initProtocoll initProtocoll `(v  1 e 1 0 ]
-"84
-[v _initCalib initCalib `(v  1 e 1 0 ]
-[v i1_initCalib initCalib `(v  1 e 1 0 ]
-"94
+"85
 [v _confirmEdition confirmEdition `(v  1 e 1 0 ]
 [v i1_confirmEdition confirmEdition `(v  1 e 1 0 ]
-"135
+"126
 [v _pressUP pressUP `(v  1 e 1 0 ]
 [v i1_pressUP pressUP `(v  1 e 1 0 ]
-"165
+"157
 [v _longPressUP longPressUP `(v  1 e 1 0 ]
 [v i1_longPressUP longPressUP `(v  1 e 1 0 ]
-"184
+"176
 [v _releaseUP releaseUP `(v  1 e 1 0 ]
-"189
+"181
 [v _pressDOWN pressDOWN `(v  1 e 1 0 ]
 [v i1_pressDOWN pressDOWN `(v  1 e 1 0 ]
-"219
+"212
 [v _longPressDOWN longPressDOWN `(v  1 e 1 0 ]
 [v i1_longPressDOWN longPressDOWN `(v  1 e 1 0 ]
-"229
+"222
 [v _releaseDOWN releaseDOWN `(v  1 e 1 0 ]
-"234
+"227
 [v _pressRETRO pressRETRO `(v  1 e 1 0 ]
 [v i1_pressRETRO pressRETRO `(v  1 e 1 0 ]
-"259
+"253
 [v _longPressRETRO longPressRETRO `(v  1 e 1 0 ]
 [v i1_longPressRETRO longPressRETRO `(v  1 e 1 0 ]
-"275
+"286
 [v _releaseRETRO releaseRETRO `(v  1 e 1 0 ]
-"280
+"291
 [v _pressENTER pressENTER `(v  1 e 1 0 ]
 [v i1_pressENTER pressENTER `(v  1 e 1 0 ]
-"373
+"428
 [v _longPressENTER longPressENTER `(v  1 e 1 0 ]
 [v i1_longPressENTER longPressENTER `(v  1 e 1 0 ]
-"422
+"491
 [v _releaseENTER releaseENTER `(v  1 e 1 0 ]
 "59 L:\MPLABXProjects\CortaMasa.X\source/IOConfig.h
-[v _putch putch `(v  1 e 1 0 ]
-"63
 [v _putchUART putchUART `(v  1 e 1 0 ]
-"68
+[v i1_putchUART putchUART `(v  1 e 1 0 ]
+"64
+[v _putch putch `(v  1 e 1 0 ]
+"69
 [v _ioConfig ioConfig `(v  1 e 1 0 ]
-"85
+"86
 [v _ioInitStt ioInitStt `(v  1 e 1 0 ]
-"14 L:\MPLABXProjects\CortaMasa.X\source/main.c
+"13 L:\MPLABXProjects\CortaMasa.X\source/main.c
 [v _hp_isr hp_isr `II(v  1 e 1 0 ]
-"21
+"20
 [v _isr isr `IIL(v  1 e 1 0 ]
-"32
+"31
 [v _main main `(v  1 e 1 0 ]
 "26 L:\MPLABXProjects\CortaMasa.X\source/PWMConfig.h
 [v _t2config t2config `(v  1 e 1 0 ]
@@ -170,61 +165,66 @@
 [v i1_setPWM2duty setPWM2duty `(v  1 e 1 0 ]
 [v i2_setPWM2duty setPWM2duty `(v  1 e 1 0 ]
 "49
+[v _initProtocoll initProtocoll `(v  1 e 1 0 ]
+[v i1_initProtocoll initProtocoll `(v  1 e 1 0 ]
+"62
 [v _T2int T2int `(v  1 e 1 0 ]
-"130
-[v _PWM2Config PWM2Config `(v  1 e 1 0 ]
-"154
-[v _setPWM2on setPWM2on `(v  1 e 1 0 ]
-"60 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
-[v _drawValEditor drawValEditor `(v  1 e 1 0 ]
-"89
-[v _drawMenu drawMenu `(v  1 e 1 0 ]
-"138
-[v _drawChanVal drawChanVal `(v  1 e 1 0 ]
 "159
+[v _PWM2Config PWM2Config `(v  1 e 1 0 ]
+"183
+[v _setPWM2on setPWM2on `(v  1 e 1 0 ]
+"62 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
+[v _drawValEditor drawValEditor `(v  1 e 1 0 ]
+"91
+[v _drawMenu drawMenu `(v  1 e 1 0 ]
+"140
+[v _drawChanVal drawChanVal `(v  1 e 1 0 ]
+"161
 [v _drawPass1Lin drawPass1Lin `(v  1 e 1 0 ]
-"164
+"166
 [v _drawPassWord drawPassWord `(v  1 e 1 0 ]
-"182
+"184
 [v _drawBadPass drawBadPass `(v  1 e 1 0 ]
-"187
+"189
 [v _drawAdvON drawAdvON `(v  1 e 1 0 ]
-"196
+"198
 [v _drawSNquest drawSNquest `(v  1 e 1 0 ]
-"213
+"217
 [v _drawAutoCalibRM drawAutoCalibRM `(v  1 e 1 0 ]
-"220
+"224
 [v _drawCutError drawCutError `(v  1 e 1 0 ]
-"226
+"230
+[v _drawReady2Cut drawReady2Cut `(v  1 e 1 0 ]
+"236
 [v _drawCalibProc drawCalibProc `(v  1 e 1 0 ]
-"240
+"250
 [v _drawScreen drawScreen `(v  1 e 1 0 ]
 "76 L:\MPLABXProjects\CortaMasa.X\source/SYSConfig.h
 [v _clockConfig clockConfig `(v  1 e 1 0 ]
 "89
 [v _interruptConfig interruptConfig `(v  1 e 1 0 ]
-"51 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
+"53 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
 [v _writeEEPROM writeEEPROM `(v  1 e 1 0 ]
 [v i1_writeEEPROM writeEEPROM `(v  1 e 1 0 ]
-"62
+"64
 [v _readEEPROM readEEPROM `(uc  1 e 1 0 ]
 [v i1_readEEPROM readEEPROM `(uc  1 e 1 0 ]
-"71
+"73
 [v _EEPROMConfig EEPROMConfig `(v  1 e 1 0 ]
-"76
+"78
 [v _calcSysVars calcSysVars `(v  1 e 1 0 ]
 [v i1_calcSysVars calcSysVars `(v  1 e 1 0 ]
-"87
+"89
 [v _calcVars2ti calcVars2ti `(v  1 e 1 0 ]
 [v i1_calcVars2ti calcVars2ti `(v  1 e 1 0 ]
-"111
+"113
 [v _saveSysParams saveSysParams `(v  1 e 1 0 ]
 [v i1_saveSysParams saveSysParams `(v  1 e 1 0 ]
-"144
+"146
 [v _loadSysParams loadSysParams `(v  1 e 1 0 ]
-"155
+"157
 [v _saveProcessState saveProcessState `(v  1 e 1 0 ]
-"166
+"168
 [v _sysParamInit sysParamInit `(v  1 e 1 0 ]
 [v i1_sysParamInit sysParamInit `(v  1 e 1 0 ]
 "12 L:\MPLABXProjects\CortaMasa.X\source/T4Config.h
@@ -276,12 +276,12 @@
 ]
 [u S1212 . 1 `S1197 1 . 1 0 `S1203 1 . 1 0 ]
 [v _CCPTMRS0bits CCPTMRS0bits `VES1212  1 e 1 @3913 ]
-[s S1681 . 1 `uc 1 T4CKPS 1 0 :2:0 
+[s S1535 . 1 `uc 1 T4CKPS 1 0 :2:0 
 `uc 1 TMR4ON 1 0 :1:2 
 `uc 1 T4OUTPS 1 0 :4:3 
 ]
 "1730
-[s S1685 . 1 `uc 1 T4CKPS0 1 0 :1:0 
+[s S1539 . 1 `uc 1 T4CKPS0 1 0 :1:0 
 `uc 1 T4CKPS1 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 T4OUTPS0 1 0 :1:3 
@@ -289,8 +289,8 @@
 `uc 1 T4OUTPS2 1 0 :1:5 
 `uc 1 T4OUTPS3 1 0 :1:6 
 ]
-[u S1693 . 1 `S1681 1 . 1 0 `S1685 1 . 1 0 ]
-[v _T4CONbits T4CONbits `VES1693  1 e 1 @3921 ]
+[u S1547 . 1 `S1535 1 . 1 0 `S1539 1 . 1 0 ]
+[v _T4CONbits T4CONbits `VES1547  1 e 1 @3921 ]
 "1779
 [v _PR4 PR4 `VEuc  1 e 1 @3922 ]
 [s S1083 . 1 `uc 1 STR2A 1 0 :1:0 
@@ -400,32 +400,32 @@
 [v _CCP2CONbits CCP2CONbits `VES915  1 e 1 @3942 ]
 "3255
 [v _CCPR2L CCPR2L `VEuc  1 e 1 @3943 ]
-[s S1744 . 1 `uc 1 TMR4IE 1 0 :1:0 
+[s S1598 . 1 `uc 1 TMR4IE 1 0 :1:0 
 `uc 1 TMR5IE 1 0 :1:1 
 `uc 1 TMR6IE 1 0 :1:2 
 ]
 "6168
-[u S1748 . 1 `S1744 1 . 1 0 ]
-[v _PIE5bits PIE5bits `VES1748  1 e 1 @3965 ]
-[s S1710 . 1 `uc 1 TMR4IF 1 0 :1:0 
+[u S1602 . 1 `S1598 1 . 1 0 ]
+[v _PIE5bits PIE5bits `VES1602  1 e 1 @3965 ]
+[s S1564 . 1 `uc 1 TMR4IF 1 0 :1:0 
 `uc 1 TMR5IF 1 0 :1:1 
 `uc 1 TMR6IF 1 0 :1:2 
 ]
 "6199
-[u S1714 . 1 `S1710 1 . 1 0 ]
-[v _PIR5bits PIR5bits `VES1714  1 e 1 @3966 ]
-[s S1721 . 1 `uc 1 TMR4IP 1 0 :1:0 
+[u S1568 . 1 `S1564 1 . 1 0 ]
+[v _PIR5bits PIR5bits `VES1568  1 e 1 @3966 ]
+[s S1575 . 1 `uc 1 TMR4IP 1 0 :1:0 
 `uc 1 TMR5IP 1 0 :1:1 
 `uc 1 TMR6IP 1 0 :1:2 
 ]
 "6237
-[s S1725 . 1 `uc 1 CCH05 1 0 :1:0 
+[s S1579 . 1 `uc 1 CCH05 1 0 :1:0 
 ]
-[s S1727 . 1 `uc 1 . 1 0 :1:0 
+[s S1581 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 CCH15 1 0 :1:1 
 ]
-[u S1730 . 1 `S1721 1 . 1 0 `S1725 1 . 1 0 `S1727 1 . 1 0 ]
-[v _IPR5bits IPR5bits `VES1730  1 e 1 @3967 ]
+[u S1584 . 1 `S1575 1 . 1 0 `S1579 1 . 1 0 `S1581 1 . 1 0 ]
+[v _IPR5bits IPR5bits `VES1584  1 e 1 @3967 ]
 [s S518 . 1 `uc 1 RA0 1 0 :1:0 
 `uc 1 RA1 1 0 :1:1 
 `uc 1 RA2 1 0 :1:2 
@@ -570,76 +570,6 @@
 ]
 [u S293 . 1 `S222 1 . 1 0 `S231 1 . 1 0 `S240 1 . 1 0 `S249 1 . 1 0 `S258 1 . 1 0 `S267 1 . 1 0 `S274 1 . 1 0 `S281 1 . 1 0 `S283 1 . 1 0 `S290 1 . 1 0 ]
 [v _PORTBbits PORTBbits `VES293  1 e 1 @3969 ]
-[s S478 . 1 `uc 1 RC0 1 0 :1:0 
-`uc 1 RC1 1 0 :1:1 
-`uc 1 RC2 1 0 :1:2 
-`uc 1 RC3 1 0 :1:3 
-`uc 1 RC4 1 0 :1:4 
-`uc 1 RC5 1 0 :1:5 
-`uc 1 RC6 1 0 :1:6 
-`uc 1 RC7 1 0 :1:7 
-]
-"7014
-[s S1544 . 1 `uc 1 T1OSO 1 0 :1:0 
-`uc 1 T1OSI 1 0 :1:1 
-`uc 1 T5CKI 1 0 :1:2 
-`uc 1 SCK 1 0 :1:3 
-`uc 1 SDI 1 0 :1:4 
-`uc 1 SDO 1 0 :1:5 
-`uc 1 TX 1 0 :1:6 
-`uc 1 RX 1 0 :1:7 
-]
-[s S1553 . 1 `uc 1 P2B 1 0 :1:0 
-`uc 1 P2A 1 0 :1:1 
-`uc 1 P1A 1 0 :1:2 
-`uc 1 SCL 1 0 :1:3 
-`uc 1 SDA 1 0 :1:4 
-`uc 1 . 1 0 :1:5 
-`uc 1 CK 1 0 :1:6 
-`uc 1 DT 1 0 :1:7 
-]
-[s S1562 . 1 `uc 1 T1CKI 1 0 :1:0 
-`uc 1 CCP2 1 0 :1:1 
-`uc 1 CCP1 1 0 :1:2 
-`uc 1 SCK1 1 0 :1:3 
-`uc 1 SDI1 1 0 :1:4 
-`uc 1 SDO1 1 0 :1:5 
-`uc 1 TX1 1 0 :1:6 
-`uc 1 RX1 1 0 :1:7 
-]
-[s S1571 . 1 `uc 1 T3CKI 1 0 :1:0 
-`uc 1 . 1 0 :1:1 
-`uc 1 CTPLS 1 0 :1:2 
-`uc 1 SCL1 1 0 :1:3 
-`uc 1 SDA1 1 0 :1:4 
-`uc 1 . 1 0 :1:5 
-`uc 1 CK1 1 0 :1:6 
-`uc 1 DT1 1 0 :1:7 
-]
-[s S1580 . 1 `uc 1 T3G 1 0 :1:0 
-`uc 1 . 1 0 :1:1 
-`uc 1 AN14 1 0 :1:2 
-`uc 1 AN15 1 0 :1:3 
-`uc 1 AN16 1 0 :1:4 
-`uc 1 AN17 1 0 :1:5 
-`uc 1 AN18 1 0 :1:6 
-`uc 1 AN19 1 0 :1:7 
-]
-[s S1589 . 1 `uc 1 . 1 0 :6:0 
-`uc 1 CCP3 1 0 :1:6 
-`uc 1 P3B 1 0 :1:7 
-]
-[s S1593 . 1 `uc 1 . 1 0 :6:0 
-`uc 1 P3A 1 0 :1:6 
-]
-[s S1596 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 PA1 1 0 :1:2 
-]
-[s S1599 . 1 `uc 1 . 1 0 :1:0 
-`uc 1 PA2 1 0 :1:1 
-]
-[u S1602 . 1 `S478 1 . 1 0 `S1544 1 . 1 0 `S1553 1 . 1 0 `S1562 1 . 1 0 `S1571 1 . 1 0 `S1580 1 . 1 0 `S1589 1 . 1 0 `S1593 1 . 1 0 `S1596 1 . 1 0 `S1599 1 . 1 0 ]
-[v _PORTCbits PORTCbits `VES1602  1 e 1 @3970 ]
 [s S660 . 1 `uc 1 LATB0 1 0 :1:0 
 `uc 1 LATB1 1 0 :1:1 
 `uc 1 LATB2 1 0 :1:2 
@@ -744,6 +674,15 @@
 `uc 1 TRISC7 1 0 :1:7 
 ]
 "8207
+[s S478 . 1 `uc 1 RC0 1 0 :1:0 
+`uc 1 RC1 1 0 :1:1 
+`uc 1 RC2 1 0 :1:2 
+`uc 1 RC3 1 0 :1:3 
+`uc 1 RC4 1 0 :1:4 
+`uc 1 RC5 1 0 :1:5 
+`uc 1 RC6 1 0 :1:6 
+`uc 1 RC7 1 0 :1:7 
+]
 [u S487 . 1 `S469 1 . 1 0 `S478 1 . 1 0 ]
 [v _TRISCbits TRISCbits `VES487  1 e 1 @3988 ]
 [s S74 . 1 `uc 1 TUN 1 0 :6:0 
@@ -1006,13 +945,13 @@
 ]
 [u S129 . 1 `S100 1 . 1 0 `S102 1 . 1 0 `S105 1 . 1 0 `S108 1 . 1 0 `S111 1 . 1 0 `S114 1 . 1 0 `S123 1 . 1 0 ]
 [v _RCONbits RCONbits `VES129  1 e 1 @4048 ]
-[s S1755 . 1 `uc 1 SWDTEN 1 0 :1:0 
+[s S1609 . 1 `uc 1 SWDTEN 1 0 :1:0 
 ]
 "15690
-[s S1757 . 1 `uc 1 SWDTE 1 0 :1:0 
+[s S1611 . 1 `uc 1 SWDTE 1 0 :1:0 
 ]
-[u S1759 . 1 `S1755 1 . 1 0 `S1757 1 . 1 0 ]
-[v _WDTCONbits WDTCONbits `VES1759  1 e 1 @4049 ]
+[u S1613 . 1 `S1609 1 . 1 0 `S1611 1 . 1 0 ]
+[v _WDTCONbits WDTCONbits `VES1613  1 e 1 @4049 ]
 [s S53 . 1 `uc 1 LFIOFS 1 0 :1:0 
 `uc 1 MFIOFS 1 0 :1:1 
 `uc 1 PRISD 1 0 :1:2 
@@ -1121,41 +1060,39 @@
 [v _processTimer processTimer `l  1 e 4 0 ]
 "23
 [v _securTimer securTimer `l  1 e 4 0 ]
-"24
-[v _timeDOWN timeDOWN `l  1 e 4 0 ]
-"38 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
+"40 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
 [v _actualScreen actualScreen `c  1 e 1 0 ]
-"39
-[v _menuSection menuSection `c  1 e 1 0 ]
-"40
-[v _passSection passSection `c  1 e 1 0 ]
 "41
-[v _chanValSection chanValSection `c  1 e 1 0 ]
+[v _menuSection menuSection `c  1 e 1 0 ]
 "42
-[v _contra contra `[4]uc  1 e 4 0 ]
+[v _passSection passSection `c  1 e 1 0 ]
 "43
-[v _introducido introducido `[4]c  1 e 4 0 ]
+[v _chanValSection chanValSection `c  1 e 1 0 ]
 "44
+[v _contra contra `[4]uc  1 e 4 0 ]
+"45
+[v _introducido introducido `[4]c  1 e 4 0 ]
+"46
 [v _passChar passChar `[4]uc  1 e 4 0 ]
-"47
-[v _chanValf chanValf `f  1 e 3 0 ]
-"48
-[v _chanVals chanVals `s  1 e 2 0 ]
 "49
-[v _chanValdig chanValdig `[6]c  1 e 6 0 ]
+[v _chanValf chanValf `f  1 e 3 0 ]
+"50
+[v _chanVals chanVals `s  1 e 2 0 ]
 "51
-[v _exp10 exp10 `[6]l  1 e 24 0 ]
-"52
-[v _questSN questSN `[2]uc  1 e 2 0 ]
+[v _chanValdig chanValdig `[6]c  1 e 6 0 ]
 "53
-[v _selSN selSN `uc  1 e 1 0 ]
+[v _exp10 exp10 `[6]l  1 e 24 0 ]
 "54
-[v _fd fd `uc  1 e 1 0 ]
+[v _questSN questSN `[2]uc  1 e 2 0 ]
 "55
-[v _tempLastScreen tempLastScreen `uc  1 e 1 0 ]
+[v _selSN selSN `uc  1 e 1 0 ]
+"56
+[v _fd fd `uc  1 e 1 0 ]
 "57
+[v _tempLastScreen tempLastScreen `uc  1 e 1 0 ]
+"59
 [v _flech flech `uc  1 e 1 0 ]
-"58
+"60
 [v _calibLevel calibLevel `uc  1 e 1 0 ]
 [s S735 . 3 `uc 1 floatLB 1 0 `uc 1 floatHB 1 1 `uc 1 floatUB 1 2 ]
 "27 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
@@ -1167,35 +1104,39 @@
 [v _i16Data i16Data `S745  1 e 2 0 ]
 "30
 [v _processStarted processStarted `uc  1 e 1 0 ]
+"31
+[v _ready2Cut ready2Cut `uc  1 e 1 0 ]
 "32
+[v _calibMode calibMode `uc  1 e 1 0 ]
+"34
 [v _processState processState `s  1 e 2 0 ]
-"33
-[v _kgXcorte kgXcorte `f  1 e 3 0 ]
 "35
-[v _tiXcorte tiXcorte `f  1 e 3 0 ]
-"36
-[v _timsXcorte timsXcorte `f  1 e 3 0 ]
+[v _kgXcorte kgXcorte `f  1 e 3 0 ]
 "37
-[v _temptiXcorte temptiXcorte `f  1 e 3 0 ]
+[v _tiXcorte tiXcorte `f  1 e 3 0 ]
 "38
-[v _numCortes numCortes `s  1 e 2 0 ]
+[v _timsXcorte timsXcorte `f  1 e 3 0 ]
 "39
+[v _temptiXcorte temptiXcorte `f  1 e 3 0 ]
+"40
+[v _numCortes numCortes `s  1 e 2 0 ]
+"41
 [v _tempNumCortes tempNumCortes `s  1 e 2 0 ]
-"42
-[v _tempVelocidadMasa1 tempVelocidadMasa1 `f  1 e 3 0 ]
-"43
-[v _tempVelocidadMasa2 tempVelocidadMasa2 `f  1 e 3 0 ]
 "44
-[v _tempVelocidadMasa3 tempVelocidadMasa3 `f  1 e 3 0 ]
+[v _tempVelocidadMasa1 tempVelocidadMasa1 `f  1 e 3 0 ]
 "45
-[v _velocidadMasa velocidadMasa `f  1 e 3 0 ]
+[v _tempVelocidadMasa2 tempVelocidadMasa2 `f  1 e 3 0 ]
+"46
+[v _tempVelocidadMasa3 tempVelocidadMasa3 `f  1 e 3 0 ]
 "47
-[v _bladeIsUP bladeIsUP `uc  1 e 1 0 ]
-"48
-[v _ie ie `uc  1 e 1 0 ]
+[v _velocidadMasa velocidadMasa `f  1 e 3 0 ]
 "49
+[v _bladeIsUP bladeIsUP `uc  1 e 1 0 ]
+"50
+[v _ie ie `uc  1 e 1 0 ]
+"51
 [v _maxTimePerCut maxTimePerCut `l  1 e 4 0 ]
-"32 L:\MPLABXProjects\CortaMasa.X\source/main.c
+"31 L:\MPLABXProjects\CortaMasa.X\source/main.c
 [v _main main `(v  1 e 1 0 ]
 {
 "54
@@ -1205,33 +1146,33 @@
 {
 "58
 } 0
-"166 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
+"168 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
 [v _sysParamInit sysParamInit `(v  1 e 1 0 ]
 {
-"195
+"197
 } 0
-"62
+"64
 [v _readEEPROM readEEPROM `(uc  1 e 1 0 ]
 {
 [v readEEPROM@adr adr `uc  1 a 1 wreg ]
 [v readEEPROM@adr adr `uc  1 a 1 wreg ]
 [v readEEPROM@adr adr `uc  1 a 1 0 ]
-"69
+"71
 } 0
-"76
+"78
 [v _calcSysVars calcSysVars `(v  1 e 1 0 ]
 {
-"77
+"79
 [v calcSysVars@temp temp `f  1 a 3 35 ]
-"85
+"87
 } 0
-"154 L:\MPLABXProjects\CortaMasa.X\source/PWMConfig.h
+"183 L:\MPLABXProjects\CortaMasa.X\source/PWMConfig.h
 [v _setPWM2on setPWM2on `(v  1 e 1 0 ]
 {
 [v setPWM2on@on on `uc  1 a 1 wreg ]
 [v setPWM2on@on on `uc  1 a 1 wreg ]
 [v setPWM2on@on on `uc  1 a 1 0 ]
-"162
+"191
 } 0
 "179 L:\MPLABXProjects/vclib_lcd.h
 [v _lcd_init lcd_init `(v  1 e 1 0 ]
@@ -1243,104 +1184,109 @@
 [v lcd_init@F7567 F7567 `[4]uc  1 s 4 F7567 ]
 "196
 } 0
-"85 L:\MPLABXProjects\CortaMasa.X\source/IOConfig.h
+"86 L:\MPLABXProjects\CortaMasa.X\source/IOConfig.h
 [v _ioInitStt ioInitStt `(v  1 e 1 0 ]
 {
-"89
+"90
 } 0
-"68
+"69
 [v _ioConfig ioConfig `(v  1 e 1 0 ]
 {
-"83
+"84
 } 0
 "89 L:\MPLABXProjects\CortaMasa.X\source/SYSConfig.h
 [v _interruptConfig interruptConfig `(v  1 e 1 0 ]
 {
 "93
 } 0
-"240 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
+"250 L:\MPLABXProjects\CortaMasa.X\source/screenDrawers.h
 [v _drawScreen drawScreen `(v  1 e 1 0 ]
 {
-"286
+"302
 } 0
-"196
+"198
 [v _drawSNquest drawSNquest `(v  1 e 1 0 ]
 {
 [v drawSNquest@tq tq `uc  1 a 1 wreg ]
-"197
+"199
 [v drawSNquest@i i `i  1 a 2 116 ]
-"196
-[v drawSNquest@tq tq `uc  1 a 1 wreg ]
 "198
+[v drawSNquest@tq tq `uc  1 a 1 wreg ]
+"200
 [v drawSNquest@tq tq `uc  1 a 1 118 ]
-"211
+"215
 } 0
-"164
+"230
+[v _drawReady2Cut drawReady2Cut `(v  1 e 1 0 ]
+{
+"234
+} 0
+"166
 [v _drawPassWord drawPassWord `(v  1 e 1 0 ]
 {
-"173
+"175
 [v drawPassWord@i i `i  1 a 2 116 ]
-"180
+"182
 } 0
-"89
+"91
 [v _drawMenu drawMenu `(v  1 e 1 0 ]
 {
 [v drawMenu@adv adv `uc  1 a 1 wreg ]
 [v drawMenu@adv adv `uc  1 a 1 wreg ]
 [v drawMenu@adv adv `uc  1 a 1 116 ]
-"136
+"138
 } 0
-"220
+"224
 [v _drawCutError drawCutError `(v  1 e 1 0 ]
 {
-"224
+"228
 } 0
-"138
+"140
 [v _drawChanVal drawChanVal `(v  1 e 1 0 ]
 {
-"157
+"159
 } 0
-"226
+"236
 [v _drawCalibProc drawCalibProc `(v  1 e 1 0 ]
 {
-"238
+"248
 } 0
-"182
+"184
 [v _drawBadPass drawBadPass `(v  1 e 1 0 ]
 {
-"185
+"187
 } 0
-"159
+"161
 [v _drawPass1Lin drawPass1Lin `(v  1 e 1 0 ]
 {
-"162
+"164
 } 0
-"213
+"217
 [v _drawAutoCalibRM drawAutoCalibRM `(v  1 e 1 0 ]
 {
-"218
+"222
 } 0
-"60
+"62
 [v _drawValEditor drawValEditor `(v  1 e 1 0 ]
 {
-"81
+"83
 } 0
-"187
+"189
 [v _drawAdvON drawAdvON `(v  1 e 1 0 ]
 {
 [v drawAdvON@on on `uc  1 a 1 wreg ]
 [v drawAdvON@on on `uc  1 a 1 wreg ]
 [v drawAdvON@on on `uc  1 a 1 116 ]
-"194
+"196
 } 0
 "464 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
 {
 "528
 [v printf@val val `ul  1 a 4 102 ]
-[u S2424 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[u S2276 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v printf@tmpval tmpval `S2424  1 a 4 98 ]
+[v printf@tmpval tmpval `S2276  1 a 4 98 ]
 "516
 [v printf@fval fval `d  1 a 3 110 ]
 "504
@@ -1372,13 +1318,21 @@
 [v scale@scl scl `c  1 a 1 41 ]
 "441
 } 0
-"59 L:\MPLABXProjects\CortaMasa.X\source/IOConfig.h
+"64 L:\MPLABXProjects\CortaMasa.X\source/IOConfig.h
 [v _putch putch `(v  1 e 1 0 ]
 {
 [v putch@val val `uc  1 a 1 wreg ]
 [v putch@val val `uc  1 a 1 wreg ]
 [v putch@val val `uc  1 a 1 13 ]
-"61
+"67
+} 0
+"59
+[v _putchUART putchUART `(v  1 e 1 0 ]
+{
+[v putchUART@val val `uc  1 a 1 wreg ]
+[v putchUART@val val `uc  1 a 1 wreg ]
+[v putchUART@val val `uc  1 a 1 0 ]
+"62
 } 0
 "212 L:\MPLABXProjects/vclib_lcd.h
 [v _lcd_putc lcd_putc `(v  1 e 1 0 ]
@@ -1573,55 +1527,112 @@
 {
 "106
 } 0
-"184 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
+"176 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
 [v _releaseUP releaseUP `(v  1 e 1 0 ]
 {
-"187
+"179
 } 0
-"275
+"286
 [v _releaseRETRO releaseRETRO `(v  1 e 1 0 ]
 {
-"278
+"289
 } 0
-"422
+"491
 [v _releaseENTER releaseENTER `(v  1 e 1 0 ]
 {
-"425
+"494
 } 0
-"229
+"222
 [v _releaseDOWN releaseDOWN `(v  1 e 1 0 ]
 {
-"232
+"225
 } 0
-"135
+"126
 [v _pressUP pressUP `(v  1 e 1 0 ]
 {
-"163
+"155
 } 0
 "28
 [v _chanValDigUP chanValDigUP `(v  1 e 1 0 ]
 {
 "35
 } 0
-"234
+"227
 [v _pressRETRO pressRETRO `(v  1 e 1 0 ]
 {
-"257
+"251
 } 0
-"280
+"291
 [v _pressENTER pressENTER `(v  1 e 1 0 ]
 {
-"371
+"426
 } 0
-"72
+"14
+[v _checkPass checkPass `(uc  1 e 1 0 ]
+{
+"15
+[v checkPass@i i `i  1 a 2 5 ]
+"16
+[v checkPass@passOK passOK `uc  1 a 1 4 ]
+"26
+} 0
+"181
+[v _pressDOWN pressDOWN `(v  1 e 1 0 ]
+{
+"210
+} 0
+"37
+[v _chanValDigDOWN chanValDigDOWN `(v  1 e 1 0 ]
+{
+"44
+} 0
+"157
+[v _longPressUP longPressUP `(v  1 e 1 0 ]
+{
+"174
+} 0
+"253
+[v _longPressRETRO longPressRETRO `(v  1 e 1 0 ]
+{
+"284
+} 0
+"49 L:\MPLABXProjects\CortaMasa.X\source/PWMConfig.h
 [v _initProtocoll initProtocoll `(v  1 e 1 0 ]
 {
 [v initProtocoll@init init `uc  1 a 1 wreg ]
 [v initProtocoll@init init `uc  1 a 1 wreg ]
 [v initProtocoll@init init `uc  1 a 1 6 ]
-"82
+"60
 } 0
-"46
+"428 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
+[v _longPressENTER longPressENTER `(v  1 e 1 0 ]
+{
+"480
+[v longPressENTER@temp temp `f  1 a 3 76 ]
+"489
+} 0
+"61
+[v _integrator integrator `(v  1 e 1 0 ]
+{
+"63
+[v integrator@temp temp `l  1 a 4 39 ]
+"62
+[v integrator@acum acum `l  1 a 4 35 ]
+"64
+[v integrator@i i `i  1 a 2 43 ]
+"70
+} 0
+"42 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\altoft.c
+[v ___altoft __altoft `(f  1 e 3 0 ]
+{
+"44
+[v ___altoft@sign sign `uc  1 a 1 17 ]
+[v ___altoft@exp exp `uc  1 a 1 16 ]
+"42
+[v ___altoft@c c `l  1 p 4 8 ]
+"57
+} 0
+"46 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
 [v _desintegrator desintegrator `(v  1 e 1 0 ]
 {
 "50
@@ -1635,6 +1646,16 @@
 "52
 [v desintegrator@i i `i  1 a 2 74 ]
 "59
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+{
+"17
+[v ___lmul@product product `ul  1 a 4 8 ]
+"15
+[v ___lmul@multiplier multiplier `ul  1 p 4 0 ]
+[v ___lmul@multiplicand multiplicand `ul  1 p 4 4 ]
+"129
 } 0
 "44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
 [v ___fttol __fttol `(l  1 e 4 0 ]
@@ -1661,104 +1682,32 @@
 [v ___aldiv@divisor divisor `l  1 p 4 4 ]
 "42
 } 0
-"14 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
-[v _checkPass checkPass `(uc  1 e 1 0 ]
-{
-"15
-[v checkPass@i i `i  1 a 2 5 ]
-"16
-[v checkPass@passOK passOK `uc  1 a 1 4 ]
-"26
-} 0
-"189
-[v _pressDOWN pressDOWN `(v  1 e 1 0 ]
-{
-"217
-} 0
-"37
-[v _chanValDigDOWN chanValDigDOWN `(v  1 e 1 0 ]
-{
-"44
-} 0
-"165
-[v _longPressUP longPressUP `(v  1 e 1 0 ]
-{
-"182
-} 0
-"259
-[v _longPressRETRO longPressRETRO `(v  1 e 1 0 ]
-{
-"273
-} 0
-"373
-[v _longPressENTER longPressENTER `(v  1 e 1 0 ]
-{
-"412
-[v longPressENTER@temp temp `f  1 a 3 57 ]
-"420
-} 0
-"61
-[v _integrator integrator `(v  1 e 1 0 ]
-{
-"63
-[v integrator@temp temp `l  1 a 4 39 ]
-"62
-[v integrator@acum acum `l  1 a 4 35 ]
-"64
-[v integrator@i i `i  1 a 2 43 ]
-"70
-} 0
-"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul32.c
-[v ___lmul __lmul `(ul  1 e 4 0 ]
-{
-"17
-[v ___lmul@product product `ul  1 a 4 8 ]
-"15
-[v ___lmul@multiplier multiplier `ul  1 p 4 0 ]
-[v ___lmul@multiplicand multiplicand `ul  1 p 4 4 ]
-"129
-} 0
-"42 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\altoft.c
-[v ___altoft __altoft `(f  1 e 3 0 ]
-{
-"44
-[v ___altoft@sign sign `uc  1 a 1 17 ]
-[v ___altoft@exp exp `uc  1 a 1 16 ]
-"42
-[v ___altoft@c c `l  1 p 4 8 ]
-"57
-} 0
-"84 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
-[v _initCalib initCalib `(v  1 e 1 0 ]
-{
-"92
-} 0
-"94
+"85 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
 [v _confirmEdition confirmEdition `(v  1 e 1 0 ]
 {
 [v confirmEdition@yes yes `uc  1 a 1 wreg ]
 [v confirmEdition@yes yes `uc  1 a 1 wreg ]
 [v confirmEdition@yes yes `uc  1 a 1 35 ]
-"133
+"124
 } 0
-"111 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
+"113 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
 [v _saveSysParams saveSysParams `(v  1 e 1 0 ]
 {
-"142
+"144
 } 0
-"51
+"53
 [v _writeEEPROM writeEEPROM `(v  1 e 1 0 ]
 {
 [v writeEEPROM@adr adr `uc  1 a 1 wreg ]
 [v writeEEPROM@adr adr `uc  1 a 1 wreg ]
 [v writeEEPROM@data data `uc  1 p 1 0 ]
 [v writeEEPROM@adr adr `uc  1 a 1 1 ]
-"60
+"62
 } 0
-"87
+"89
 [v _calcVars2ti calcVars2ti `(v  1 e 1 0 ]
 {
-"109
+"111
 } 0
 "62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftmul.c
 [v ___ftmul __ftmul `(f  1 e 3 0 ]
@@ -1808,10 +1757,10 @@
 [v ___ftpack@sign sign `uc  1 p 1 4 ]
 "86
 } 0
-"219 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
+"212 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
 [v _longPressDOWN longPressDOWN `(v  1 e 1 0 ]
 {
-"227
+"220
 } 0
 "13 L:\MPLABXProjects/delay.h
 [v _delay_ms delay_ms `(v  1 e 1 0 ]
@@ -1827,10 +1776,10 @@
 {
 "105
 } 0
-"130 L:\MPLABXProjects\CortaMasa.X\source/PWMConfig.h
+"159 L:\MPLABXProjects\CortaMasa.X\source/PWMConfig.h
 [v _PWM2Config PWM2Config `(v  1 e 1 0 ]
 {
-"152
+"181
 } 0
 "26
 [v _t2config t2config `(v  1 e 1 0 ]
@@ -1846,15 +1795,15 @@
 [v setPWM2duty@actuator actuator `s  1 p 2 0 ]
 "47
 } 0
-"71 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
+"73 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
 [v _EEPROMConfig EEPROMConfig `(v  1 e 1 0 ]
 {
-"74
+"76
 } 0
-"21 L:\MPLABXProjects\CortaMasa.X\source/main.c
+"20 L:\MPLABXProjects\CortaMasa.X\source/main.c
 [v _isr isr `IIL(v  1 e 1 0 ]
 {
-"30
+"29
 } 0
 "11 L:\MPLABXProjects\CortaMasa.X\source/UARTConfig.h
 [v _UARTint UARTint `(v  1 e 1 0 ]
@@ -1863,48 +1812,97 @@
 [v UARTint@sas sas `uc  1 a 1 51 ]
 "79
 } 0
-"166 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
+"168 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
 [v i1_sysParamInit sysParamInit `(v  1 e 1 0 ]
 {
-"195
+"197
 } 0
-"62
+"64
 [v i1_readEEPROM readEEPROM `(uc  1 e 1 0 ]
 {
 [v i1readEEPROM@adr adr `uc  1 a 1 wreg ]
 [v i1readEEPROM@adr adr `uc  1 a 1 wreg ]
 [v i1readEEPROM@adr adr `uc  1 a 1 0 ]
-"69
+"71
 } 0
-"135 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
+"59 L:\MPLABXProjects\CortaMasa.X\source/IOConfig.h
+[v i1_putchUART putchUART `(v  1 e 1 0 ]
+{
+[v i1putchUART@val val `uc  1 a 1 wreg ]
+[v i1putchUART@val val `uc  1 a 1 wreg ]
+[v i1putchUART@val val `uc  1 a 1 0 ]
+"62
+} 0
+"126 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
 [v i1_pressUP pressUP `(v  1 e 1 0 ]
 {
-"163
+"155
 } 0
 "28
 [v i1_chanValDigUP chanValDigUP `(v  1 e 1 0 ]
 {
 "35
 } 0
-"234
+"227
 [v i1_pressRETRO pressRETRO `(v  1 e 1 0 ]
 {
-"257
+"251
 } 0
-"280
+"291
 [v i1_pressENTER pressENTER `(v  1 e 1 0 ]
 {
-"371
+"426
 } 0
-"72
-[v i1_initProtocoll initProtocoll `(v  1 e 1 0 ]
+"14
+[v i1_checkPass checkPass `(uc  1 e 1 0 ]
 {
-[v i1initProtocoll@init init `uc  1 a 1 wreg ]
-[v i1initProtocoll@init init `uc  1 a 1 wreg ]
-[v i1initProtocoll@init init `uc  1 a 1 6 ]
-"82
+[v i1checkPass@i checkPass `i  1 a 2 5 ]
+[v i1checkPass@passOK checkPass `uc  1 a 1 4 ]
+"26
 } 0
-"46
+"181
+[v i1_pressDOWN pressDOWN `(v  1 e 1 0 ]
+{
+"210
+} 0
+"37
+[v i1_chanValDigDOWN chanValDigDOWN `(v  1 e 1 0 ]
+{
+"44
+} 0
+"157
+[v i1_longPressUP longPressUP `(v  1 e 1 0 ]
+{
+"174
+} 0
+"253
+[v i1_longPressRETRO longPressRETRO `(v  1 e 1 0 ]
+{
+"284
+} 0
+"428
+[v i1_longPressENTER longPressENTER `(v  1 e 1 0 ]
+{
+[v i1longPressENTER@temp longPressENTER `f  1 a 3 45 ]
+"489
+} 0
+"61
+[v i1_integrator integrator `(v  1 e 1 0 ]
+{
+[v i1integrator@temp integrator `l  1 a 4 39 ]
+[v i1integrator@acum integrator `l  1 a 4 35 ]
+[v i1integrator@i integrator `i  1 a 2 43 ]
+"70
+} 0
+"42 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\altoft.c
+[v i1___altoft __altoft `(f  1 e 3 0 ]
+{
+[v i1___altoft@sign __altoft `uc  1 a 1 17 ]
+[v i1___altoft@exp __altoft `uc  1 a 1 16 ]
+[v i1___altoft@c c `l  1 p 4 8 ]
+"57
+} 0
+"46 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
 [v i1_desintegrator desintegrator `(v  1 e 1 0 ]
 {
 [v i1desintegrator@temp2 desintegrator `l  1 a 4 36 ]
@@ -1913,6 +1911,14 @@
 [v i1desintegrator@temp desintegrator `f  1 a 3 25 ]
 [v i1desintegrator@i desintegrator `i  1 a 2 40 ]
 "59
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul32.c
+[v i1___lmul __lmul `(ul  1 e 4 0 ]
+{
+[v i1___lmul@product __lmul `ul  1 a 4 8 ]
+[v i1___lmul@multiplier multiplier `ul  1 p 4 0 ]
+[v i1___lmul@multiplicand multiplicand `ul  1 p 4 4 ]
+"129
 } 0
 "44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
 [v i1___fttol __fttol `(l  1 e 4 0 ]
@@ -1933,75 +1939,13 @@
 [v i1___aldiv@divisor divisor `l  1 p 4 4 ]
 "42
 } 0
-"14 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
-[v i1_checkPass checkPass `(uc  1 e 1 0 ]
-{
-[v i1checkPass@i checkPass `i  1 a 2 5 ]
-[v i1checkPass@passOK checkPass `uc  1 a 1 4 ]
-"26
-} 0
-"189
-[v i1_pressDOWN pressDOWN `(v  1 e 1 0 ]
-{
-"217
-} 0
-"37
-[v i1_chanValDigDOWN chanValDigDOWN `(v  1 e 1 0 ]
-{
-"44
-} 0
-"165
-[v i1_longPressUP longPressUP `(v  1 e 1 0 ]
-{
-"182
-} 0
-"259
-[v i1_longPressRETRO longPressRETRO `(v  1 e 1 0 ]
-{
-"273
-} 0
-"373
-[v i1_longPressENTER longPressENTER `(v  1 e 1 0 ]
-{
-[v i1longPressENTER@temp longPressENTER `f  1 a 3 45 ]
-"420
-} 0
-"61
-[v i1_integrator integrator `(v  1 e 1 0 ]
-{
-[v i1integrator@temp integrator `l  1 a 4 39 ]
-[v i1integrator@acum integrator `l  1 a 4 35 ]
-[v i1integrator@i integrator `i  1 a 2 43 ]
-"70
-} 0
-"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul32.c
-[v i1___lmul __lmul `(ul  1 e 4 0 ]
-{
-[v i1___lmul@product __lmul `ul  1 a 4 8 ]
-[v i1___lmul@multiplier multiplier `ul  1 p 4 0 ]
-[v i1___lmul@multiplicand multiplicand `ul  1 p 4 4 ]
-"129
-} 0
-"42 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\altoft.c
-[v i1___altoft __altoft `(f  1 e 3 0 ]
-{
-[v i1___altoft@sign __altoft `uc  1 a 1 17 ]
-[v i1___altoft@exp __altoft `uc  1 a 1 16 ]
-[v i1___altoft@c c `l  1 p 4 8 ]
-"57
-} 0
-"84 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
-[v i1_initCalib initCalib `(v  1 e 1 0 ]
-{
-"92
-} 0
-"94
+"85 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
 [v i1_confirmEdition confirmEdition `(v  1 e 1 0 ]
 {
 [v i1confirmEdition@yes yes `uc  1 a 1 wreg ]
 [v i1confirmEdition@yes yes `uc  1 a 1 wreg ]
 [v i1confirmEdition@yes yes `uc  1 a 1 33 ]
-"133
+"124
 } 0
 "86 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftadd.c
 [v i1___ftadd __ftadd `(f  1 e 3 0 ]
@@ -2013,33 +1957,25 @@
 [v i1___ftadd@f2 f2 `f  1 p 3 11 ]
 "148
 } 0
-"219 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
+"212 L:\MPLABXProjects\CortaMasa.X\source/DisplayProtocol.h
 [v i1_longPressDOWN longPressDOWN `(v  1 e 1 0 ]
 {
-"227
+"220
 } 0
-"63 L:\MPLABXProjects\CortaMasa.X\source/IOConfig.h
-[v _putchUART putchUART `(v  1 e 1 0 ]
-{
-[v putchUART@val val `uc  1 a 1 wreg ]
-[v putchUART@val val `uc  1 a 1 wreg ]
-[v putchUART@val val `uc  1 a 1 0 ]
-"66
-} 0
-"144 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
+"146 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
 [v _loadSysParams loadSysParams `(v  1 e 1 0 ]
 {
-"153
+"155
 } 0
-"111
+"113
 [v i1_saveSysParams saveSysParams `(v  1 e 1 0 ]
 {
-"142
+"144
 } 0
-"87
+"89
 [v i1_calcVars2ti calcVars2ti `(v  1 e 1 0 ]
 {
-"109
+"111
 } 0
 "54 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftdiv.c
 [v i1___ftdiv __ftdiv `(f  1 e 3 0 ]
@@ -2052,11 +1988,11 @@
 [v i1___ftdiv@f2 f2 `f  1 p 3 21 ]
 "86
 } 0
-"76 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
+"78 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
 [v i1_calcSysVars calcSysVars `(v  1 e 1 0 ]
 {
 [v i1calcSysVars@temp calcSysVars `f  1 a 3 23 ]
-"85
+"87
 } 0
 "62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftmul.c
 [v i1___ftmul __ftmul `(f  1 e 3 0 ]
@@ -2077,10 +2013,18 @@
 [v i1___ftpack@sign sign `uc  1 p 1 4 ]
 "86
 } 0
-"49 L:\MPLABXProjects\CortaMasa.X\source/PWMConfig.h
+"62 L:\MPLABXProjects\CortaMasa.X\source/PWMConfig.h
 [v _T2int T2int `(v  1 e 1 0 ]
 {
-"128
+"157
+} 0
+"49
+[v i1_initProtocoll initProtocoll `(v  1 e 1 0 ]
+{
+[v i1initProtocoll@init init `uc  1 a 1 wreg ]
+[v i1initProtocoll@init init `uc  1 a 1 wreg ]
+[v i1initProtocoll@init init `uc  1 a 1 6 ]
+"60
 } 0
 "37
 [v i1_setPWM2duty setPWM2duty `(v  1 e 1 0 ]
@@ -2089,24 +2033,24 @@
 [v i1setPWM2duty@actuator actuator `s  1 p 2 0 ]
 "47
 } 0
-"155 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
+"157 L:\MPLABXProjects\CortaMasa.X\source/sysParams.h
 [v _saveProcessState saveProcessState `(v  1 e 1 0 ]
 {
-"164
+"166
 } 0
-"51
+"53
 [v i1_writeEEPROM writeEEPROM `(v  1 e 1 0 ]
 {
 [v i1writeEEPROM@adr adr `uc  1 a 1 wreg ]
 [v i1writeEEPROM@adr adr `uc  1 a 1 wreg ]
 [v i1writeEEPROM@data data `uc  1 p 1 0 ]
 [v i1writeEEPROM@adr adr `uc  1 a 1 1 ]
-"60
+"62
 } 0
-"14 L:\MPLABXProjects\CortaMasa.X\source/main.c
+"13 L:\MPLABXProjects\CortaMasa.X\source/main.c
 [v _hp_isr hp_isr `II(v  1 e 1 0 ]
 {
-"19
+"18
 } 0
 "21 L:\MPLABXProjects\CortaMasa.X\source/T4Config.h
 [v _T4int T4int `(v  1 e 1 0 ]

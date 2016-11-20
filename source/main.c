@@ -10,7 +10,6 @@
 #include "DisplayProtocol.h"
 #include "ButtonController.h"
 
-
 void interrupt hp_isr(void) {
     if(PIE5bits.TMR4IE && PIR5bits.TMR4IF) {
         T4int(); //counter para los cortes
@@ -43,6 +42,7 @@ void main(void) {
     UARTConfig();
     interruptConfig();
     CLRWDT();
+    //initProtocoll(1);
     WDTCONbits.SWDTEN = 1;
     setPWM2duty(-400);
     setPWM2on(1);

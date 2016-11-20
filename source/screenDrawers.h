@@ -23,6 +23,8 @@ extern "C" {
     #define SCREEN_CALIB_INIT   11
     #define SCREEN_CALIB_RMAS   12
     #define SCREEN_CUT_ERROR    13
+    #define SCREEN_READY_2CUT   14
+    #define SCREEN_STOP_CALIB   15
 
     #define MENU_ESTADO         0
     #define MENU_VALP_CUT       1
@@ -97,9 +99,9 @@ extern "C" {
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
                 if(processStarted)
-                    printf("   %d / %d    ", processState, numCortes);
+                    printf("   %d / %d       ", processState, numCortes);
                 else
-                    printf("    Detenido    ");
+                    printf("    Detenido       ");
                 break;
             }case (MENU_VALP_CUT): {
                 lcd_gotoxy(1, 1);
@@ -109,7 +111,7 @@ extern "C" {
                 else
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
-                printf("   %3.3f kg   ", kgXcorte);
+                printf("   %3.3f kg      ", kgXcorte);
                 break;
             }case (MENU_CANT_CUT): {
                 lcd_gotoxy(1, 1);
@@ -119,7 +121,7 @@ extern "C" {
                 else
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
-                printf("      %d       ", numCortes);
+                printf("      %d         ", numCortes);
                 break;
             }case (MENU_VEL_MAS): {
                 lcd_gotoxy(1, 1);
@@ -129,7 +131,7 @@ extern "C" {
                 else
                     lcd_putc(' ');
                 lcd_gotoxy(2, 2);
-                printf("  %3.3f kg/s  ", velocidadMasa);
+                printf("  %3.3f kg/s      ", velocidadMasa);
                 break;
             }
         }
@@ -207,6 +209,8 @@ extern "C" {
             printf("Guardar Cambio? \n");
         else if(tq == 3)
             printf("Init AutoCalib? \n");
+        else if(tq == 4)
+            printf("Stop AutoCalib? \n");
         printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
     }
     
@@ -223,11 +227,17 @@ extern "C" {
         printf("      Trancada  ");
     }
     
+    void drawReady2Cut() {
+        lcd_gotoxy(1, 1);
+        printf("   Enter para:  \n");
+        printf("Empezar a cortar");
+    }
+    
     void drawCalibProc() {
         lcd_gotoxy(1, 1);    
         if(calibLevel == 0) {
-            printf("Autocalib usando\n");
-            printf("       1 kg     ");
+            printf("Autocalib con   \n");
+            printf("Corte referencia");
         }else if(calibLevel == 1) {
             printf("Autocalib usando\n");
             printf("     0.5 kg     ");
@@ -280,6 +290,12 @@ extern "C" {
                 break;
             }case (SCREEN_CUT_ERROR): {
                 drawCutError();
+                break;
+            }case (SCREEN_READY_2CUT): {
+                drawReady2Cut();
+                break;
+            }case (SCREEN_STOP_CALIB): {
+                drawSNquest(4);
                 break;
             }
         }

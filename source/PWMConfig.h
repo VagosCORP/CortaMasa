@@ -21,7 +21,7 @@ extern "C" {
     
     long processTimer = 0;
     long securTimer = 0;
-    long timeDOWN = 500;
+    long timeDOWN = 50;
     
     void t2config() {
         T2CONbits.TMR2ON = 0;
@@ -46,8 +46,21 @@ extern "C" {
         CCPR2L = act>>2;
     }
     
+    void initProtocoll(char init) {
+        if(!FC1)
+            bladeIsUP = 2;
+        if(init) {
+            LED_ERR = 0;
+            processTimer = 0;
+            processState = 0;
+            if(bladeIsUP != 1)
+                setPWM2duty(-400);
+        }
+        //actualScreen = tempLastScreen;
+    }
+    
     void T2int() {
-        if(!processStarted)
+        if(!processStarted && actualScreen != SCREEN_READY_2CUT && !ready2Cut)
             REL = 0;
         t2Cont1++;
         if(FC1 && !lastSttFC1) {//pressFC1();
@@ -55,12 +68,17 @@ extern "C" {
             setPWM2duty(0);
             bladeIsUP = 1;
             processTimer = 0;
+            if(processStarted)
+                processState++;
             securTimer = 0;
-            if(processState >= numCortes) {
+            if(processStarted && processState >= numCortes) {
                 processStarted = 0;
                 saveProcessState();
-                if(actualScreen == SCREEN_CALIB_PROCESS)
+                if(calibMode) {
                     actualScreen = SCREEN_CALIB_RMAS;
+                    tempLastScreen = SCREEN_CALIB_PROCESS;
+                }
+                initProtocoll(1);
             }
 //            delay_ms(100);
             t2Cont1 = 0;
@@ -95,11 +113,22 @@ extern "C" {
             bladeIsUP = 0;
             processTimer = 0;
             securTimer = 0;
-            processState++;
+            if(processStarted)
+                processState++;
+            if(ready2Cut) {
+                processStarted = 1;
+                ready2Cut = 0;
+            }
             saveProcessState();
-            if(processState >= numCortes)
-                REL = 0;
-//            delay_ms(100);
+            if(processStarted && processState >= numCortes) {
+                processStarted = 0;
+                saveProcessState();
+                if(calibMode) {
+                    actualScreen = SCREEN_CALIB_RMAS;
+                    tempLastScreen = SCREEN_CALIB_PROCESS;
+                }
+                initProtocoll(1);
+            }
             t2Cont2 = 0;
         }else if(!FC2 && lastSttFC2) {
             if(t2Cont2 > 124)

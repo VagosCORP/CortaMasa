@@ -9199,13 +9199,14 @@ char DOWNsecurLock = 0;
 char RETROsecurLock = 0;
 char ENTERsecurLock = 0;
 
-void putch(char val) {
-lcd_putc(val);
-}
-
 void putchUART(char val) {
 while(!TXSTA1bits.TRMT);
 TXREG1 = val;
+}
+
+void putch(char val) {
+lcd_putc(val);
+putchUART(val);
 }
 
 void ioConfig() {
@@ -9254,6 +9255,8 @@ FLOATDATAX fData;
 INT16DATAX i16Data;
 
 char processStarted = 0;
+char ready2Cut = 0;
+char calibMode = 0;
 float pi = 3.14159265358979323846;
 short processState = 0;
 float kgXcorte = 1.0;
@@ -9270,7 +9273,7 @@ float tempVelocidadMasa2 = 0.2;
 float tempVelocidadMasa3 = 0.2;
 float velocidadMasa = 0.2;
 float calFactor = 0;
-char bladeIsUP = 2;
+char bladeIsUP = 1;
 char ie = 0;
 long maxTimePerCut = 5000;
 
@@ -9303,17 +9306,17 @@ void calcSysVars() {
 float temp = 0;
 timsXcorte = (float)tiXcorte * 1000;
 
-# 84
+# 86
 kgXcorte = (float)velocidadMasa * tiXcorte;
 }
 
 void calcVars2ti() {
 
-# 95
+# 97
 tiXcorte = (float)kgXcorte / velocidadMasa;
 timsXcorte = (float)tiXcorte * 1000;
 
-# 109
+# 111
 }
 
 void saveSysParams() {
@@ -9331,7 +9334,7 @@ i16Data.int16dat = numCortes;
 writeEEPROM(6, i16Data.int16HB);
 writeEEPROM(7, i16Data.int16LB);
 
-# 135
+# 137
 fData.floatdat = velocidadMasa;
 
 writeEEPROM(17, fData.floatUB);
@@ -9342,8 +9345,8 @@ INTCONbits.GIE = ie;
 }
 
 void loadSysParams() {
-tiXcorte = 0.5f;
-numCortes = 20;
+tiXcorte = 5.0f;
+numCortes = 10;
 
 velocidadMasa = 1.0f;
 processState = 0;
@@ -9374,18 +9377,18 @@ i16Data.int16HB = readEEPROM(6);
 i16Data.int16LB = readEEPROM(7);
 numCortes = i16Data.int16dat;
 
-# 187
+# 189
 fData.floatUB = readEEPROM(17);
 fData.floatHB = readEEPROM(18);
 fData.floatLB = readEEPROM(19);
 velocidadMasa = fData.floatdat;
 calcSysVars();
-processState = readEEPROM(31);
-bladeIsUP = readEEPROM(32);
-processStarted = readEEPROM(30);
+
+
+
 }
 
-# 38 "source/screenDrawers.h"
+# 40 "source/screenDrawers.h"
 signed char actualScreen = 0;
 signed char menuSection = 0;
 signed char passSection = 0;
@@ -9431,7 +9434,7 @@ chanValdig[2], chanValdig[3], chanValdig[4], chanValdig[5]);
 lcd_gotoxy(11, 2);
 }
 
-# 89
+# 91
 void drawMenu(char adv) {
 switch (menuSection) {
 case (0): {
@@ -9443,9 +9446,9 @@ else
 lcd_putc(' ');
 lcd_gotoxy(2, 2);
 if(processStarted)
-printf("   %d / %d    ", processState, numCortes);
+printf("   %d / %d       ", processState, numCortes);
 else
-printf("    Detenido    ");
+printf("    Detenido       ");
 break;
 }case (1): {
 lcd_gotoxy(1, 1);
@@ -9455,7 +9458,7 @@ lcd_putc('A');
 else
 lcd_putc(' ');
 lcd_gotoxy(2, 2);
-printf("   %3.3f kg   ", kgXcorte);
+printf("   %3.3f kg      ", kgXcorte);
 break;
 }case (2): {
 lcd_gotoxy(1, 1);
@@ -9465,7 +9468,7 @@ lcd_putc('A');
 else
 lcd_putc(' ');
 lcd_gotoxy(2, 2);
-printf("      %d       ", numCortes);
+printf("      %d         ", numCortes);
 break;
 }case (3): {
 lcd_gotoxy(1, 1);
@@ -9475,7 +9478,7 @@ lcd_putc('A');
 else
 lcd_putc(' ');
 lcd_gotoxy(2, 2);
-printf("  %3.3f kg/s  ", velocidadMasa);
+printf("  %3.3f kg/s      ", velocidadMasa);
 break;
 }
 }
@@ -9553,6 +9556,8 @@ else if(tq == 2)
 printf("Guardar Cambio? \n");
 else if(tq == 3)
 printf("Init AutoCalib? \n");
+else if(tq == 4)
+printf("Stop AutoCalib? \n");
 printf("   %cSI    %cNO   ", questSN[0], questSN[1]);
 }
 
@@ -9569,11 +9574,17 @@ printf("Guillotina      \n");
 printf("      Trancada  ");
 }
 
+void drawReady2Cut() {
+lcd_gotoxy(1, 1);
+printf("   Enter para:  \n");
+printf("Empezar a cortar");
+}
+
 void drawCalibProc() {
 lcd_gotoxy(1, 1);
 if(calibLevel == 0) {
-printf("Autocalib usando\n");
-printf("       1 kg     ");
+printf("Autocalib con   \n");
+printf("Corte referencia");
 }else if(calibLevel == 1) {
 printf("Autocalib usando\n");
 printf("     0.5 kg     ");
@@ -9627,6 +9638,12 @@ break;
 }case (13): {
 drawCutError();
 break;
+}case (14): {
+drawReady2Cut();
+break;
+}case (15): {
+drawSNquest(4);
+break;
 }
 }
 }
@@ -9644,7 +9661,7 @@ char FC2securLock = 0;
 
 long processTimer = 0;
 long securTimer = 0;
-long timeDOWN = 500;
+long timeDOWN = 50;
 
 void t2config() {
 T2CONbits.TMR2ON = 0;
@@ -9669,8 +9686,21 @@ CCP2CONbits.DC2B = act;
 CCPR2L = act>>2;
 }
 
+void initProtocoll(char init) {
+if(!PORTAbits.RA7)
+bladeIsUP = 2;
+if(init) {
+LATCbits.LATC5 = 0;
+processTimer = 0;
+processState = 0;
+if(bladeIsUP != 1)
+setPWM2duty(-400);
+}
+
+}
+
 void T2int() {
-if(!processStarted)
+if(!processStarted && actualScreen != 14 && !ready2Cut)
 LATCbits.LATC4 = 0;
 t2Cont1++;
 if(PORTAbits.RA7 && !lastSttFC1) {
@@ -9678,12 +9708,17 @@ lastSttFC1 = 1;
 setPWM2duty(0);
 bladeIsUP = 1;
 processTimer = 0;
+if(processStarted)
+processState++;
 securTimer = 0;
-if(processState >= numCortes) {
+if(processStarted && processState >= numCortes) {
 processStarted = 0;
 saveProcessState();
-if(actualScreen == 6)
+if(calibMode) {
 actualScreen = 12;
+tempLastScreen = 6;
+}
+initProtocoll(1);
 }
 
 t2Cont1 = 0;
@@ -9700,7 +9735,7 @@ holdFC1cont = 0;
 
 }else {
 
-# 89
+# 107
 }
 }
 t2Cont2++;
@@ -9710,11 +9745,22 @@ setPWM2duty(0);
 bladeIsUP = 0;
 processTimer = 0;
 securTimer = 0;
+if(processStarted)
 processState++;
+if(ready2Cut) {
+processStarted = 1;
+ready2Cut = 0;
+}
 saveProcessState();
-if(processState >= numCortes)
-LATCbits.LATC4 = 0;
-
+if(processStarted && processState >= numCortes) {
+processStarted = 0;
+saveProcessState();
+if(calibMode) {
+actualScreen = 12;
+tempLastScreen = 6;
+}
+initProtocoll(1);
+}
 t2Cont2 = 0;
 }else if(!PORTAbits.RA6 && lastSttFC2) {
 if(t2Cont2 > 124)
@@ -9729,7 +9775,7 @@ holdFC2cont = 0;
 
 }else {
 
-# 125
+# 154
 }
 }
 
@@ -9828,26 +9874,17 @@ acum += temp;
 chanValf = (float)acum / 1000;
 }
 
-void initProtocoll(char init) {
-if(!PORTAbits.RA7)
-bladeIsUP = 2;
-if(init) {
-LATCbits.LATC5 = 0;
-processState = 0;
-if(bladeIsUP != 1)
-setPWM2duty(-400);
-}
-actualScreen = tempLastScreen;
-}
+
 
 void initCalib() {
 if(!PORTAbits.RA7)
 bladeIsUP = 2;
+processTimer = 0;
 processState = 0;
-processStarted = 1;
+
 if(bladeIsUP != 1)
 setPWM2duty(-400);
-actualScreen = 6;
+
 }
 
 void confirmEdition(char yes) {
@@ -9901,7 +9938,8 @@ introducido[passSection]++;
 if (introducido[passSection] > 9)
 introducido[passSection] = 0;
 } else if (actualScreen == 2 || actualScreen == 3
-|| actualScreen == 10 || actualScreen == 11) {
+|| actualScreen == 10 || actualScreen == 11
+|| actualScreen == 15) {
 selSN = !selSN;
 if(selSN > 1)
 selSN = 0;
@@ -9955,7 +9993,8 @@ introducido[passSection]--;
 if (introducido[passSection] < 0)
 introducido[passSection] = 9;
 } else if (actualScreen == 2 || actualScreen == 3
-|| actualScreen == 10 || actualScreen == 11) {
+|| actualScreen == 10 || actualScreen == 11
+|| actualScreen == 15) {
 selSN = !selSN;
 if(selSN > 1)
 selSN = 0;
@@ -9994,7 +10033,8 @@ void pressRETRO() {
 if (actualScreen == 1) {
 actualScreen = 0;
 }else if (actualScreen == 2 || actualScreen == 3
-|| actualScreen == 10) {
+|| actualScreen == 10 || actualScreen == 11
+|| actualScreen == 15) {
 actualScreen = tempLastScreen;
 }else if(actualScreen == 5) {
 if(menuSection != 2) {
@@ -10018,16 +10058,33 @@ initProtocoll(1);
 void longPressRETRO() {
 if (!RETROisLP) {
 RETROisLP = 1;
-if(actualScreen == 0 || actualScreen == 4) {
-if(processStarted) {
+if(actualScreen == 0 || actualScreen == 4
+|| actualScreen == 14) {
+if(processStarted || actualScreen == 14) {
 tempLastScreen = actualScreen;
 actualScreen = 3;
 selSN = 0;
 }
 }else if(actualScreen == 5)
 actualScreen = 4;
-else if(actualScreen == 12)
+else if(actualScreen == 12 || actualScreen == 6) {
+tempLastScreen = actualScreen;
+actualScreen = 15;
+selSN = 1;
+}else if(actualScreen == 14) {
+processStarted = 0;
+processState = 0;
+LATCbits.LATC4 = 0;
+actualScreen = 0;
+if(calibMode) {
+numCortes = tempNumCortes;
+tiXcorte = temptiXcorte;
+timsXcorte = (float)tiXcorte * 1000;
+calibMode = 0;
 actualScreen = 4;
+}
+initProtocoll(1);
+}
 }
 }
 
@@ -10090,13 +10147,34 @@ chanValSection = 5;
 confirmEdition(!processStarted);
 }else if(actualScreen == 2) {
 initProtocoll(!selSN);
-processStarted = !selSN;
-}else if(actualScreen == 3) {
-processStarted = selSN;
+if(!selSN) {
+actualScreen = 14;
+LATCbits.LATC4 = 1;
+ready2Cut = 1;
+
+}else
 actualScreen = tempLastScreen;
+}else if(actualScreen == 14) {
+
+setPWM2duty(400);
+actualScreen = tempLastScreen;
+}else if(actualScreen == 3) {
+actualScreen = tempLastScreen;
+if(!selSN) {
+processStarted = 0;
+processState = 0;
 LATCbits.LATC4 = 0;
-if(bladeIsUP != 1)
-setPWM2duty(-400);
+if(tempLastScreen == 14)
+actualScreen = 0;
+if(calibMode) {
+numCortes = tempNumCortes;
+tiXcorte = temptiXcorte;
+timsXcorte = (float)tiXcorte * 1000;
+calibMode = 0;
+actualScreen = 4;
+}
+initProtocoll(1);
+}
 }else if(actualScreen == 10) {
 if(!selSN)
 confirmEdition(1);
@@ -10107,7 +10185,10 @@ actualScreen = 4;
 else if(actualScreen == 9)
 actualScreen = 0;
 else if(actualScreen == 11) {
+initProtocoll(!selSN);
 if(!selSN) {
+actualScreen = 6;
+tempLastScreen = actualScreen;
 chanValf = 0;
 desintegrator();
 temptiXcorte = tiXcorte;
@@ -10118,15 +10199,35 @@ numCortes = 1;
 processState = 0;
 processTimer = 0;
 calibLevel = 0;
-initCalib();
+initProtocoll(1);
+LATCbits.LATC4 = 1;
+ready2Cut = 1;
+actualScreen = 14;
+calibMode = 1;
 }else
 actualScreen = 4;
 }else if(actualScreen == 12) {
 chanValSection--;
 if(chanValSection < 0)
 chanValSection = 5;
-}else if(actualScreen == 13)
+}else if(actualScreen == 15) {
+if(!selSN) {
+processStarted = 0;
+processState = 0;
+LATCbits.LATC4 = 0;
+numCortes = tempNumCortes;
+tiXcorte = temptiXcorte;
+timsXcorte = (float)tiXcorte * 1000;
+calibMode = 0;
+actualScreen = 4;
+}else {
+actualScreen = tempLastScreen;
+tempLastScreen = 6;
+}
+}else if(actualScreen == 13) {
 initProtocoll(1);
+actualScreen = tempLastScreen;
+}
 }
 
 void longPressENTER() {
@@ -10149,29 +10250,43 @@ if(menuSection != 2)
 integrator();
 confirmEdition(!processStarted);
 }else if(actualScreen == 12) {
+tempLastScreen = 6;
 integrator();
 if(calibLevel == 0) {
 tempVelocidadMasa1 = (float)chanValf / tiXcorte;
-tiXcorte = (float)0.5 / tempVelocidadMasa1;
+tiXcorte = (float)0.5f / tempVelocidadMasa1;
+timsXcorte = (float)tiXcorte * 1000;
 calibLevel = 1;
 numCortes = 1;
 processState = 0;
 processTimer = 0;
-initCalib();
+
+actualScreen = tempLastScreen;
+chanValf = (float)0.50f;;
+desintegrator();
+LATCbits.LATC4 = 1;
+processStarted = 1;
 }else if(calibLevel == 1) {
 tempVelocidadMasa2 = (float)chanValf / tiXcorte;
-tiXcorte = (float)0.25 / tempVelocidadMasa2;
+tiXcorte = (float)0.25f / tempVelocidadMasa2;
+timsXcorte = (float)tiXcorte * 1000;
 calibLevel = 2;
 numCortes = 1;
 processState = 0;
 processTimer = 0;
-initCalib();
+
+actualScreen = tempLastScreen;
+chanValf = (float)0.25f;
+desintegrator();
+LATCbits.LATC4 = 1;
+processStarted = 1;
 }else if(calibLevel == 2) {
 tempVelocidadMasa3 = (float)chanValf / tiXcorte;
 float temp = (float)tempVelocidadMasa1 + tempVelocidadMasa2+ tempVelocidadMasa3;
 chanValf = (float)temp / 3.0f;
 numCortes = tempNumCortes;
 calcVars2ti();
+calibMode = 0;
 confirmEdition(!processStarted);
 }
 }
@@ -10391,8 +10506,8 @@ LATCbits.LATC5 = 1;
 void T4int() {
 LATBbits.LATB0 = processStarted;
 asm(" clrwdt");
-if(PORTCbits.RC2 || PORTCbits.RC3)
-cutError();
+
+
 processTimer++;
 if(processStarted) {
 securTimer++;
@@ -10400,7 +10515,7 @@ if(bladeIsUP == 1) {
 if(securTimer > timsXcorte + maxTimePerCut)
 cutError();
 }else {
-if(securTimer > maxTimePerCut)
+if(securTimer > timsXcorte + maxTimePerCut)
 cutError();
 }
 }
@@ -10410,7 +10525,7 @@ setPWM2duty(400);
 LATCbits.LATC4 = 1;
 }
 }else if(bladeIsUP == 0){
-if(processTimer >= timeDOWN && processStarted) {
+if(processTimer >= timsXcorte && processStarted) {
 setPWM2duty(-400);
 }
 }
@@ -10527,7 +10642,7 @@ delay_ms(200);
 }
 }
 
-# 14 "source/main.c"
+# 13 "source/main.c"
 void interrupt hp_isr(void) {
 if(PIE5bits.TMR4IE && PIR5bits.TMR4IF) {
 T4int();
@@ -10560,6 +10675,7 @@ PWM2Config();
 UARTConfig();
 interruptConfig();
 asm(" clrwdt");
+
 WDTCONbits.SWDTEN = 1;
 setPWM2duty(-400);
 setPWM2on(1);
