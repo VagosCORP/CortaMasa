@@ -156,7 +156,7 @@ text126 CODE 0 5B42 5B42 AE 1
 text127 CODE 0 710E 710E 2E 1
 bssCOMRAM COMRAM 1 37 37 14 1
 mediumconst MEDIUMCONST 0 7CD4 7CD4 32C 1
-$C:\Users\Sebas\AppData\Local\Temp\scok.obj
+$C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 idloc IDLOC 0 200000 200000 8 1
 init CODE 0 BE BE 4 1
 reset_vec CODE 0 0 0 4 1
@@ -2572,76 +2572,76 @@ CD4 text23 CODE >536:C:\Program Files (x86)\Microchip\xc8\v1.41\sources\common\d
 6E24 text0 CODE >51:L:\MPLABXProjects\CortaMasa.X\source/main.c
 6E28 text0 CODE >52:L:\MPLABXProjects\CortaMasa.X\source/main.c
 6E2C text0 CODE >50:L:\MPLABXProjects\CortaMasa.X\source/main.c
-6030 cinit CODE >2057:C:\Users\Sebas\AppData\Local\Temp\scok.
-6030 cinit CODE >2059:C:\Users\Sebas\AppData\Local\Temp\scok.
-6030 cinit CODE >2062:C:\Users\Sebas\AppData\Local\Temp\scok.
-6030 cinit CODE >2375:C:\Users\Sebas\AppData\Local\Temp\scok.
-6032 cinit CODE >2376:C:\Users\Sebas\AppData\Local\Temp\scok.
-6034 cinit CODE >2377:C:\Users\Sebas\AppData\Local\Temp\scok.
-6036 cinit CODE >2378:C:\Users\Sebas\AppData\Local\Temp\scok.
-6038 cinit CODE >2379:C:\Users\Sebas\AppData\Local\Temp\scok.
-603A cinit CODE >2380:C:\Users\Sebas\AppData\Local\Temp\scok.
-603C cinit CODE >2381:C:\Users\Sebas\AppData\Local\Temp\scok.
-6040 cinit CODE >2382:C:\Users\Sebas\AppData\Local\Temp\scok.
-6044 cinit CODE >2383:C:\Users\Sebas\AppData\Local\Temp\scok.
-6044 cinit CODE >2384:C:\Users\Sebas\AppData\Local\Temp\scok.
-6046 cinit CODE >2385:C:\Users\Sebas\AppData\Local\Temp\scok.
-604A cinit CODE >2386:C:\Users\Sebas\AppData\Local\Temp\scok.
-604C cinit CODE >2387:C:\Users\Sebas\AppData\Local\Temp\scok.
-604E cinit CODE >2388:C:\Users\Sebas\AppData\Local\Temp\scok.
-6050 cinit CODE >2392:C:\Users\Sebas\AppData\Local\Temp\scok.
-6052 cinit CODE >2393:C:\Users\Sebas\AppData\Local\Temp\scok.
-6054 cinit CODE >2394:C:\Users\Sebas\AppData\Local\Temp\scok.
-6056 cinit CODE >2395:C:\Users\Sebas\AppData\Local\Temp\scok.
-6058 cinit CODE >2396:C:\Users\Sebas\AppData\Local\Temp\scok.
-605A cinit CODE >2397:C:\Users\Sebas\AppData\Local\Temp\scok.
-605C cinit CODE >2398:C:\Users\Sebas\AppData\Local\Temp\scok.
-6060 cinit CODE >2399:C:\Users\Sebas\AppData\Local\Temp\scok.
-6064 cinit CODE >2400:C:\Users\Sebas\AppData\Local\Temp\scok.
-6064 cinit CODE >2401:C:\Users\Sebas\AppData\Local\Temp\scok.
-6066 cinit CODE >2402:C:\Users\Sebas\AppData\Local\Temp\scok.
-606A cinit CODE >2403:C:\Users\Sebas\AppData\Local\Temp\scok.
-606C cinit CODE >2404:C:\Users\Sebas\AppData\Local\Temp\scok.
-606E cinit CODE >2405:C:\Users\Sebas\AppData\Local\Temp\scok.
-6070 cinit CODE >2409:C:\Users\Sebas\AppData\Local\Temp\scok.
-6072 cinit CODE >2410:C:\Users\Sebas\AppData\Local\Temp\scok.
-6074 cinit CODE >2411:C:\Users\Sebas\AppData\Local\Temp\scok.
-6076 cinit CODE >2412:C:\Users\Sebas\AppData\Local\Temp\scok.
-6078 cinit CODE >2413:C:\Users\Sebas\AppData\Local\Temp\scok.
-607A cinit CODE >2414:C:\Users\Sebas\AppData\Local\Temp\scok.
-607C cinit CODE >2415:C:\Users\Sebas\AppData\Local\Temp\scok.
-6080 cinit CODE >2416:C:\Users\Sebas\AppData\Local\Temp\scok.
-6084 cinit CODE >2417:C:\Users\Sebas\AppData\Local\Temp\scok.
-6084 cinit CODE >2418:C:\Users\Sebas\AppData\Local\Temp\scok.
-6086 cinit CODE >2419:C:\Users\Sebas\AppData\Local\Temp\scok.
-608A cinit CODE >2420:C:\Users\Sebas\AppData\Local\Temp\scok.
-608C cinit CODE >2421:C:\Users\Sebas\AppData\Local\Temp\scok.
-608E cinit CODE >2422:C:\Users\Sebas\AppData\Local\Temp\scok.
-6090 cinit CODE >2426:C:\Users\Sebas\AppData\Local\Temp\scok.
-6094 cinit CODE >2427:C:\Users\Sebas\AppData\Local\Temp\scok.
-6096 cinit CODE >2428:C:\Users\Sebas\AppData\Local\Temp\scok.
-6096 cinit CODE >2429:C:\Users\Sebas\AppData\Local\Temp\scok.
-6098 cinit CODE >2430:C:\Users\Sebas\AppData\Local\Temp\scok.
-609A cinit CODE >2431:C:\Users\Sebas\AppData\Local\Temp\scok.
-609C cinit CODE >2434:C:\Users\Sebas\AppData\Local\Temp\scok.
-60A0 cinit CODE >2435:C:\Users\Sebas\AppData\Local\Temp\scok.
-60A2 cinit CODE >2436:C:\Users\Sebas\AppData\Local\Temp\scok.
-60A2 cinit CODE >2437:C:\Users\Sebas\AppData\Local\Temp\scok.
-60A4 cinit CODE >2438:C:\Users\Sebas\AppData\Local\Temp\scok.
-60A6 cinit CODE >2439:C:\Users\Sebas\AppData\Local\Temp\scok.
-60A8 cinit CODE >2442:C:\Users\Sebas\AppData\Local\Temp\scok.
-60AC cinit CODE >2443:C:\Users\Sebas\AppData\Local\Temp\scok.
-60AE cinit CODE >2444:C:\Users\Sebas\AppData\Local\Temp\scok.
-60AE cinit CODE >2445:C:\Users\Sebas\AppData\Local\Temp\scok.
-60B0 cinit CODE >2446:C:\Users\Sebas\AppData\Local\Temp\scok.
-60B2 cinit CODE >2447:C:\Users\Sebas\AppData\Local\Temp\scok.
-60B4 cinit CODE >2453:C:\Users\Sebas\AppData\Local\Temp\scok.
-60B4 cinit CODE >2455:C:\Users\Sebas\AppData\Local\Temp\scok.
-60B6 cinit CODE >2456:C:\Users\Sebas\AppData\Local\Temp\scok.
-60B8 cinit CODE >2458:C:\Users\Sebas\AppData\Local\Temp\scok.
-60BA cinit CODE >2459:C:\Users\Sebas\AppData\Local\Temp\scok.
-60BC cinit CODE >2460:C:\Users\Sebas\AppData\Local\Temp\scok.
-60BE cinit CODE >2461:C:\Users\Sebas\AppData\Local\Temp\scok.
+6030 cinit CODE >2057:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6030 cinit CODE >2059:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6030 cinit CODE >2062:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6030 cinit CODE >2375:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6032 cinit CODE >2376:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6034 cinit CODE >2377:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6036 cinit CODE >2378:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6038 cinit CODE >2379:C:\Users\Sebas\AppData\Local\Temp\s26k.
+603A cinit CODE >2380:C:\Users\Sebas\AppData\Local\Temp\s26k.
+603C cinit CODE >2381:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6040 cinit CODE >2382:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6044 cinit CODE >2383:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6044 cinit CODE >2384:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6046 cinit CODE >2385:C:\Users\Sebas\AppData\Local\Temp\s26k.
+604A cinit CODE >2386:C:\Users\Sebas\AppData\Local\Temp\s26k.
+604C cinit CODE >2387:C:\Users\Sebas\AppData\Local\Temp\s26k.
+604E cinit CODE >2388:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6050 cinit CODE >2392:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6052 cinit CODE >2393:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6054 cinit CODE >2394:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6056 cinit CODE >2395:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6058 cinit CODE >2396:C:\Users\Sebas\AppData\Local\Temp\s26k.
+605A cinit CODE >2397:C:\Users\Sebas\AppData\Local\Temp\s26k.
+605C cinit CODE >2398:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6060 cinit CODE >2399:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6064 cinit CODE >2400:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6064 cinit CODE >2401:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6066 cinit CODE >2402:C:\Users\Sebas\AppData\Local\Temp\s26k.
+606A cinit CODE >2403:C:\Users\Sebas\AppData\Local\Temp\s26k.
+606C cinit CODE >2404:C:\Users\Sebas\AppData\Local\Temp\s26k.
+606E cinit CODE >2405:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6070 cinit CODE >2409:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6072 cinit CODE >2410:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6074 cinit CODE >2411:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6076 cinit CODE >2412:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6078 cinit CODE >2413:C:\Users\Sebas\AppData\Local\Temp\s26k.
+607A cinit CODE >2414:C:\Users\Sebas\AppData\Local\Temp\s26k.
+607C cinit CODE >2415:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6080 cinit CODE >2416:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6084 cinit CODE >2417:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6084 cinit CODE >2418:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6086 cinit CODE >2419:C:\Users\Sebas\AppData\Local\Temp\s26k.
+608A cinit CODE >2420:C:\Users\Sebas\AppData\Local\Temp\s26k.
+608C cinit CODE >2421:C:\Users\Sebas\AppData\Local\Temp\s26k.
+608E cinit CODE >2422:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6090 cinit CODE >2426:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6094 cinit CODE >2427:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6096 cinit CODE >2428:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6096 cinit CODE >2429:C:\Users\Sebas\AppData\Local\Temp\s26k.
+6098 cinit CODE >2430:C:\Users\Sebas\AppData\Local\Temp\s26k.
+609A cinit CODE >2431:C:\Users\Sebas\AppData\Local\Temp\s26k.
+609C cinit CODE >2434:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60A0 cinit CODE >2435:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60A2 cinit CODE >2436:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60A2 cinit CODE >2437:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60A4 cinit CODE >2438:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60A6 cinit CODE >2439:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60A8 cinit CODE >2442:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60AC cinit CODE >2443:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60AE cinit CODE >2444:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60AE cinit CODE >2445:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60B0 cinit CODE >2446:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60B2 cinit CODE >2447:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60B4 cinit CODE >2453:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60B4 cinit CODE >2455:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60B6 cinit CODE >2456:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60B8 cinit CODE >2458:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60BA cinit CODE >2459:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60BC cinit CODE >2460:C:\Users\Sebas\AppData\Local\Temp\s26k.
+60BE cinit CODE >2461:C:\Users\Sebas\AppData\Local\Temp\s26k.
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -2674,7 +2674,7 @@ _timsXcorte 53 0 COMRAM 1 dataCOMRAM dist/default/production\CortaMasa.X.product
 ___ftdiv@exp 11F 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
 __Hibigdata 0 0 CODE 0 ibigdata dist/default/production\CortaMasa.X.production.obj
 i1_saveSysParams 6154 0 CODE 0 text109 dist/default/production\CortaMasa.X.production.obj
-__mediumconst 7CD4 0 MEDIUMCONST 0 mediumconst C:\Users\Sebas\AppData\Local\Temp\scok.obj
+__mediumconst 7CD4 0 MEDIUMCONST 0 mediumconst C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 _lastSttUP D8 0 BANK0 1 dataBANK0 dist/default/production\CortaMasa.X.production.obj
 _drawValEditor 1FA2 0 CODE 0 text21 dist/default/production\CortaMasa.X.production.obj
 __Heeprom_data 0 0 EEDATA 0 eeprom_data dist/default/production\CortaMasa.X.production.obj
@@ -2694,12 +2694,12 @@ _lastSttFC2 B7 0 BANK0 1 bssBANK0 dist/default/production\CortaMasa.X.production
 __size_of_confirmEdition 0 0 ABS 0 - dist/default/production\CortaMasa.X.production.obj
 __Lsmallconst 0 0 SMALLCONST 0 smallconst dist/default/production\CortaMasa.X.production.obj
 i1readEEPROM@adr 60 0 BANK0 1 cstackBANK0 dist/default/production\CortaMasa.X.production.obj
-___sp 0 0 STACK 2 stack C:\Users\Sebas\AppData\Local\Temp\scok.obj
+___sp 0 0 STACK 2 stack C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 _main 6DE4 0 CODE 0 text0 dist/default/production\CortaMasa.X.production.obj
 btemp 5C 0 COMRAM 1 temp dist/default/production\CortaMasa.X.production.obj
 ___ftadd@f1 12D 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
 ___ftadd@f2 130 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
-start BE 0 CODE 0 init C:\Users\Sebas\AppData\Local\Temp\scok.obj
+start BE 0 CODE 0 init C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 _drawSNquest 49C6 0 CODE 0 text11 dist/default/production\CortaMasa.X.production.obj
 __size_of___aldiv 0 0 ABS 0 - dist/default/production\CortaMasa.X.production.obj
 __size_of___awdiv 0 0 ABS 0 - dist/default/production\CortaMasa.X.production.obj
@@ -2761,11 +2761,11 @@ _drawBadPass 72DC 0 CODE 0 text18 dist/default/production\CortaMasa.X.production
 _holdDOWNcont C8 0 BANK0 1 bssBANK0 dist/default/production\CortaMasa.X.production.obj
 i1calcSysVars@temp 77 0 BANK0 1 cstackBANK0 dist/default/production\CortaMasa.X.production.obj
 __end_of_PWM2Config 6C02 0 CODE 0 text80 dist/default/production\CortaMasa.X.production.obj
-__accesstop 60 0 ABS 0 - C:\Users\Sebas\AppData\Local\Temp\scok.obj
-intlevel0 0 0 CODE 0 text C:\Users\Sebas\AppData\Local\Temp\scok.obj
-intlevel1 0 0 CODE 0 text C:\Users\Sebas\AppData\Local\Temp\scok.obj
-intlevel2 0 0 CODE 0 text C:\Users\Sebas\AppData\Local\Temp\scok.obj
-intlevel3 0 0 CODE 0 text C:\Users\Sebas\AppData\Local\Temp\scok.obj
+__accesstop 60 0 ABS 0 - C:\Users\Sebas\AppData\Local\Temp\s26k.obj
+intlevel0 0 0 CODE 0 text C:\Users\Sebas\AppData\Local\Temp\s26k.obj
+intlevel1 0 0 CODE 0 text C:\Users\Sebas\AppData\Local\Temp\s26k.obj
+intlevel2 0 0 CODE 0 text C:\Users\Sebas\AppData\Local\Temp\s26k.obj
+intlevel3 0 0 CODE 0 text C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 __ptext100 5DD0 0 CODE 0 text100 dist/default/production\CortaMasa.X.production.obj
 __ptext101 3572 0 CODE 0 text101 dist/default/production\CortaMasa.X.production.obj
 __ptext102 68FA 0 CODE 0 text102 dist/default/production\CortaMasa.X.production.obj
@@ -2860,9 +2860,9 @@ _t2config 72AE 0 CODE 0 text81 dist/default/production\CortaMasa.X.production.ob
 _scale$2829 126 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
 ___awdiv@dividend 106 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
 i1_putchUART 736A 0 CODE 0 text88 dist/default/production\CortaMasa.X.production.obj
-___inthi_sp 0 0 STACK 2 stack C:\Users\Sebas\AppData\Local\Temp\scok.obj
+___inthi_sp 0 0 STACK 2 stack C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 printf@width 16C 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
-___intlo_sp 0 0 STACK 2 stack C:\Users\Sebas\AppData\Local\Temp\scok.obj
+___intlo_sp 0 0 STACK 2 stack C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 __size_ofi2___ftge 0 0 ABS 0 - dist/default/production\CortaMasa.X.production.obj
 __end_ofi1_desintegrator 3718 0 CODE 0 text101 dist/default/production\CortaMasa.X.production.obj
 __size_of___altoft 0 0 ABS 0 - dist/default/production\CortaMasa.X.production.obj
@@ -3118,7 +3118,7 @@ __size_of_putchUART 0 0 ABS 0 - dist/default/production\CortaMasa.X.production.o
 _calFactor 42 0 COMRAM 1 bssCOMRAM dist/default/production\CortaMasa.X.production.obj
 __Hbigbss 0 0 BIGRAM 1 bigbss dist/default/production\CortaMasa.X.production.obj
 __Hbigram 0 0 ABS 0 bigram dist/default/production\CortaMasa.X.production.obj
-__smallconst 0 0 SMALLCONST 0 smallconst C:\Users\Sebas\AppData\Local\Temp\scok.obj
+__smallconst 0 0 SMALLCONST 0 smallconst C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 ___lltoft 65B0 0 CODE 0 text40 dist/default/production\CortaMasa.X.production.obj
 __size_of_longPressUP 0 0 ABS 0 - dist/default/production\CortaMasa.X.production.obj
 __size_of_lcd_init 0 0 ABS 0 - dist/default/production\CortaMasa.X.production.obj
@@ -3542,8 +3542,8 @@ _lcd_send_4bits$1496 100 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa
 _lcd_send_4bits$1497 101 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
 _lcd_send_4bits$1498 102 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
 _lcd_send_4bits$1499 103 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
-stackhi 5FF 0 ABS 0 - C:\Users\Sebas\AppData\Local\Temp\scok.obj
-stacklo 1C0 0 ABS 0 - C:\Users\Sebas\AppData\Local\Temp\scok.obj
+stackhi 5FF 0 ABS 0 - C:\Users\Sebas\AppData\Local\Temp\s26k.obj
+stacklo 1C0 0 ABS 0 - C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 i1writeEEPROM@data 60 0 BANK0 1 cstackBANK0 dist/default/production\CortaMasa.X.production.obj
 __Lintcode 8 0 CODE 0 intcode dist/default/production\CortaMasa.X.production.obj
 i2___ftadd@f1 13 0 COMRAM 1 cstackCOMRAM dist/default/production\CortaMasa.X.production.obj
@@ -3748,7 +3748,7 @@ __Ltext97 0 0 ABS 0 text97 dist/default/production\CortaMasa.X.production.obj
 __Ltext98 0 0 ABS 0 text98 dist/default/production\CortaMasa.X.production.obj
 __Ltext99 0 0 ABS 0 text99 dist/default/production\CortaMasa.X.production.obj
 i1longPressENTER@temp 8D 0 BANK0 1 cstackBANK0 dist/default/production\CortaMasa.X.production.obj
-__ramtop 600 0 RAM 0 ramtop C:\Users\Sebas\AppData\Local\Temp\scok.obj
+__ramtop 600 0 RAM 0 ramtop C:\Users\Sebas\AppData\Local\Temp\s26k.obj
 ___aldiv@dividend 100 0 BANK1 1 cstackBANK1 dist/default/production\CortaMasa.X.production.obj
 i2___altoft 6720 0 CODE 0 text125 dist/default/production\CortaMasa.X.production.obj
 _securTimer 37 0 COMRAM 1 bssCOMRAM dist/default/production\CortaMasa.X.production.obj
