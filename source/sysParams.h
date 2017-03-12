@@ -46,7 +46,8 @@ extern "C" {
     float tempVelocidadMasa3 = 0.2; //16-19
     float velocidadMasa = 0.2; //16-19
     float calFactor = 0;
-    char bladeIsUP = 1;
+    char bladeIsUP = 0;
+    char bladeIsDown = 0;
     char ie = 0;
     long maxTimePerCut = 5000;
     

@@ -21,28 +21,20 @@ extern "C" {
     void T4int() {
         LED_STT = processStarted;
         CLRWDT();//si no se llama, en 128ms reset!
-        //if(M1F || M2F)
-            //cutError();
+//        if(M1F || M2F)
+//            cutError();
         processTimer++;
         if(processStarted) {
             securTimer++;
-            if(bladeIsUP == 1) {
-                if(securTimer > timsXcorte + maxTimePerCut)
+            if(securTimer > timsXcorte + maxTimePerCut)
                     cutError();
-            }else {
-                if(securTimer > timsXcorte + maxTimePerCut)
-                    cutError();
-            }
         }
-        if(bladeIsUP == 1) {
-            if(processTimer >= timsXcorte && processStarted && processState < numCortes) {
-                setPWM2duty(400);
-                REL = 1;
-            }
-        }else if(bladeIsUP == 0){
-            if(processTimer >= timsXcorte && processStarted) {
-                setPWM2duty(-400);
-            }
+        if(bladeIsUP && !bladeIsDown) {
+            if(processTimer >= timsXcorte && processStarted && processState < numCortes)
+                bajarCuchilla();
+        }else if(bladeIsDown && !bladeIsUP){
+            if(processTimer >= timsXcorte && processStarted)
+                subirCuchilla();
         }
     } 
     

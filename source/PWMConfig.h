@@ -27,7 +27,7 @@ extern "C" {
         T2CONbits.TMR2ON = 0;
         T2CONbits.T2CKPS = 0b00; //1:1 Pre
         T2CONbits.T2OUTPS = 0b1111; //1:16 Post
-//        PR2 = 199; //50 us OF ~ 20kHz
+        PR2 = 199; //50 us OF ~ 20kHz
         PIR1bits.TMR2IF = 0;
         IPR1bits.TMR2IP = 0;
         PIE1bits.TMR2IE = 1;
@@ -46,26 +46,43 @@ extern "C" {
         CCPR2L = act>>2;
     }
     
+    void subirCuchilla(void) {
+        setPWM2duty(-400);
+    }
+    
+    void bajarCuchilla(void) {
+        setPWM2duty(400);
+    }
+    
+    void detenerCuchilla(void) {
+        setPWM2duty(0);
+    }
+    
     void initProtocoll(char init) {
-        if(!FC1)
-            bladeIsUP = 2;
         if(init) {
             LED_ERR = 0;
             processTimer = 0;
             processState = 0;
-            if(bladeIsUP != 1)
-                setPWM2duty(-400);
+            if(!bladeIsUP)
+                subirCuchilla();
         }
         //actualScreen = tempLastScreen;
     }
     
+    void stopProcess() {
+        processStarted = 0;
+        ready2Cut = 0;
+        REL = 0;
+        detenerCuchilla();
+    }
+    
     void T2int() {
-        if(!processStarted && actualScreen != SCREEN_READY_2CUT && !ready2Cut)
-            REL = 0;
+        if(!processStarted && actualScreen != SCREEN_READY_2CUT && !ready2Cut || bladeIsUP && bladeIsDown)
+            stopProcess();
         t2Cont1++;
         if(FC1 && !lastSttFC1) {//pressFC1();
             lastSttFC1 = 1;
-            setPWM2duty(0);
+            detenerCuchilla();
             bladeIsUP = 1;
             processTimer = 0;
             if(processStarted)
@@ -80,37 +97,21 @@ extern "C" {
                 }
                 initProtocoll(1);
             }
-//            delay_ms(100);
             t2Cont1 = 0;
         }else if(!FC1 && lastSttFC1) {
-            if(t2Cont1 > 124)
+            if(t2Cont1 > 124) {
                 lastSttFC1 = 0;
-//            if(holdFC1cont < 10) {
-//                
-//            }
-//            delay_ms(50);
-        }else if(FC1 == lastSttFC1) {
-            if(!FC1) {
-                holdFC1cont = 0;
-//                releaseFC1();
-            }else {
-                
-//                if(!FC1securLock)
-//                    holdFC1cont++;
-//                if(holdFC1cont > 9) {
-//                    if(holdFC1cont < 26) {
-//                        longPressFC1();
-//                    }else
-//                        FC1securLock = 1;//Alguien apoyado!
-//                }
-//                delay_ms(200);
+                bladeIsUP = 0;
             }
+        }else if(FC1 == lastSttFC1) {
+            if(!FC1)
+                bladeIsUP = 0;
         }
         t2Cont2++;
         if(FC2 && !lastSttFC2) {//pressFC2();
             lastSttFC2 = 1;
-            setPWM2duty(0);
-            bladeIsUP = 0;
+            detenerCuchilla();
+            bladeIsDown = 1;
             processTimer = 0;
             securTimer = 0;
             if(processStarted)
@@ -131,27 +132,13 @@ extern "C" {
             }
             t2Cont2 = 0;
         }else if(!FC2 && lastSttFC2) {
-            if(t2Cont2 > 124)
+            if(t2Cont2 > 124) {
                 lastSttFC2 = 0;
-//            if(holdFC2cont < 10) {
-//                
-//            }
-//            delay_ms(50);
-        }else if(FC2 == lastSttFC2) {
-            if(!FC2) {
-                holdFC2cont = 0;
-//                releaseFC2();
-            }else {
-//                if(!FC2securLock)
-//                    holdFC2cont++;
-//                if(holdFC2cont > 9) {
-//                    if(holdFC2cont < 26) {//longPressFC2();
-//                        
-//                    }else
-//                        FC2securLock = 1;//Alguien apoyado!
-//                }
-//                delay_ms(200);
+                bladeIsDown = 0;
             }
+        }else if(FC2 == lastSttFC2) {
+            if(!FC2)
+                bladeIsDown = 0;
         }
         
     }
@@ -164,7 +151,7 @@ extern "C" {
         PSTR2CONbits.STR2C = 0;
         PSTR2CONbits.STR2D = 0;
         CCPTMRS0bits.C2TSEL = 0b00;
-        PR2 = 199;
+        PR2 = 199; //50 us OF ~ 20kHz
         ECCP2ASbits.CCP2AS = 0b000; //no auto ShutDown
         ECCP2ASbits.PSS2AC = 0b00;
         ECCP2ASbits.PSS2BD = 0b00;

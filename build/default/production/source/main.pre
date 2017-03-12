@@ -8545,7 +8545,8 @@ float tempVelocidadMasa2 = 0.2;
 float tempVelocidadMasa3 = 0.2;
 float velocidadMasa = 0.2;
 float calFactor = 0;
-char bladeIsUP = 1;
+char bladeIsUP = 0;
+char bladeIsDown = 0;
 char ie = 0;
 long maxTimePerCut = 5000;
 
@@ -8578,17 +8579,17 @@ void calcSysVars() {
 float temp = 0;
 timsXcorte = (float)tiXcorte * 1000;
 
-# 86
+# 87
 kgXcorte = (float)velocidadMasa * tiXcorte;
 }
 
 void calcVars2ti() {
 
-# 97
+# 98
 tiXcorte = (float)kgXcorte / velocidadMasa;
 timsXcorte = (float)tiXcorte * 1000;
 
-# 111
+# 112
 }
 
 void saveSysParams() {
@@ -8606,7 +8607,7 @@ i16Data.int16dat = numCortes;
 writeEEPROM(6, i16Data.int16HB);
 writeEEPROM(7, i16Data.int16LB);
 
-# 137
+# 138
 fData.floatdat = velocidadMasa;
 
 writeEEPROM(17, fData.floatUB);
@@ -8649,7 +8650,7 @@ i16Data.int16HB = readEEPROM(6);
 i16Data.int16LB = readEEPROM(7);
 numCortes = i16Data.int16dat;
 
-# 189
+# 190
 fData.floatUB = readEEPROM(17);
 fData.floatHB = readEEPROM(18);
 fData.floatLB = readEEPROM(19);
@@ -8939,7 +8940,7 @@ void t2config() {
 T2CONbits.TMR2ON = 0;
 T2CONbits.T2CKPS = 0b00;
 T2CONbits.T2OUTPS = 0b1111;
-
+PR2 = 199;
 PIR1bits.TMR2IF = 0;
 IPR1bits.TMR2IP = 0;
 PIE1bits.TMR2IE = 1;
@@ -8958,26 +8959,43 @@ CCP2CONbits.DC2B = act;
 CCPR2L = act>>2;
 }
 
+void subirCuchilla(void) {
+setPWM2duty(-400);
+}
+
+void bajarCuchilla(void) {
+setPWM2duty(400);
+}
+
+void detenerCuchilla(void) {
+setPWM2duty(0);
+}
+
 void initProtocoll(char init) {
-if(!PORTAbits.RA7)
-bladeIsUP = 2;
 if(init) {
 LATCbits.LATC5 = 0;
 processTimer = 0;
 processState = 0;
-if(bladeIsUP != 1)
-setPWM2duty(-400);
+if(!bladeIsUP)
+subirCuchilla();
 }
 
+}
+
+void stopProcess() {
+processStarted = 0;
+ready2Cut = 0;
+LATCbits.LATC4 = 0;
+detenerCuchilla();
 }
 
 void T2int() {
-if(!processStarted && actualScreen != 14 && !ready2Cut)
-LATCbits.LATC4 = 0;
+if(!processStarted && actualScreen != 14 && !ready2Cut || bladeIsUP && bladeIsDown)
+stopProcess();
 t2Cont1++;
 if(PORTAbits.RA7 && !lastSttFC1) {
 lastSttFC1 = 1;
-setPWM2duty(0);
+detenerCuchilla();
 bladeIsUP = 1;
 processTimer = 0;
 if(processStarted)
@@ -8992,29 +9010,21 @@ tempLastScreen = 6;
 }
 initProtocoll(1);
 }
-
 t2Cont1 = 0;
 }else if(!PORTAbits.RA7 && lastSttFC1) {
-if(t2Cont1 > 124)
+if(t2Cont1 > 124) {
 lastSttFC1 = 0;
-
-
-
-
-}else if(PORTAbits.RA7 == lastSttFC1) {
-if(!PORTAbits.RA7) {
-holdFC1cont = 0;
-
-}else {
-
-# 107
+bladeIsUP = 0;
 }
+}else if(PORTAbits.RA7 == lastSttFC1) {
+if(!PORTAbits.RA7)
+bladeIsUP = 0;
 }
 t2Cont2++;
 if(PORTAbits.RA6 && !lastSttFC2) {
 lastSttFC2 = 1;
-setPWM2duty(0);
-bladeIsUP = 0;
+detenerCuchilla();
+bladeIsDown = 1;
 processTimer = 0;
 securTimer = 0;
 if(processStarted)
@@ -9035,20 +9045,13 @@ initProtocoll(1);
 }
 t2Cont2 = 0;
 }else if(!PORTAbits.RA6 && lastSttFC2) {
-if(t2Cont2 > 124)
+if(t2Cont2 > 124) {
 lastSttFC2 = 0;
-
-
-
-
-}else if(PORTAbits.RA6 == lastSttFC2) {
-if(!PORTAbits.RA6) {
-holdFC2cont = 0;
-
-}else {
-
-# 154
+bladeIsDown = 0;
 }
+}else if(PORTAbits.RA6 == lastSttFC2) {
+if(!PORTAbits.RA6)
+bladeIsDown = 0;
 }
 
 }
@@ -9149,13 +9152,11 @@ chanValf = (float)acum / 1000;
 
 
 void initCalib() {
-if(!PORTAbits.RA7)
-bladeIsUP = 2;
 processTimer = 0;
 processState = 0;
 
-if(bladeIsUP != 1)
-setPWM2duty(-400);
+if(!bladeIsUP)
+subirCuchilla();
 
 }
 
@@ -9344,9 +9345,8 @@ tempLastScreen = actualScreen;
 actualScreen = 15;
 selSN = 1;
 }else if(actualScreen == 14) {
-processStarted = 0;
 processState = 0;
-LATCbits.LATC4 = 0;
+stopProcess();
 actualScreen = 0;
 if(calibMode) {
 numCortes = tempNumCortes;
@@ -9421,8 +9421,8 @@ confirmEdition(!processStarted);
 initProtocoll(!selSN);
 if(!selSN) {
 actualScreen = 14;
-LATCbits.LATC4 = 1;
 ready2Cut = 1;
+LATCbits.LATC4 = 1;
 
 }else
 actualScreen = tempLastScreen;
@@ -9433,9 +9433,8 @@ actualScreen = tempLastScreen;
 }else if(actualScreen == 3) {
 actualScreen = tempLastScreen;
 if(!selSN) {
-processStarted = 0;
 processState = 0;
-LATCbits.LATC4 = 0;
+stopProcess();
 if(tempLastScreen == 14)
 actualScreen = 0;
 if(calibMode) {
@@ -9484,9 +9483,8 @@ if(chanValSection < 0)
 chanValSection = 5;
 }else if(actualScreen == 15) {
 if(!selSN) {
-processStarted = 0;
 processState = 0;
-LATCbits.LATC4 = 0;
+stopProcess();
 numCortes = tempNumCortes;
 tiXcorte = temptiXcorte;
 timsXcorte = (float)tiXcorte * 1000;
@@ -9783,23 +9781,15 @@ asm(" clrwdt");
 processTimer++;
 if(processStarted) {
 securTimer++;
-if(bladeIsUP == 1) {
-if(securTimer > timsXcorte + maxTimePerCut)
-cutError();
-}else {
 if(securTimer > timsXcorte + maxTimePerCut)
 cutError();
 }
-}
-if(bladeIsUP == 1) {
-if(processTimer >= timsXcorte && processStarted && processState < numCortes) {
-setPWM2duty(400);
-LATCbits.LATC4 = 1;
-}
-}else if(bladeIsUP == 0){
-if(processTimer >= timsXcorte && processStarted) {
-setPWM2duty(-400);
-}
+if(bladeIsUP && !bladeIsDown) {
+if(processTimer >= timsXcorte && processStarted && processState < numCortes)
+bajarCuchilla();
+}else if(bladeIsDown && !bladeIsUP){
+if(processTimer >= timsXcorte && processStarted)
+subirCuchilla();
 }
 }
 

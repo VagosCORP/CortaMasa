@@ -72,13 +72,11 @@ extern "C" {
     
     
     void initCalib() {
-        if(!FC1)
-            bladeIsUP = 2;
         processTimer = 0;
         processState = 0;
         //processStarted = 1;
-        if(bladeIsUP != 1)
-            setPWM2duty(-400);
+        if(!bladeIsUP)
+            subirCuchilla();
         //actualScreen = SCREEN_CALIB_PROCESS;
     }
     
@@ -267,9 +265,8 @@ extern "C" {
                 actualScreen = SCREEN_STOP_CALIB;
                 selSN = NO;
             }else if(actualScreen == SCREEN_READY_2CUT) {
-                processStarted = 0;
                 processState = 0;
-                REL = 0;
+                stopProcess();
                 actualScreen = SCREEN_MENU;
                 if(calibMode) {
                     numCortes = tempNumCortes;
@@ -344,8 +341,8 @@ extern "C" {
             initProtocoll(!selSN);
             if(!selSN) {
                 actualScreen = SCREEN_READY_2CUT;
-                REL = 1;
                 ready2Cut = 1;
+                REL = 1;
                 //processStarted = !selSN; //SI = 0
             }else
                 actualScreen = tempLastScreen;
@@ -356,9 +353,8 @@ extern "C" {
         }else if(actualScreen == SCREEN_OFF_PROCESS) {
             actualScreen = tempLastScreen;
             if(!selSN) {
-                processStarted = 0;
                 processState = 0;
-                REL = 0;
+                stopProcess();
                 if(tempLastScreen == SCREEN_READY_2CUT)
                     actualScreen = SCREEN_MENU;
                 if(calibMode) {
@@ -407,9 +403,8 @@ extern "C" {
                 chanValSection = 5;
         }else if(actualScreen == SCREEN_STOP_CALIB) {
             if(!selSN) {
-                processStarted = 0;
                 processState = 0;
-                REL = 0;
+                stopProcess();
                 numCortes = tempNumCortes;
                 tiXcorte = temptiXcorte;
                 timsXcorte = (float)tiXcorte * 1000;
